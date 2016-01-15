@@ -76,6 +76,7 @@ public class ClientFrame extends javax.swing.JFrame {
         chatBox = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,6 +103,8 @@ public class ClientFrame extends javax.swing.JFrame {
 
         jButton1.setText("test");
 
+        jLabel2.setText("jLabel2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -119,7 +122,8 @@ public class ClientFrame extends javax.swing.JFrame {
                         .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton1)
-                            .addComponent(jLabel1))))
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))))
                 .addGap(0, 25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -133,6 +137,8 @@ public class ClientFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(53, 53, 53)
                         .addComponent(jLabel1)
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1)
                         .addGap(63, 63, 63)))
@@ -162,6 +168,7 @@ public class ClientFrame extends javax.swing.JFrame {
     private javax.swing.JTextField chatBox;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea msgBox;
     private javax.swing.JButton sendButton;
