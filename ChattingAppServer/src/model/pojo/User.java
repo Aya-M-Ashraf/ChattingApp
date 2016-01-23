@@ -1,10 +1,12 @@
 package model.pojo;
 
+import java.io.Serializable;
+
 /**
  *
  * @author KHoloud
  */
-public class User {
+public class User implements Serializable {
     
     private String email;
     private String firstName;
@@ -18,9 +20,35 @@ public class User {
     private String gender;
     private boolean isOnline;
     
-    public User(){
-        
+   public User(){
+        this.email = null;
+        this.firstName = null;
+        this.lastName = null;
+        this.password = null;
+        this.country = null;
+        this.city = null;
+        this.secuirtyQuestion = null;
+        this.securityAnswer = null;
+        this.status = null;
+        this.gender = null;
+        this.isOnline = false;
+    } 
+
+    public User(String email, String firstName, String lastName, String password, String country, String city, String secuirtyQuestion, String securityAnswer, String status, String gender, boolean isOnline) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.country = country;
+        this.city = city;
+        this.secuirtyQuestion = secuirtyQuestion;
+        this.securityAnswer = securityAnswer;
+        this.status = status;
+        this.gender = gender;
+        this.isOnline = isOnline;
     }
+   
+   
 
     public String getEmail() {
         return email;

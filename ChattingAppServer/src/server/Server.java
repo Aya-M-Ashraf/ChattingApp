@@ -2,6 +2,7 @@ package server;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.*;
+import services.SignInServiceImpl;
 
 /**
  *
@@ -13,13 +14,17 @@ public class Server {
 
         try {
 
-            ServerImpl serverImplRef = new ServerImpl();
             Registry registry = LocateRegistry.createRegistry(5000);
+            
+            ServerImpl serverImplRef = new ServerImpl();
             registry.rebind("ChatService", serverImplRef);
+            
+            SignInServiceImpl SignInServiceImplRef = new SignInServiceImpl();
+            registry.rebind("SignInService", SignInServiceImplRef);
 
         } catch (RemoteException ex) {
             ex.printStackTrace();
-        }
+        }         
     }
 
     public static void main(String[] args) {
