@@ -18,7 +18,7 @@
       <Label id="passwordLabel" fx:id="passwordLabel" layoutX="28.0" layoutY="193.0" prefHeight="17.0" prefWidth="59.0" text="Password" AnchorPane.bottomAnchor="358.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="174.0" AnchorPane.topAnchor="193.0" />
       <Button id="signInButtton" fx:id="signInButtton" layoutX="102.0" layoutY="253.0" mnemonicParsing="false" text="Sign In" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="102.0" AnchorPane.rightAnchor="106.0" AnchorPane.topAnchor="253.0" onMouseClicked="#handleSignInButton" />
       <Hyperlink id="forgotPasswordLink" fx:id="forgotPasswordLink" layoutX="70.0" layoutY="347.0" text="i forgot my password" AnchorPane.bottomAnchor="198.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="347.0" />
-      <Hyperlink id="signUpLink" fx:id="signUpLink" layoutX="101.0" layoutY="309.0" text="Sign Up " AnchorPane.bottomAnchor="236.0" AnchorPane.leftAnchor="101.0" AnchorPane.rightAnchor="106.0" AnchorPane.topAnchor="309.0" />
+      <Hyperlink id="signUpLink" fx:id="signUpLink" layoutX="101.0" layoutY="309.0" text="Sign Up " AnchorPane.bottomAnchor="236.0" AnchorPane.leftAnchor="101.0" AnchorPane.rightAnchor="106.0" AnchorPane.topAnchor="309.0"  onMouseClicked="#handleSignUpLink" />
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="261.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="567.0" prefWidth="302.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="controller.MainPageFormController">
+   <children>
+      <MenuBar prefHeight="36.0" prefWidth="305.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <ImageView id="imageView" fx:id="imageView" fitHeight="110.0" fitWidth="159.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
+      <ComboBox id="statusComboBox" fx:id="statusComboBox" layoutX="159.0" layoutY="121.0" prefWidth="150.0" />
+      <Label id="nameLabel" fx:id="nameLabel" layoutX="184.0" layoutY="56.0" prefHeight="25.0" prefWidth="88.0" text="UserName" />
+      <GridPane id="gridPane" fx:id="gridPane" layoutY="209.0" prefHeight="59.0" prefWidth="310.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.0" minWidth="10.0" prefWidth="177.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.0" minWidth="10.0" prefWidth="133.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <ImageView id="friendImage" fx:id="friendImage" fitHeight="57.0" fitWidth="174.0" pickOnBounds="true" preserveRatio="true" />
+            <Label id="friendNameLabel" fx:id="friendNameLabel" prefHeight="44.0" prefWidth="131.0" text="friend name" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
