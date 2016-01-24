@@ -6,6 +6,8 @@
 package controller;
 
 
+import controller.Controller;
+import controller.Validation;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Application;
@@ -25,7 +27,7 @@ import model.pojo.User;
  *
  * @author Amr
  */
-public class SignUpViewController implements Initializable {
+public class SignUpFormController implements Initializable {
 
 
     /**
@@ -73,7 +75,7 @@ public class SignUpViewController implements Initializable {
                 if (Validation.eMailValidation(eMail.getText())) {
                     if (Validation.passwordValidation(password.getText())) {
                         user = new User(eMail.getText(), firstName.getText(), lastName.getText(), password.getText(), country.getValue(), city.getValue(), question.getText(), answer.getText(), "Available", gender.getValue(), true);
-                        controller.sendUserTOServer(user);
+                        controller.sendUserToServer(user);
                     } else {
                         System.out.println("password is invalid");
                     }

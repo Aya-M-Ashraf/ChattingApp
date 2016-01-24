@@ -17,8 +17,6 @@ import model.pojo.User;
 public class SignInFormController implements Initializable {
 
     @FXML
-    private Button signInButton;
-    @FXML
     private TextField emailTextField;
     @FXML
     private TextField passwordTextField;
@@ -40,7 +38,7 @@ public class SignInFormController implements Initializable {
             email = emailTextField.getText();
         }else
         {
-            //do anything shreer
+            //do anything shreer email field is empty 
         }
         
         if(passwordTextField.getText() != null)
