@@ -10,8 +10,7 @@ public class SignInServiceImpl extends UnicastRemoteObject implements SignInServ
 
    Controller controller = new Controller();
     
-    public SignInServiceImpl() throws RemoteException {
-    }
+    public SignInServiceImpl() throws RemoteException {}
 
     @Override
     public User signIn(String email, String password) throws RemoteException {
