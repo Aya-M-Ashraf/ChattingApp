@@ -2,10 +2,6 @@ package model.pojo;
 
 import java.io.Serializable;
 
-/**
- *
- * @author KHoloud
- */
 public class User implements Serializable {
     
     private String email;
@@ -19,6 +15,20 @@ public class User implements Serializable {
     private String status;
     private String gender;
     private boolean isOnline;
+    
+    public User(){
+        this.email = null;
+        this.firstName = null;
+        this.lastName = null;
+        this.password = null;
+        this.country = null;
+        this.city = null;
+        this.secuirtyQuestion = null;
+        this.securityAnswer = null;
+        this.status = null;
+        this.gender = null;
+        this.isOnline = false;
+    }
 
     public User(String email, String firstName, String lastName, String password, String country, String city, String secuirtyQuestion, String securityAnswer, String status, String gender, boolean isOnline) {
         this.email = email;
@@ -34,10 +44,6 @@ public class User implements Serializable {
         this.isOnline = isOnline;
     }
 
-    public User() {
-    }
-    
-    
     public String getEmail() {
         return email;
     }
@@ -118,14 +124,11 @@ public class User implements Serializable {
         this.gender = gender;
     }
 
-    public boolean isOnline() {
+    public boolean isIsOnline() {
         return isOnline;
     }
 
     public void setIsOnline(boolean isOnline) {
         this.isOnline = isOnline;
-    }
-    
-    
-    
+    }   
 }
