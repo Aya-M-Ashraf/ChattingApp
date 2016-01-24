@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -63,7 +64,12 @@ public class SignInFormController implements Initializable {
             if(user!= null){
                 try {
                     Parent homePageParent = FXMLLoader.load(getClass().getResource("MainPageForm.fxml"));
+                    
+                    Label userNameLabel = (Label) homePageParent.lookup("#nameLabel");
+                    userNameLabel.setText(user.getEmail());
+                    
                     Scene homePageScene = new Scene(homePageParent);
+                   // Stage d = new Stage();
                     Stage homeStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     homeStage.setScene(homePageScene);
                     homeStage.show();

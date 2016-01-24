@@ -7,8 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="567.0" prefWidth="302.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="controller.MainPageFormController">
+<AnchorPane id="AnchorPane" prefHeight="567.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainPageFormController">
    <children>
       <MenuBar prefHeight="36.0" prefWidth="305.0">
         <menus>
@@ -29,9 +28,12 @@
           </Menu>
         </menus>
       </MenuBar>
-      <ImageView id="imageView" fx:id="imageView" fitHeight="110.0" fitWidth="159.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView id="imageView" fx:id="imageView" fitHeight="110.0" fitWidth="159.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@myImg.jpg" />
+         </image></ImageView>
       <ComboBox id="statusComboBox" fx:id="statusComboBox" layoutX="159.0" layoutY="121.0" prefWidth="150.0" />
-      <Label id="nameLabel" fx:id="nameLabel" layoutX="184.0" layoutY="56.0" prefHeight="25.0" prefWidth="88.0" text="UserName" />
+      <Label id="nameLabel" fx:id="nameLabel" layoutX="144.0" layoutY="56.0" prefHeight="36.0" prefWidth="150.0" text="UserName" />
       <GridPane id="gridPane" fx:id="gridPane" layoutY="209.0" prefHeight="59.0" prefWidth="310.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.0" minWidth="10.0" prefWidth="177.0" />
