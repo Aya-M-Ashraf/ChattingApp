@@ -6,53 +6,61 @@ import java.rmi.registry.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.ClientImpl;
-import interfaces.ServerInterface;
-import view.ClientFrame;
+import interfaces.SignUpServerService;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import model.pojo.User;
+//import view.ClientFrame;
 
 /**
  *
  * @author Aya M. Ashraf
  */
-public class Controller {
+public class Controller extends Application {
 
     ClientImpl clientImplRef;
-    ClientFrame viewFrame;
-    ServerInterface serverRef;
+    SignUpServerService serverRef;
 
     public Controller() {
 
         try {
             clientImplRef = new ClientImpl(this);
             Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5000);
-            serverRef = (ServerInterface) registry.lookup("ChatService");
-            serverRef.register(clientImplRef);                          //add client to server Vector
+            serverRef = (SignUpServerService) registry.lookup("ChatService");
+            //serverRef.register(clientImplRef);                          //add client to server Vector
         } catch (RemoteException ex) {
             ex.printStackTrace();
         } catch (NotBoundException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        viewFrame = new ClientFrame(this);
     }
 
-    public void sendMsg(String msg) {
-        try {
-            serverRef.tellOthers(msg);
-        } catch (RemoteException ex) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+    /**
+     * take user object from the signUpFromCotroller
+     */
+    public void sendUserTOServer(User user) {
+      
+        if (serverRef.clientSignUp(user)) {
+            System.out.println("sign up correct");
+        } else {
+            System.out.println("sign up fail");
         }
     }
-
-    public void unregister() throws RemoteException {
-        serverRef.unregister(clientImplRef);
+ @Override
+    public void start(Stage stage) throws Exception {
+   
+     
     }
 
-    public void displayMsg(String msg) {
-        viewFrame.display(msg);
-    }
-
+    
     public static void main(String[] args) {
+        
         new Controller();
+        launch(args);
     }
 
 }
