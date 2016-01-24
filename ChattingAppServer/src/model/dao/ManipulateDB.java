@@ -40,11 +40,12 @@ public class ManipulateDB {
                 user.setGender(rs.getString(9));
                 user.setSecuirtyQuestion(rs.getString(10));
                 user.setSecurityAnswer(rs.getString(11));
+                return user;
             }
         } catch (SQLException ex) {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return user;
+        return null;
     }
     
     public User selectAllfromUserWhereEmail(String email){
@@ -66,12 +67,13 @@ public class ManipulateDB {
                 user.setGender(rs.getString(9));
                 user.setSecuirtyQuestion(rs.getString(10));
                 user.setSecurityAnswer(rs.getString(11));
+                return user;
             }
         } catch (SQLException ex) {
             System.out.println("Can't select Query");
             //Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return user;
+        return null;
     }
 
 }
