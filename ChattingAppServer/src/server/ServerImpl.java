@@ -1,43 +1,43 @@
 package server;
 
 import interfaces.ClientInterface;
-import interfaces.ServerInterface;
+import interfaces.SignUpServerService;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.DBConnection.DataBaseConnection;
+import model.dao.ManipulateDB;
+import model.pojo.User;
 
 /**
  *
  * @author Aya M. Ashraf
  */
-public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
+public class ServerImpl extends UnicastRemoteObject implements SignUpServerService {
 
-    Vector<ClientInterface> clientsVector = new Vector<>();
+      
+    ManipulateDB dbManipulator;
 
     public ServerImpl() throws RemoteException {
-    }
-
-    public void tellOthers(String msg) throws RemoteException {
-
-        System.out.println("Message is recieved");
-        for (ClientInterface client : clientsVector) {
-            try {
-                client.receive(msg);
-            } catch (RemoteException ex) {
-                System.out.println("Can't send message to client!");
-                ex.printStackTrace();
-            }
+        try {
+            dbManipulator = new ManipulateDB();
+        } catch (ClassNotFoundException ex) {
+            System.out.println("i am manipulate database server imp");
+            Logger.getLogger(ServerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
     }
+     /*
+     *the implementaion of the sgn up method in server interface
+     */
+     public boolean clientSignUp(User user){
+         if(!dbManipulator.searchForUserByEMail(user.getEmail()))
+             if(dbManipulator.insertUser(user))
+                 return true;
 
-    public void register(ClientInterface clientRef) throws RemoteException {
-        clientsVector.add(clientRef);
-        System.out.println("Client has been added");
-    }
-    
-     public void unregister(ClientInterface clientRef) throws RemoteException {
-        clientsVector.remove(clientRef);
-        System.out.println("Client has been removed");
-    }
+        return false;
+     }
 
 }

@@ -48,4 +48,47 @@ public class ManipulateDB {
         return user;
     }
 
+    public boolean searchForUserByEMail(String eMail) {
+        PreparedStatement pst;
+        try {
+            pst = connection.prepareStatement("Select * from user where Email = ?");
+            pst.setString(1, eMail);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+
+             
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+        return false;
+    }
+
+    public boolean insertUser(User user) {
+                
+        PreparedStatement pst;
+        try {
+            pst = connection.prepareStatement("insert into user values(?,?,?,?,?,?,?,?,?,?,?)");
+            pst.setString(1, user.getEmail());
+            pst.setString(2, user.getFirstName());
+            pst.setString(3, user.getLastName());
+            pst.setString(4, user.getPassword());
+            pst.setString(5, user.getCountry());
+            pst.setString(6, user.getCity());
+            pst.setBoolean(7, user.isOnline());
+            pst.setString(8, user.getStatus());
+            pst.setString(9, user.getGender());
+            pst.setString(10, user.getSecuirtyQuestion());
+            pst.setString(11, user.getSecurityAnswer());
+            pst.executeUpdate();
+            System.out.println("insertUser(User user)  ok");
+
+            return true;
+
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
 }
