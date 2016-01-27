@@ -26,11 +26,14 @@ public class MainPageFormController implements Initializable {
     private ComboBox<String> statusComboBox;
     @FXML
     private Label nameLabel;
+    
+    String userStatus;
+    Controller controller = new Controller();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         statusComboBox.getItems().addAll("Available", "Busy", "Away");
-        statusComboBox.setValue("Available");
+        //statusComboBox.setValue("Available");
     }
 
     @FXML
@@ -49,5 +52,12 @@ public class MainPageFormController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(SignInFormController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void statusChangeHandeling(){
+        userStatus= statusComboBox.getSelectionModel().getSelectedItem();
+        System.out.println(userStatus);
+        System.out.println("MAIL "+nameLabel.getText());
+        controller.updateUserStatus(nameLabel.getText(),userStatus);
     }
 }

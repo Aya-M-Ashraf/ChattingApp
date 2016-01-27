@@ -60,6 +60,13 @@ public class Controller extends Application{
                 if (user.getPassword().equals(password)) {
                     //password is correct
                     System.out.println(user.getFirstName() + " u r logged in");
+                    if (serverSignInRef.updateUserIsOnlineByEmail(email)) {
+                        user.setIsOnline(true);
+                        System.out.println("isonline updated" + user.getEmail() + " " + user.isIsOnline());
+
+                    } else {
+                        System.out.println("isonline doesn't updated.");
+                    }
                     return user;
                 } else {
                     // password isn't correct.
@@ -72,6 +79,21 @@ public class Controller extends Application{
         }
         return null;
     }
+    
+    public boolean updateUserStatus(String email, String status) {
+        try {
+            if (serverSignInRef.updateUserStatusByEmail(email, status) == true) {
+                System.out.println("status updated by " + status);
+            } else {
+                System.out.println("status doesn't updated.");
+                
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
     
     public void addFriendToUser(String userEmail, String emailToAdd) {
         
