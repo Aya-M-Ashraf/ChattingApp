@@ -13,73 +13,82 @@ import services.AddFriendServiceImpl;
 import services.SignInServiceImpl;
 import services.SignUpServiceImpl;
 
-
 public class Controller {
-     ManipulateDB manipulateDBObj;
+
+    ManipulateDB manipulateDBObj;
 
     public Controller() {
-         try {
-             manipulateDBObj = new ManipulateDB();
-         } catch (ClassNotFoundException ex) {
-             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-         }
+        try {
+            manipulateDBObj = new ManipulateDB();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
+
     public boolean searchForUserByEMail(String eMail) {
         User user;
         user = manipulateDBObj.selectAllfromUserWhereEmail(eMail);
-        if (user == null)
+        if (user == null) {
             return false;
-        else
+        } else {
             return true;
+        }
     }
-     
+
     public User signIn(String email, String password) {
-        
-        return  manipulateDBObj.selectAllfromUserWhereEmail(email);
-  }
-    
+
+        return manipulateDBObj.selectAllfromUserWhereEmail(email);
+    }
+
     public boolean insertUser(User user) {
-        
-        return  manipulateDBObj.insertUser(user);
-  }
-    
-    public void startServer(Registry registry){
+
+        return manipulateDBObj.insertUser(user);
+    }
+
+    public boolean updateUserIsOnlineByEmail(String email) {
+
+        return manipulateDBObj.updateUserIsOnlineByEmail(email);
+    }
+
+    public boolean updateUserStatusByEmail(String email, String status) {
+        return manipulateDBObj.updateUserStatusByEmail(email, status);
+    }
+
+    public void startServer(Registry registry) {
         try {
 
-            
             SignInServiceImpl SignInServiceImplRef = new SignInServiceImpl();
             registry.rebind("SignInService", SignInServiceImplRef);
-            
+
             SignUpServiceImpl SignUpServiceRef = new SignUpServiceImpl();
             registry.rebind("SignUpService", SignUpServiceRef);
-            
+
             AddFriendServiceImpl AddFriendServiceRef = new AddFriendServiceImpl();
             registry.rebind("AddFriendService", AddFriendServiceRef);
 
         } catch (RemoteException ex) {
             System.out.println("can't start");
             ex.printStackTrace();
-        } 
+        }
     }
-    
-    public void stopServer(){
+
+    public void stopServer() {
         try {
 
             Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5000);
-    
+
             registry.unbind("SignInService");
             registry.unbind("SignUpService");
-             registry.unbind("AddFriendService");
+            registry.unbind("AddFriendService");
 
         } catch (RemoteException ex) {
             ex.printStackTrace();
-        } catch (NotBoundException ex) { 
-             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-         } 
+        } catch (NotBoundException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public boolean addFriendRequest(String userEmail, String emailToAdd) {
-        return manipulateDBObj.insertFriendRequest(userEmail,emailToAdd);
+        return manipulateDBObj.insertFriendRequest(userEmail, emailToAdd);
     }
 }

@@ -145,4 +145,36 @@ public class ManipulateDB {
         return friendList;
         
     }
+    
+    public boolean updateUserIsOnlineByEmail(String email){
+        //User user = new User();
+        try {
+            PreparedStatement pst;
+            pst = connection.prepareStatement("UPDATE  user SET Online = 1 WHERE  Email = ? ");
+            pst.setString(1, email);
+            pst.executeUpdate();
+            System.out.println("isOnline updated");
+            return true;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    public boolean updateUserStatusByEmail(String email, String status){
+        try {
+            PreparedStatement pst;
+            pst = connection.prepareStatement("UPDATE  user SET Status = ? WHERE  Email = ? ");
+            pst.setString(1, status);
+            pst.setString(2, email);
+            pst.executeUpdate();
+            System.out.println("status updated");
+            return true;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
 }
