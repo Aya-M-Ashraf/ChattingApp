@@ -1,8 +1,8 @@
 package controller;
 
+import interfaces.AddFriendServerService;
 import interfaces.SignInServerService;
 import interfaces.SignUpServerService;
-import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -22,8 +22,9 @@ import model.pojo.User;
  */
 public class Controller extends Application{
     
-    SignInServerService serverSignInRef;
-    SignUpServerService serverSignUpRef;
+    private SignInServerService serverSignInRef;
+    private SignUpServerService serverSignUpRef;
+    private AddFriendServerService serverAddFriendRef;
     
     public Controller() {
         try {
@@ -31,15 +32,11 @@ public class Controller extends Application{
 
             serverSignInRef = (SignInServerService) registry.lookup("SignInService");
             serverSignUpRef = (SignUpServerService) registry.lookup("SignUpService");
+            serverAddFriendRef = (AddFriendServerService) registry.lookup("AddFriendService");
             
-        } catch (RemoteException ex) {
-            System.out.println("cant lookup");
-        } catch (NotBoundException ex) {
-            System.out.println("cant lookup");
-        } catch (IOException ex) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        } catch (RemoteException | NotBoundException ex) {
+            System.out.println("can't lookup from registry");
+        }        
     }
     
     public void sendUserToServer(User user) {
@@ -56,13 +53,13 @@ public class Controller extends Application{
         User user;
         try {
             user = serverSignInRef.signIn(email, password);
-            if (user == null) {
-                // user doesn't exist
+            
+            if (user == null) {   // user doesn't exist              
                 System.out.println("User doesn't exisit!");
             } else {
                 if (user.getPassword().equals(password)) {
                     //password is correct
-                    System.out.println(user.getPassword() + " u r logged in");
+                    System.out.println(user.getFirstName() + " u r logged in");
                     return user;
                 } else {
                     // password isn't correct.
@@ -72,9 +69,24 @@ public class Controller extends Application{
         } catch (RemoteException ex) {
             System.out.println("can't use sign In from server");
             ex.printStackTrace();
-            //Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    
+    public void addFriendToUser(String userEmail, String emailToAdd) {
+        
+        try {
+            if(serverAddFriendRef.checkIfUserExist(emailToAdd)){
+               if(serverAddFriendRef.sendFriendRequest(userEmail,emailToAdd))
+                    System.out.println("Request is sent");
+            }
+            else
+            {
+                System.out.println("this mail doesn't belong to anyone");
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
       
     @Override
@@ -87,7 +99,7 @@ public class Controller extends Application{
     
     public static void main(String[] args) {
         launch(args);   
-    }  
+    }      
 
     
 }

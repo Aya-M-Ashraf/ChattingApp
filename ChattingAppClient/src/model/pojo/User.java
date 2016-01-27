@@ -1,6 +1,8 @@
 package model.pojo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Vector;
 
 public class User implements Serializable {
     
@@ -15,6 +17,7 @@ public class User implements Serializable {
     private String status;
     private String gender;
     private boolean isOnline;
+    private ArrayList<User> friendsList;
     
     public User(){
         this.email = null;
@@ -28,6 +31,7 @@ public class User implements Serializable {
         this.status = null;
         this.gender = null;
         this.isOnline = false;
+        this.friendsList = new ArrayList<>();
     }
 
     public User(String email, String firstName, String lastName, String password, String country, String city, String secuirtyQuestion, String securityAnswer, String status, String gender, boolean isOnline) {
@@ -42,6 +46,7 @@ public class User implements Serializable {
         this.status = status;
         this.gender = gender;
         this.isOnline = isOnline;
+        this.friendsList = new ArrayList<>();
     }
 
     public String getEmail() {
@@ -127,8 +132,16 @@ public class User implements Serializable {
     public boolean isIsOnline() {
         return isOnline;
     }
-
+    
     public void setIsOnline(boolean isOnline) {
         this.isOnline = isOnline;
     }   
+
+    public ArrayList<User> getFriendsList() {
+        return friendsList;
+    }
+
+    public void setFriendsList(ArrayList<User> friendsList) {
+        this.friendsList = friendsList;
+    }
 }
