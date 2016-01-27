@@ -77,6 +77,34 @@ public class ManipulateDB {
         }
         return null;
     }
+    
+    public User selectAllFriendWhereFriendEmail(String email) {
+        User user = new User();
+        try {
+            PreparedStatement pst = connection.prepareStatement("Select * from user where Email = ? ");
+            pst.setString(1, email);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                user.setEmail(rs.getString(1));
+                user.setFirstName(rs.getString(2));
+                user.setLastName(rs.getString(3));
+                user.setPassword(rs.getString(4));
+                user.setCountry(rs.getString(5));
+                user.setCity(rs.getString(6));
+                user.setIsOnline(rs.getBoolean(7));
+                user.setStatus(rs.getString(8));
+                user.setGender(rs.getString(9));
+                user.setSecuirtyQuestion(rs.getString(10));
+                user.setSecurityAnswer(rs.getString(11));
+                return user;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Can't execute select Query");
+        }
+        return null;
+    }
 
     public boolean insertUser(User user) {
 
@@ -133,7 +161,7 @@ public class ManipulateDB {
 
             while (rs.next()) {
                 friendMail = rs.getString(1);
-                friend = selectAllfromUserWhereEmail(friendMail);
+                friend = selectAllFriendWhereFriendEmail(friendMail);
                 friendList.add(friend);
                 System.out.println("1");
             }
