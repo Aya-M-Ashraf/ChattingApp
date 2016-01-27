@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.dao.ManipulateDB;
 import model.pojo.User;
+import services.AddFriendServiceImpl;
 import services.SignInServiceImpl;
 import services.SignUpServiceImpl;
 
@@ -50,9 +51,11 @@ public class Controller {
             SignInServiceImpl SignInServiceImplRef = new SignInServiceImpl();
             registry.rebind("SignInService", SignInServiceImplRef);
             
-            
             SignUpServiceImpl SignUpServiceRef = new SignUpServiceImpl();
             registry.rebind("SignUpService", SignUpServiceRef);
+            
+            AddFriendServiceImpl AddFriendServiceRef = new AddFriendServiceImpl();
+            registry.rebind("AddFriendService", AddFriendServiceRef);
 
         } catch (RemoteException ex) {
             System.out.println("can't start");
@@ -67,11 +70,16 @@ public class Controller {
     
             registry.unbind("SignInService");
             registry.unbind("SignUpService");
+             registry.unbind("AddFriendService");
 
         } catch (RemoteException ex) {
             ex.printStackTrace();
         } catch (NotBoundException ex) { 
              Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
          } 
+    }
+
+    public boolean addFriendRequest(String userEmail, String emailToAdd) {
+        return manipulateDBObj.insertFriendRequest(userEmail,emailToAdd);
     }
 }

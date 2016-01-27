@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.DBConnection.DataBaseConnection;
@@ -16,13 +17,13 @@ import model.pojo.User;
 public class ManipulateDB {
 
     Connection connection;
-
+    
     public ManipulateDB() throws ClassNotFoundException {
         DataBaseConnection DBConnection = new DataBaseConnection();
         connection = DBConnection.getConnection();
     }
 
-    public User selectAllfromUser() {
+    public User selectAllfromUser() {    //where we use this strange function !!!?
         User user = new User();
         try {
             PreparedStatement pst = connection.prepareStatement("Select * from user");
@@ -67,11 +68,12 @@ public class ManipulateDB {
                 user.setGender(rs.getString(9));
                 user.setSecuirtyQuestion(rs.getString(10));
                 user.setSecurityAnswer(rs.getString(11));
+                user.setFriendsList(selectUserFriends(user));
                 return user;
             }
         } catch (SQLException ex) {
-            System.out.println("Can't select Query");
-            //Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            System.out.println("Can't execute select Query");
         }
         return null;
     }
@@ -98,7 +100,49 @@ public class ManipulateDB {
             return true;
 
         } catch (SQLException ex) {
+            ex.printStackTrace();
             return false;
         }
+    }
+
+    public boolean insertFriendRequest(String userEmail, String emailToAdd) {
+        PreparedStatement pst;
+        try {
+            pst = connection.prepareStatement("insert into user_has_friend_request values(?,?)");
+            pst.setString(1, userEmail);
+            pst.setString(2,emailToAdd);
+            pst.executeUpdate();
+            System.out.println("request is inserted to DB");
+            return true;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+    
+    public ArrayList<User> selectUserFriends(User user){
+         
+        User friend = new User();
+         ArrayList<User> friendList = new ArrayList<>();         
+        try {
+            String friendMail;
+            PreparedStatement pst = connection.prepareStatement("Select Friend_Email from user_has_friend where User_Email = ? ");
+            pst.setString(1, user.getEmail());
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                friendMail = rs.getString(1);
+                friend = selectAllfromUserWhereEmail(friendMail);
+                friendList.add(friend);
+                System.out.println("1");
+            }
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Can't execute select Query");
+        }
+        return friendList;
+        
     }
 }
