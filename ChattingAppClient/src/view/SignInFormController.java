@@ -68,16 +68,13 @@ public class SignInFormController implements Initializable {
                    
                     Label userNameLabel = (Label) homePageParent.lookup("#nameLabel");
                     userNameLabel.setText(user.getEmail());
-                    ComboBox<String> userStatusComboBox = (ComboBox<String>) homePageParent.lookup("#statusComboBox");
-                    userStatusComboBox.setValue(user.getStatus());
+                    
+                    //ComboBox<String> userStatusComboBox = (ComboBox<String>) homePageParent.lookup("#statusComboBox");
+                    //userStatusComboBox.setValue(user.getStatus()); they dont work
+                    
                     ListView listView = (ListView) homePageParent.lookup("#listView");
-
-                    
                     ObservableList<User> observableList = FXCollections.observableList(user.getFriendsList());
-                    
-
                     listView.setItems(observableList);
-
                     listView.setCellFactory(new Callback<ListView<User>, ListCell<User>>() {
 
                         @Override

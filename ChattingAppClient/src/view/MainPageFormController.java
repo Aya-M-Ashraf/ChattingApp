@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
@@ -34,7 +35,7 @@ public class MainPageFormController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         statusComboBox.getItems().addAll("Available", "Busy", "Away");
-        //statusComboBox.setValue("Available");
+        statusComboBox.setValue("Available");
     }
 
     @FXML
@@ -55,10 +56,30 @@ public class MainPageFormController implements Initializable {
         }
     }
     
+    @FXML
+    public void onSignOut(MouseEvent event) {
+        try {
+            System.out.println("sign out button pressed");
+            Parent signInPage = FXMLLoader.load(getClass().getResource("SignInForm.fxml"));
+            Scene signInPageScene = new Scene(signInPage);
+            Stage homeStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            homeStage.setScene(signInPageScene);
+            homeStage.show();        
+    
+        } catch (IOException ex) {
+            System.out.println("signout putton pressed");
+            Logger.getLogger(SignInFormController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println(nameLabel.getText());
+        controller.signOutOneUser(nameLabel.getText());
+    }
+    
     public void statusChangeHandeling(){
-        userStatus= statusComboBox.getSelectionModel().getSelectedItem();
+        userStatus = statusComboBox.getSelectionModel().getSelectedItem();
         System.out.println(userStatus);
         System.out.println("MAIL "+nameLabel.getText());
         controller.updateUserStatus(nameLabel.getText(),userStatus);
     }
+    
+    
 }

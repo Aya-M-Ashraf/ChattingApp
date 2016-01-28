@@ -4,6 +4,7 @@ import interfaces.AddFriendServerService;
 import interfaces.SignInServerService;
 import interfaces.SignUpServerService;
 import interfaces.ChangeStatusService;
+import interfaces.SignOutServerService;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -17,13 +18,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.pojo.User;
 
-/**
- *
- * @author Amr
- */
+
 public class Controller extends Application {
 
     private SignInServerService serverSignInRef;
+    private SignOutServerService serverSignOutRef;
     private SignUpServerService serverSignUpRef;
     private AddFriendServerService serverAddFriendRef;
     private ChangeStatusService changeStatusRef;
@@ -33,6 +32,7 @@ public class Controller extends Application {
             Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5000);
 
             serverSignInRef = (SignInServerService) registry.lookup("SignInService");
+            serverSignOutRef = (SignOutServerService) registry.lookup("SignOutService");
             serverSignUpRef = (SignUpServerService) registry.lookup("SignUpService");
             serverAddFriendRef = (AddFriendServerService) registry.lookup("AddFriendService");
             changeStatusRef = (ChangeStatusService) registry.lookup("ChangeStatusService");
@@ -81,6 +81,21 @@ public class Controller extends Application {
             ex.printStackTrace();
         }
         return null;
+    }
+    
+    public boolean signOutOneUser(String eMail) {
+        try {
+            System.out.println("befor  user Signd out ");
+            return serverSignOutRef.signOutOneUser(eMail);
+              
+        } catch (RemoteException ex) {
+
+            System.out.println("user Signd out ");
+
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+
     }
 
     public boolean updateUserStatus(String email, String status) {
