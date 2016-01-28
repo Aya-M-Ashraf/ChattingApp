@@ -12,6 +12,7 @@ import model.pojo.User;
 import services.AddFriendServiceImpl;
 import services.SignInServiceImpl;
 import services.SignUpServiceImpl;
+import services.ChangeStatusServiceImpl;
 
 public class Controller {
 
@@ -29,8 +30,10 @@ public class Controller {
         User user;
         user = manipulateDBObj.selectAllfromUserWhereEmail(eMail);
         if (user == null) {
+            System.out.println("no user with this mail is found");
             return false;
         } else {
+            System.out.println("user with this mail is found");
             return true;
         }
     }
@@ -65,6 +68,9 @@ public class Controller {
 
             AddFriendServiceImpl AddFriendServiceRef = new AddFriendServiceImpl();
             registry.rebind("AddFriendService", AddFriendServiceRef);
+            
+            ChangeStatusServiceImpl changeStatusServiceImplRef = new ChangeStatusServiceImpl();
+            registry.rebind("ChangeStatusService", changeStatusServiceImplRef);
 
         } catch (RemoteException ex) {
             System.out.println("can't start");
@@ -80,6 +86,7 @@ public class Controller {
             registry.unbind("SignInService");
             registry.unbind("SignUpService");
             registry.unbind("AddFriendService");
+            registry.unbind("ChangeStatusService");
 
         } catch (RemoteException ex) {
             ex.printStackTrace();
@@ -91,4 +98,8 @@ public class Controller {
     public boolean addFriendRequest(String userEmail, String emailToAdd) {
         return manipulateDBObj.insertFriendRequest(userEmail, emailToAdd);
     }
+    
+//    public boolean tellFriendsMyStatus(User user, String newStatus){
+//        return 
+//    }
 }

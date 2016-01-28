@@ -110,7 +110,7 @@ public class ManipulateDB {
 
         PreparedStatement pst;
         try {
-            pst = connection.prepareStatement("insert into user values(?,?,?,?,?,?,?,?,?,?,?)");
+            pst = connection.prepareStatement("insert into user values(?,?,?,?,?,?,?,?,?,?,?,?)");
             pst.setString(1, user.getEmail());
             pst.setString(2, user.getFirstName());
             pst.setString(3, user.getLastName());
@@ -122,6 +122,7 @@ public class ManipulateDB {
             pst.setString(9, user.getGender());
             pst.setString(10, user.getSecuirtyQuestion());
             pst.setString(11, user.getSecurityAnswer());
+            pst.setString(12, null);
             pst.executeUpdate();
             System.out.println("insertUser(User user)  ok");
 
