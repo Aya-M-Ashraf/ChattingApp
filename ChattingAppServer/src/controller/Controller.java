@@ -1,26 +1,32 @@
 package controller;
 
-import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.dao.ManipulateDB;
+import model.dao.QueryDB;
 import model.pojo.User;
 import services.AddFriendServiceImpl;
 import services.SignInServiceImpl;
 import services.SignUpServiceImpl;
 import services.ChangeStatusServiceImpl;
+import services.SignOutServiceImpl;
 
 public class Controller {
 
     ManipulateDB manipulateDBObj;
+    QueryDB queryDB;
+    Vector<User> usersVector = new Vector<User>();
 
     public Controller() {
         try {
             manipulateDBObj = new ManipulateDB();
+            queryDB = new QueryDB();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -37,14 +43,32 @@ public class Controller {
             return true;
         }
     }
+    
+    public boolean removeUserFromVector(String eMail) {
+
+        User user = manipulateDBObj.selectAllfromUserWhereEmail(eMail);
+
+        System.out.println("user teo");
+        if (user != null) {
+            System.out.println("user removed");
+            return usersVector.remove(user);
+
+        } else {
+            System.out.println("user is equal to null in selectAllfromUserWhereEmail(eMail) in removeUserFromVector(String eMail)");
+            return false;
+        }
+
+    }
+    
+    public boolean setUserOff(String eMail) {
+        return manipulateDBObj.setUserOff(eMail);
+    }
 
     public User signIn(String email, String password) {
-
         return manipulateDBObj.selectAllfromUserWhereEmail(email);
     }
 
     public boolean insertUser(User user) {
-
         return manipulateDBObj.insertUser(user);
     }
 
@@ -62,6 +86,9 @@ public class Controller {
 
             SignInServiceImpl SignInServiceImplRef = new SignInServiceImpl();
             registry.rebind("SignInService", SignInServiceImplRef);
+            
+            SignOutServiceImpl SignOutServiceImplRef = new SignOutServiceImpl();
+            registry.rebind("SignOutService", SignOutServiceImplRef);
 
             SignUpServiceImpl SignUpServiceRef = new SignUpServiceImpl();
             registry.rebind("SignUpService", SignUpServiceRef);
@@ -84,6 +111,7 @@ public class Controller {
             Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5000);
 
             registry.unbind("SignInService");
+            registry.unbind("SignOutService");
             registry.unbind("SignUpService");
             registry.unbind("AddFriendService");
             registry.unbind("ChangeStatusService");
@@ -99,7 +127,11 @@ public class Controller {
         return manipulateDBObj.insertFriendRequest(userEmail, emailToAdd);
     }
     
-//    public boolean tellFriendsMyStatus(User user, String newStatus){
-//        return 
-//    }
+   public ArrayList<User> getAllUsers() {
+        return queryDB.selectAllUsers();
+    }
+   
+    public ArrayList<User> selectAllUsersWhere(String query) {
+        return queryDB.selectAllUsersWhere(query);
+    }
 }

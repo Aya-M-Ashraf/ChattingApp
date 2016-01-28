@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.web.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FXMLServerController">
+   <children>
+      <BorderPane layoutX="40.0" layoutY="14.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <TabPane prefHeight="409.0" prefWidth="606.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="Start / Stop" />
+          <Tab text="Statistics">
+               <content>
+                  <AnchorPane fx:id="reportAP" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <BorderPane layoutX="14.0" layoutY="14.0" prefHeight="400.0" prefWidth="484.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <top>
+                              <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Button fx:id="userReport" mnemonicParsing="false" onAction="#onUserReportClicked" text="Uers Report" />
+                                    <ComboBox fx:id="firstChooser" prefHeight="28.0" prefWidth="104.0" />
+                                    <Label prefHeight="29.0" prefWidth="51.0" text="   Vs" />
+                                    <ComboBox fx:id="secondChooser" prefHeight="28.0" prefWidth="111.0" />
+                                    <Button fx:id="getPercent" mnemonicParsing="false" onAction="#onUsergetPercentClicked" text="Get Persent" />
+                                 </children>
+                              </HBox>
+                           </top>
+                           <center>
+                              <TextArea fx:id="usersArea" prefHeight="283.0" prefWidth="616.0" BorderPane.alignment="CENTER" />
+                           </center>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

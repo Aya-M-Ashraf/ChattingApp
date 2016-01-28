@@ -17,7 +17,7 @@ import model.pojo.User;
 public class ManipulateDB {
 
     Connection connection;
-    
+
     public ManipulateDB() throws ClassNotFoundException {
         DataBaseConnection DBConnection = new DataBaseConnection();
         connection = DBConnection.getConnection();
@@ -77,7 +77,7 @@ public class ManipulateDB {
         }
         return null;
     }
-    
+
     public User selectAllFriendWhereFriendEmail(String email) {
         User user = new User();
         try {
@@ -139,7 +139,7 @@ public class ManipulateDB {
         try {
             pst = connection.prepareStatement("insert into user_has_friend_request values(?,?)");
             pst.setString(1, userEmail);
-            pst.setString(2,emailToAdd);
+            pst.setString(2, emailToAdd);
             pst.executeUpdate();
             System.out.println("request is inserted to DB");
             return true;
@@ -149,11 +149,11 @@ public class ManipulateDB {
             return false;
         }
     }
-    
-    public ArrayList<User> selectUserFriends(User user){
-         
+
+    public ArrayList<User> selectUserFriends(User user) {
+
         User friend = new User();
-         ArrayList<User> friendList = new ArrayList<>();         
+        ArrayList<User> friendList = new ArrayList<>();
         try {
             String friendMail;
             PreparedStatement pst = connection.prepareStatement("Select Friend_Email from user_has_friend where User_Email = ? ");
@@ -166,16 +166,16 @@ public class ManipulateDB {
                 friendList.add(friend);
                 System.out.println("1");
             }
-            
+
         } catch (SQLException ex) {
             ex.printStackTrace();
             System.out.println("Can't execute select Query");
         }
         return friendList;
-        
+
     }
-    
-    public boolean updateUserIsOnlineByEmail(String email){
+
+    public boolean updateUserIsOnlineByEmail(String email) {
         //User user = new User();
         try {
             PreparedStatement pst;
@@ -184,14 +184,14 @@ public class ManipulateDB {
             pst.executeUpdate();
             System.out.println("isOnline updated");
             return true;
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
-    
-    public boolean updateUserStatusByEmail(String email, String status){
+
+    public boolean updateUserStatusByEmail(String email, String status) {
         try {
             PreparedStatement pst;
             pst = connection.prepareStatement("UPDATE  user SET Status = ? WHERE  Email = ? ");
@@ -200,10 +200,30 @@ public class ManipulateDB {
             pst.executeUpdate();
             System.out.println("status updated");
             return true;
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
+    
+    
+     public boolean setUserOff(String eMail) {
+        try {
+            PreparedStatement pst;
+            pst = connection.prepareStatement("UPDATE user SET Online=0 WHERE Email=?");
+          
+            pst.setString(1, eMail);
+            System.out.println(pst.toString());
+              System.out.println("offline");
+            pst.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            System.out.println("i cant set the user online or offline");
+            
+           // Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+                       
+            return false;
+        } 
+}
 }
