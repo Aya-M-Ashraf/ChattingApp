@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="567.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainPageFormController">
+<AnchorPane id="AnchorPane" prefHeight="567.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainPageFormController">
    <children>
       <MenuBar prefHeight="25.0" prefWidth="305.0">
         <menus>
@@ -33,7 +33,7 @@
          <image>
             <Image url="@myImg.jpg" />
          </image></ImageView>
-      <ComboBox id="statusComboBox" fx:id="statusComboBox" layoutX="145.0" layoutY="85.0" prefHeight="25.0" prefWidth="107.0" onMouseClicked="#statusChangeHandeling" />
+      <ComboBox id="statusComboBox" fx:id="statusComboBox" layoutX="145.0" layoutY="85.0" prefHeight="25.0" prefWidth="107.0" onAction="#statusChangeHandeling" />
       <Label id="nameLabel" fx:id="nameLabel" layoutX="119.0" layoutY="38.0" prefHeight="36.0" prefWidth="150.0" />
       <ListView fx:id="listView" layoutY="184.0" prefHeight="381.0" prefWidth="309.0" />
       <Label fx:id="testLabel" layoutX="40.0" layoutY="146.0" prefHeight="25.0" prefWidth="63.0" />

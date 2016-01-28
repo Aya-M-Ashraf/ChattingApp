@@ -1,5 +1,6 @@
-package controller;
+package view;
 
+import controller.Controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;

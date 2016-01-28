@@ -1,5 +1,6 @@
-package controller;
+package view;
 
+import controller.Controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -103,7 +104,7 @@ public class SignInFormController implements Initializable {
                                             
                                             setGraphic(root);
                                         } catch (IOException ex) {
-                                            Logger.getLogger(controller.MainPageFormController.class.getName()).log(Level.SEVERE, null, ex);
+                                            Logger.getLogger(view.MainPageFormController.class.getName()).log(Level.SEVERE, null, ex);
                                         }
                                     }
 
