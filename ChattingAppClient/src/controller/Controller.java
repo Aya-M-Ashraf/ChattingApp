@@ -17,17 +17,26 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.pojo.User;
+import services.ClientServicesImpl;
 
 
 public class Controller extends Application {
-
+    ClientServicesImpl clientServicesImpl;
     private SignInServerService serverSignInRef;
     private SignOutServerService serverSignOutRef;
     private SignUpServerService serverSignUpRef;
     private AddFriendServerService serverAddFriendRef;
     private ChangeStatusService changeStatusRef;
+    User user;
 
     public Controller() {
+        try {
+            
+            clientServicesImpl = new ClientServicesImpl(this);
+            
+        } catch (RemoteException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
         try {
             Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5000);
 
@@ -53,7 +62,6 @@ public class Controller extends Application {
 
     public User signIn(String email, String password) {
 
-        User user;
         try {
             user = serverSignInRef.signIn(email, password);
 
@@ -149,6 +157,28 @@ public class Controller extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public void registerMe() {
+        try {
+       
+            serverSignInRef.registerUser(clientServicesImpl);
+        } catch (RemoteException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    
+   public void unregisterMe() {
+        try {
+            serverSignInRef.unregisterUser(clientServicesImpl);
+        } catch (RemoteException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public String getEmail() {
+        return user.getEmail();
     }
 
 }

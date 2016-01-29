@@ -10,6 +10,8 @@ import model.pojo.User;
  */
 public interface SignInServerService extends Remote {
     public User signIn(String email, String password) throws RemoteException;
+    public void registerUser(ClientServices userInterface)throws RemoteException;
+    public void unregisterUser(ClientServices userInterface) throws RemoteException;
     public boolean updateUserIsOnlineByEmail(String email) throws RemoteException;
     public boolean updateUserStatusByEmail(String email, String status) throws RemoteException;
 }
