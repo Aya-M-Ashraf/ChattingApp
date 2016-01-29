@@ -78,7 +78,7 @@ public class ManipulateDB {
         return null;
     }
 
-    public User selectAllFriendWhereFriendEmail(String email) {
+    public User selectAllFromUserWhereEmailwithoutFriendList(String email) {
         User user = new User();
         try {
             PreparedStatement pst = connection.prepareStatement("Select * from user where Email = ? ");
@@ -162,7 +162,7 @@ public class ManipulateDB {
 
             while (rs.next()) {
                 friendMail = rs.getString(1);
-                friend = selectAllFriendWhereFriendEmail(friendMail);
+                friend = selectAllFromUserWhereEmailwithoutFriendList(friendMail);
                 friendList.add(friend);
                 System.out.println("1");
             }
@@ -172,7 +172,48 @@ public class ManipulateDB {
             System.out.println("Can't execute select Query");
         }
         return friendList;
+    }
+    
+    public ArrayList<User> selectAllOnlineUsers() {
 
+        User user = new User();
+        ArrayList<User> onlineUsers = new ArrayList<>();
+        try {
+            String userMail;
+            PreparedStatement pst = connection.prepareStatement("Select Email from user where Online = true ");
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                userMail = rs.getString(1);
+                user = selectAllFromUserWhereEmailwithoutFriendList(userMail);
+                onlineUsers.add(user);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Can't execute selectAllOnlineUsers Query");
+        }
+        return onlineUsers;
+    }
+     
+    public ArrayList<User> selectAllOfflineUsers() {
+
+        User user = new User();
+        ArrayList<User> offlineUsers = new ArrayList<>();
+        try {
+            String userMail;
+            PreparedStatement pst = connection.prepareStatement("Select Email from user where Online = false ");
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                userMail = rs.getString(1);
+                user = selectAllFromUserWhereEmailwithoutFriendList(userMail);
+                offlineUsers.add(user);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Can't execute selectAllOnlineUsers Query");
+        }
+        return offlineUsers;
     }
 
     public boolean updateUserIsOnlineByEmail(String email) {
@@ -206,9 +247,8 @@ public class ManipulateDB {
         }
         return false;
     }
-    
-    
-     public boolean setUserOff(String eMail) {
+   
+    public boolean setUserOff(String eMail) {
         try {
             PreparedStatement pst;
             pst = connection.prepareStatement("UPDATE user SET Online=0 WHERE Email=?");

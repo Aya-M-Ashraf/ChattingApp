@@ -11,9 +11,11 @@ import java.rmi.server.UnicastRemoteObject;
  */
 public class AddFriendServiceImpl extends UnicastRemoteObject implements AddFriendServerService{
 
-    Controller controller = new Controller();
+    Controller controller;
     
-    public AddFriendServiceImpl() throws RemoteException {}
+    public AddFriendServiceImpl(Controller controller) throws RemoteException {
+        this.controller = controller;
+    }
     
     @Override
     public boolean checkIfUserExist(String email) {

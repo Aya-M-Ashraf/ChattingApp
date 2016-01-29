@@ -11,10 +11,10 @@ import java.rmi.server.UnicastRemoteObject;
  */
 public class SignOutServiceImpl extends UnicastRemoteObject implements SignOutServerService {
 
-    Controller controller = new Controller();
+    Controller controller;
 
-    public SignOutServiceImpl() throws RemoteException {
-
+    public SignOutServiceImpl(Controller controller) throws RemoteException {
+        this.controller = controller;
     }
 
     @Override

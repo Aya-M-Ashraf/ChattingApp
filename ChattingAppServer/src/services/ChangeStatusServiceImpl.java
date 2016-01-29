@@ -5,6 +5,7 @@
  */
 package services;
 
+import controller.Controller;
 import interfaces.ChangeStatusService;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -16,8 +17,10 @@ import model.pojo.User;
  * @author KHoloud
  */
 public class ChangeStatusServiceImpl extends UnicastRemoteObject implements ChangeStatusService{
-
-    public ChangeStatusServiceImpl() throws RemoteException{
+    Controller controller;
+    
+    public ChangeStatusServiceImpl(Controller controller) throws RemoteException{
+        this.controller = controller;
     }
 
     @Override

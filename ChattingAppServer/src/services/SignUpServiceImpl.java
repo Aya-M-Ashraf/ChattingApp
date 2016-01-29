@@ -12,9 +12,11 @@ import model.pojo.User;
  */
 public class SignUpServiceImpl extends UnicastRemoteObject implements SignUpServerService {
 
-    Controller controller = new Controller();
+    Controller controller;
 
-    public SignUpServiceImpl() throws RemoteException {}
+    public SignUpServiceImpl(Controller controller) throws RemoteException {
+        this.controller = controller;
+    }
 
     @Override
     public boolean clientSignUp(User user) {

@@ -1,5 +1,6 @@
 package controller;
 
+import interfaces.ClientServices;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -22,6 +23,16 @@ public class Controller {
     ManipulateDB manipulateDBObj;
     QueryDB queryDB;
     Vector<User> usersVector = new Vector<User>();
+    
+    Vector<ClientServices> usersInterfacesVector = new Vector<>();
+
+    public Vector<ClientServices> getUsersInterfacesVector() {
+        return usersInterfacesVector;
+    }
+
+    public void setUsersInterfacesVector(Vector<ClientServices> usersInterfacesVector) {
+        this.usersInterfacesVector = usersInterfacesVector;
+    }
 
     public Controller() {
         try {
@@ -43,12 +54,11 @@ public class Controller {
             return true;
         }
     }
-    
+
     public boolean removeUserFromVector(String eMail) {
 
         User user = manipulateDBObj.selectAllfromUserWhereEmail(eMail);
 
-        System.out.println("user teo");
         if (user != null) {
             System.out.println("user removed");
             return usersVector.remove(user);
@@ -59,7 +69,7 @@ public class Controller {
         }
 
     }
-    
+
     public boolean setUserOff(String eMail) {
         return manipulateDBObj.setUserOff(eMail);
     }
@@ -84,19 +94,19 @@ public class Controller {
     public void startServer(Registry registry) {
         try {
 
-            SignInServiceImpl SignInServiceImplRef = new SignInServiceImpl();
+            SignInServiceImpl SignInServiceImplRef = new SignInServiceImpl(this);
             registry.rebind("SignInService", SignInServiceImplRef);
-            
-            SignOutServiceImpl SignOutServiceImplRef = new SignOutServiceImpl();
+
+            SignOutServiceImpl SignOutServiceImplRef = new SignOutServiceImpl(this);
             registry.rebind("SignOutService", SignOutServiceImplRef);
 
-            SignUpServiceImpl SignUpServiceRef = new SignUpServiceImpl();
+            SignUpServiceImpl SignUpServiceRef = new SignUpServiceImpl(this);
             registry.rebind("SignUpService", SignUpServiceRef);
 
-            AddFriendServiceImpl AddFriendServiceRef = new AddFriendServiceImpl();
+            AddFriendServiceImpl AddFriendServiceRef = new AddFriendServiceImpl(this);
             registry.rebind("AddFriendService", AddFriendServiceRef);
-            
-            ChangeStatusServiceImpl changeStatusServiceImplRef = new ChangeStatusServiceImpl();
+
+            ChangeStatusServiceImpl changeStatusServiceImplRef = new ChangeStatusServiceImpl(this);
             registry.rebind("ChangeStatusService", changeStatusServiceImplRef);
 
         } catch (RemoteException ex) {
@@ -126,12 +136,20 @@ public class Controller {
     public boolean addFriendRequest(String userEmail, String emailToAdd) {
         return manipulateDBObj.insertFriendRequest(userEmail, emailToAdd);
     }
-    
-   public ArrayList<User> getAllUsers() {
+
+    public ArrayList<User> getAllUsers() {
         return queryDB.selectAllUsers();
     }
-   
+
     public ArrayList<User> selectAllUsersWhere(String query) {
         return queryDB.selectAllUsersWhere(query);
+    }
+
+    public int getOnlineUsersCount() {
+        return manipulateDBObj.selectAllOnlineUsers().size();
+    }
+
+    public int getOfflineUsersCount() {
+        return manipulateDBObj.selectAllOfflineUsers().size();
     }
 }

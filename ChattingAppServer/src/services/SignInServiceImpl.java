@@ -1,6 +1,7 @@
 package services;
 
 import controller.Controller;
+import interfaces.ClientServices;
 import interfaces.SignInServerService;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -8,9 +9,10 @@ import model.pojo.User;
 
 public class SignInServiceImpl extends UnicastRemoteObject implements SignInServerService {
 
-    Controller controller = new Controller();
+    Controller controller;
 
-    public SignInServiceImpl() throws RemoteException {
+    public SignInServiceImpl(Controller controller) throws RemoteException {
+        this.controller = controller;
     }
 
     @Override
@@ -30,4 +32,14 @@ public class SignInServiceImpl extends UnicastRemoteObject implements SignInServ
         return controller.updateUserStatusByEmail(email, status);
     }
 
+    @Override
+    public void registerUser(ClientServices userInterface) throws RemoteException {
+       controller.getUsersInterfacesVector().add(userInterface);
+        System.out.println("client added "+controller.getUsersInterfacesVector().size());
+    }
+    @Override
+    public void unregisterUser(ClientServices userInterface) throws RemoteException {
+       controller.getUsersInterfacesVector().remove(userInterface);
+        System.out.println("client removed "+controller.getUsersInterfacesVector().size());
+    }
 }
