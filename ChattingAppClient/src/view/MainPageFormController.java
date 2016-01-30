@@ -47,7 +47,7 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         statusComboBox.getItems().addAll("Available", "Busy", "Away");
-        statusComboBox.setValue("Available");
+        //statusComboBox.setValue("Available");
     }
     
     void passController(Controller controller) {
