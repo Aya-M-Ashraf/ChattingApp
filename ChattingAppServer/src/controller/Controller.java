@@ -154,12 +154,16 @@ public class Controller {
     }
 
     public void sendAddToOnlineUsers(String text) {
+        if(usersInterfacesVector.size() > 0){
         for (ClientServices clientServices : usersInterfacesVector) {
             try {
                 clientServices.recieveAd(text);
             } catch (RemoteException ex) {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        }else{
+            System.out.println("There is no online users.");
         }
     }
 }
