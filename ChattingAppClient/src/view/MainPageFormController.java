@@ -28,7 +28,7 @@ import model.pojo.User;
  *
  * @author KHoloud
  */
-public class MainPageFormController implements Initializable {
+public class MainPageFormController implements Initializable, FXMLControllersInterface {
 
     @FXML
     private ComboBox<String> statusComboBox;
@@ -36,15 +36,22 @@ public class MainPageFormController implements Initializable {
     private Label nameLabel;
     @FXML
     private ListView listView;
-    
+    @FXML
+    private Label adLabel;
+
     String userStatus;
-    Controller controller = new Controller();
+    Controller controller;
+
     User user = new User();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         statusComboBox.getItems().addAll("Available", "Busy", "Away");
         statusComboBox.setValue("Available");
+    }
+    
+    void passController(Controller controller) {
+        this.controller = controller;
     }
 
     @FXML
@@ -54,7 +61,6 @@ public class MainPageFormController implements Initializable {
             Parent homePageParent = loader.load();
             AddFriendFormController controller = loader.getController();
             controller.initData(nameLabel.getText());
-
             Scene homePageScene = new Scene(homePageParent);
             Stage homeStage = new Stage();
             homeStage.setScene(homePageScene);
@@ -63,18 +69,18 @@ public class MainPageFormController implements Initializable {
             Logger.getLogger(SignInFormController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @FXML
     public void onSignOut(MouseEvent event) {
         try {
-            
+
             System.out.println("sign out button pressed");
             Parent signInPage = FXMLLoader.load(getClass().getResource("SignInForm.fxml"));
             Scene signInPageScene = new Scene(signInPage);
             Stage homeStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             homeStage.setScene(signInPageScene);
-            homeStage.show();        
-    
+            homeStage.show();
+
         } catch (IOException ex) {
             System.out.println("signout button pressed");
             Logger.getLogger(SignInFormController.class.getName()).log(Level.SEVERE, null, ex);
@@ -83,12 +89,12 @@ public class MainPageFormController implements Initializable {
         controller.signOutOneUser(user.getEmail());
         controller.unregisterMe();
     }
-    
-    public void statusChangeHandeling(){
+
+    public void statusChangeHandeling() {
         userStatus = statusComboBox.getSelectionModel().getSelectedItem();
         System.out.println(userStatus);
-        System.out.println("MAIL "+nameLabel.getText());
-        controller.updateUserStatus(nameLabel.getText(),userStatus);
+        System.out.println("MAIL " + nameLabel.getText());
+        controller.updateUserStatus(nameLabel.getText(), userStatus);
     }
 
     public void passUser(User user) {
@@ -96,39 +102,42 @@ public class MainPageFormController implements Initializable {
         nameLabel.setText(user.getEmail());
         statusComboBox.setValue(user.getStatus());
         ObservableList<User> observableList = FXCollections.observableList(user.getFriendsList());
-                    listView.setItems(observableList);
-                    listView.setCellFactory(new Callback<ListView<User>, ListCell<User>>() {
-                        @Override
-                        public ListCell<User> call(ListView<User> userLists) {
-                            return new ListCell<User>() {
-                                @Override
-                                protected void updateItem(User item, boolean empty) {
-                                    super.updateItem(item, empty);
-                                    if (item == null || empty) {
-                                        setGraphic(null);
-                                    } else {
-                                        try {
-                                            Parent root = FXMLLoader.load(getClass().getResource("ContactCard.fxml"));
+        listView.setItems(observableList);
+        listView.setCellFactory(new Callback<ListView<User>, ListCell<User>>() {
+            @Override
+            public ListCell<User> call(ListView<User> userLists) {
+                return new ListCell<User>() {
+                    @Override
+                    protected void updateItem(User item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item == null || empty) {
+                            setGraphic(null);
+                        } else {
+                            try {
+                                Parent root = FXMLLoader.load(getClass().getResource("ContactCard.fxml"));
 
-                                            Label emailLabel = (Label) root.lookup("#emailLabel");
-                                            emailLabel.setText(item.getEmail());
+                                Label emailLabel = (Label) root.lookup("#emailLabel");
+                                emailLabel.setText(item.getEmail());
 
-                                            Label genderLabel = (Label) root.lookup("#genderLabel");
-                                            genderLabel.setText(item.getGender());
+                                Label genderLabel = (Label) root.lookup("#genderLabel");
+                                genderLabel.setText(item.getGender());
 
-                                            Label statusLabel = (Label) root.lookup("#statusLabel");
-                                            statusLabel.setText(item.getStatus());
+                                Label statusLabel = (Label) root.lookup("#statusLabel");
+                                statusLabel.setText(item.getStatus());
 
-                                            
-                                            setGraphic(root);
-                                        } catch (IOException ex) {
-                                            Logger.getLogger(view.MainPageFormController.class.getName()).log(Level.SEVERE, null, ex);
-                                        }
-                                    }
-
-                                }
-                            };
+                                setGraphic(root);
+                            } catch (IOException ex) {
+                                Logger.getLogger(view.MainPageFormController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
-                    });       
-    }  
+
+                    }
+                };
+            }
+        });
+    }
+
+    public void displayAdd(String adMessege) {
+        adLabel.setText(adMessege);
+    }
 }

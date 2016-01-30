@@ -9,18 +9,24 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.pojo.User;
 import services.ClientServicesImpl;
-
+import view.FXMLControllersInterface;
+import view.MainPageFormController;
+import view.SignInFormController;
 
 public class Controller extends Application {
+
     ClientServicesImpl clientServicesImpl;
     private SignInServerService serverSignInRef;
     private SignOutServerService serverSignOutRef;
@@ -28,12 +34,13 @@ public class Controller extends Application {
     private AddFriendServerService serverAddFriendRef;
     private ChangeStatusService changeStatusRef;
     User user;
+    Map<String, FXMLControllersInterface> currentControllersMap = new HashMap<>();
 
     public Controller() {
         try {
-            
+
             clientServicesImpl = new ClientServicesImpl(this);
-            
+
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -49,6 +56,14 @@ public class Controller extends Application {
         } catch (RemoteException | NotBoundException ex) {
             System.out.println("can't lookup from registry");
         }
+    }
+
+    public Map<String, FXMLControllersInterface> getCurrentControllers() {
+        return currentControllersMap;
+    }
+
+    public void setCurrentControllers(Map<String, FXMLControllersInterface> currentControllers) {
+        this.currentControllersMap = currentControllers;
     }
 
     public void sendUserToServer(User user) {
@@ -90,12 +105,12 @@ public class Controller extends Application {
         }
         return null;
     }
-    
+
     public boolean signOutOneUser(String eMail) {
         try {
             System.out.println("befor  user Signd out ");
             return serverSignOutRef.signOutOneUser(eMail);
-              
+
         } catch (RemoteException ex) {
 
             System.out.println("user Signd out ");
@@ -149,7 +164,10 @@ public class Controller extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/SignInForm.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SignInForm.fxml"));
+        Parent root = loader.load();
+        FXMLControllersInterface signInFormController = loader.getController();
+        currentControllersMap.put("SignInFormController", signInFormController);
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -161,15 +179,14 @@ public class Controller extends Application {
 
     public void registerMe() {
         try {
-       
+
             serverSignInRef.registerUser(clientServicesImpl);
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    
-   public void unregisterMe() {
+    public void unregisterMe() {
         try {
             serverSignInRef.unregisterUser(clientServicesImpl);
         } catch (RemoteException ex) {
@@ -181,4 +198,13 @@ public class Controller extends Application {
         return user.getEmail();
     }
 
+    public void ReceiveAdd(String adMassege) {
+        System.out.println("Server say: ------> " + adMassege);
+        if (!Platform.isFxApplicationThread()) {
+            Platform.runLater(() -> {
+                FXMLControllersInterface myController = currentControllersMap.get("mainPageFormController");
+                myController.displayAdd(adMassege);
+            });
+        }
+    }
 }

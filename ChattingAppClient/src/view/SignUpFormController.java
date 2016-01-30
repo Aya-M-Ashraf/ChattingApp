@@ -22,7 +22,7 @@ import model.pojo.User;
  *
  * @author Amr
  */
-public class SignUpFormController implements Initializable {
+public class SignUpFormController implements Initializable , FXMLControllersInterface {
 
 
     /**
@@ -84,6 +84,11 @@ public class SignUpFormController implements Initializable {
             System.out.println("first name is incorrect");
         }
 
+    }
+
+    @Override
+    public void displayAdd(String adMessege) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

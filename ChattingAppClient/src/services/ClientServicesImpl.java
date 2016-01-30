@@ -21,4 +21,8 @@ public class ClientServicesImpl extends UnicastRemoteObject implements ClientSer
         System.out.println(controller.getEmail());
     }
     
+    @Override
+    public void recieveAd(String adMessege) throws RemoteException{
+        controller.ReceiveAdd(adMessege);
+    }
 }

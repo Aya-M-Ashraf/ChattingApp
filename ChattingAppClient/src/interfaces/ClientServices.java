@@ -9,4 +9,5 @@ import java.rmi.RemoteException;
  */
 public interface ClientServices extends Remote {
     public void printEmail() throws RemoteException;
+    public void recieveAd(String adMessege) throws RemoteException;
 }

@@ -22,7 +22,7 @@ import model.pojo.User;
  *
  * @author KHoloud
  */
-public class SignInFormController implements Initializable {
+public class SignInFormController implements Initializable, FXMLControllersInterface{
 
     @FXML
     private TextField emailTextField;
@@ -33,12 +33,13 @@ public class SignInFormController implements Initializable {
     Controller controller;
 
     public SignInFormController() {
-        this.user = new User();
-        this.controller = new Controller();
+        
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        this.user = new User();
+        this.controller = new Controller();
     }
 
     public void handleSignInButton(MouseEvent event) {
@@ -65,8 +66,11 @@ public class SignInFormController implements Initializable {
                     
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("MainPageForm.fxml"));
                     Parent homePageParent = loader.load();
-                    MainPageFormController controller = loader.getController();
-                    controller.passUser(user);
+                    MainPageFormController mainPageController = loader.getController();
+                    mainPageController.passController(controller);
+                    mainPageController.passUser(user);
+                    FXMLControllersInterface mainPageFormController = loader.getController();
+                    controller.getCurrentControllers().put("mainPageFormController",mainPageFormController);
                                         
                     Scene homePageScene = new Scene(homePageParent);
                     Stage homeStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -89,5 +93,10 @@ public class SignInFormController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(SignInFormController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public void displayAdd(String adMessege) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

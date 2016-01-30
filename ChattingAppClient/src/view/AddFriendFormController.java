@@ -12,7 +12,7 @@ import javafx.scene.control.TextField;
  *
  * @author Aya M. Ashraf
  */
-public class AddFriendFormController implements Initializable {
+public class AddFriendFormController implements Initializable , FXMLControllersInterface {
 
     Controller controller;
     @FXML 
@@ -34,4 +34,9 @@ public class AddFriendFormController implements Initializable {
         String emailToAdd = emailTextField.getText();
         controller.addFriendToUser(userEmail,emailToAdd);
     }   
+
+    @Override
+    public void displayAdd(String adMessege) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
