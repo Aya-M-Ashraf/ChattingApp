@@ -23,7 +23,7 @@ public class Controller {
     ManipulateDB manipulateDBObj;
     QueryDB queryDB;
     Vector<User> usersVector = new Vector<User>();
-    
+
     Vector<ClientServices> usersInterfacesVector = new Vector<>();
 
     public Vector<ClientServices> getUsersInterfacesVector() {
@@ -151,5 +151,15 @@ public class Controller {
 
     public int getOfflineUsersCount() {
         return manipulateDBObj.selectAllOfflineUsers().size();
+    }
+
+    public void sendAddToOnlineUsers(String text) {
+        for (ClientServices clientServices : usersInterfacesVector) {
+            try {
+                clientServices.recieveAd(text);
+            } catch (RemoteException ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }

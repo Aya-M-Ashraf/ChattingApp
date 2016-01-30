@@ -34,12 +34,18 @@ public class SignInServiceImpl extends UnicastRemoteObject implements SignInServ
 
     @Override
     public void registerUser(ClientServices userInterface) throws RemoteException {
-       controller.getUsersInterfacesVector().add(userInterface);
-        System.out.println("client added "+controller.getUsersInterfacesVector().size());
+        controller.getUsersInterfacesVector().add(userInterface);
+        System.out.println("client added " + controller.getUsersInterfacesVector().size());
     }
+
     @Override
     public void unregisterUser(ClientServices userInterface) throws RemoteException {
-       controller.getUsersInterfacesVector().remove(userInterface);
-        System.out.println("client removed "+controller.getUsersInterfacesVector().size());
+        controller.getUsersInterfacesVector().remove(userInterface);
+        System.out.println("client removed " + controller.getUsersInterfacesVector().size());
+    }
+
+    @Override
+    public void sendAdToOnlineUsers(String AdMsg) throws RemoteException {
+        controller.sendAddToOnlineUsers(AdMsg);
     }
 }
