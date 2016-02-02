@@ -23,18 +23,21 @@ public class ChangeStatusServiceImpl extends UnicastRemoteObject implements Chan
         this.controller = controller;
     }
 
+//    @Override
+//    public boolean tellFriendsMyStatus(User user, String newStatus) throws RemoteException {
+//        ArrayList<User> friendsList = user.getFriendsList();
+//        user.setStatus(newStatus);
+//        for(int i=0 ; i<friendsList.size(); i++){
+//            if(friendsList.contains(user)){
+//                friendsList.set(i, user);
+//                System.out.println("tell friends my status event fired.");
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
     @Override
-    public boolean tellFriendsMyStatus(User user, String newStatus) throws RemoteException {
-        ArrayList<User> friendsList = user.getFriendsList();
-        user.setStatus(newStatus);
-        for(int i=0 ; i<friendsList.size(); i++){
-            if(friendsList.contains(user)){
-                friendsList.set(i, user);
-                System.out.println("tell friends my status event fired.");
-                return true;
-            }
-        }
-        return false;
+    public void tellFriendsMyStatus(User user, String newStatus){
+         controller.tellMyFriendsMyStatus(user,newStatus);
     }
-    
 }

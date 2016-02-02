@@ -10,4 +10,5 @@ import java.rmi.RemoteException;
 public interface AddFriendServerService extends Remote{
     public boolean checkIfUserExist(String email)throws RemoteException;
     public boolean sendFriendRequest(String userEmail, String emailToAdd)throws RemoteException;
+    public void deliverFriendRequest(String userEmail, String emailToAdd)throws RemoteException;
 }

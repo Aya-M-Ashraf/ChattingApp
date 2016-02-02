@@ -48,4 +48,9 @@ public class SignInServiceImpl extends UnicastRemoteObject implements SignInServ
     public void sendAdToOnlineUsers(String AdMsg) throws RemoteException {
         controller.sendAddToOnlineUsers(AdMsg);
     }
+    
+    @Override
+    public void changeFriendStatus(String friendEmail, String newStatus) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

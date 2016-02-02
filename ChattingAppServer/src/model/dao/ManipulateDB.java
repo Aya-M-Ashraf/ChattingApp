@@ -107,10 +107,9 @@ public class ManipulateDB {
     }
 
     public boolean insertUser(User user) {
-
         PreparedStatement pst;
         try {
-            pst = connection.prepareStatement("insert into user values(?,?,?,?,?,?,?,?,?,?,?,?)");
+            pst = connection.prepareStatement("insert into user values(?,?,?,?,?,?,?,?,?,?,?)");
             pst.setString(1, user.getEmail());
             pst.setString(2, user.getFirstName());
             pst.setString(3, user.getLastName());
@@ -122,16 +121,48 @@ public class ManipulateDB {
             pst.setString(9, user.getGender());
             pst.setString(10, user.getSecuirtyQuestion());
             pst.setString(11, user.getSecurityAnswer());
-            pst.setString(12, null);
             pst.executeUpdate();
             System.out.println("insertUser(User user)  ok");
-
             return true;
-
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
         }
+    }
+
+    public boolean selectAllFromFriendRequest(String userEmail, String friendEmail) {
+        PreparedStatement pst;
+        try {
+            pst = connection.prepareStatement("select * from user_has_friend_request");
+            ResultSet resultSet = pst.executeQuery();
+            while (resultSet.next()) {
+                if (userEmail.equals(resultSet.getString(1)) && friendEmail.equals(resultSet.getString(2))) {
+                    System.out.println("you already send friend request to " + friendEmail);
+                    return true;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public ArrayList<String> selectMyFriendsRequest(String email) {
+        ArrayList<String> receivedEamilsRequest = new ArrayList<>();
+        try {
+            PreparedStatement pst;
+            String receivedEmail;
+            pst = connection.prepareStatement("Select * from user_has_friend_request where Reciever_Email1 = ?");
+            pst.setString(1, email);
+            ResultSet resultSet = pst.executeQuery();
+            while (resultSet.next()) {
+                receivedEmail = resultSet.getString(1);
+                receivedEamilsRequest.add(receivedEmail);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return receivedEamilsRequest;
     }
 
     public boolean insertFriendRequest(String userEmail, String emailToAdd) {
@@ -143,7 +174,6 @@ public class ManipulateDB {
             pst.executeUpdate();
             System.out.println("request is inserted to DB");
             return true;
-
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
@@ -151,7 +181,6 @@ public class ManipulateDB {
     }
 
     public ArrayList<User> selectUserFriends(User user) {
-
         User friend = new User();
         ArrayList<User> friendList = new ArrayList<>();
         try {
@@ -173,7 +202,7 @@ public class ManipulateDB {
         }
         return friendList;
     }
-    
+
     public ArrayList<User> selectAllOnlineUsers() {
 
         User user = new User();
@@ -194,7 +223,7 @@ public class ManipulateDB {
         }
         return onlineUsers;
     }
-     
+
     public ArrayList<User> selectAllOfflineUsers() {
 
         User user = new User();
@@ -241,29 +270,57 @@ public class ManipulateDB {
             pst.executeUpdate();
             System.out.println("status updated");
             return true;
-
         } catch (SQLException ex) {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
-   
+
     public boolean setUserOff(String eMail) {
         try {
             PreparedStatement pst;
             pst = connection.prepareStatement("UPDATE user SET Online=0 WHERE Email=?");
-          
+
             pst.setString(1, eMail);
             System.out.println(pst.toString());
-              System.out.println("offline");
+            System.out.println("offline");
             pst.executeUpdate();
             return true;
         } catch (SQLException ex) {
             System.out.println("i cant set the user online or offline");
-            
-           // Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-                       
+
+            // Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
             return false;
-        } 
-}
+        }
+    }
+
+    public boolean insertFriendToUser(String email, String friendEmail) {
+        try {
+            PreparedStatement pst;
+            pst = connection.prepareStatement("Insert Into user_has_friend values (?, ?)");
+            pst.setString(1, email);
+            pst.setString(2, friendEmail);
+            pst.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
+    public boolean deleteFriendRequest(String friendEmail, String email) {
+        try {
+            System.out.println("Entered delete stmt.");
+            PreparedStatement pst;
+            pst = connection.prepareStatement("delete from mydb.user_has_friend_request where Sender_Email = ? AND Reciever_Email1 = ? ");
+            pst.setString(1, friendEmail);
+            pst.setString(2, email);
+            pst.executeUpdate();
+            System.out.println("Request has been deleted.");
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
 }

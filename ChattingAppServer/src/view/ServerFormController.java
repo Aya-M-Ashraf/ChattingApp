@@ -1,14 +1,11 @@
 package view;
 
 import controller.Controller;
-import interfaces.ClientServices;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -69,13 +66,6 @@ public class ServerFormController implements Initializable {
                         new PieChart.Data("Offline Users", controller.getOfflineUsersCount()));
 
         pieChart.setData(pieChartData);
-        try {
-            for (ClientServices client : controller.getUsersInterfacesVector()) {
-                client.printEmail();
-            }
-        } catch (RemoteException ex) {
-            Logger.getLogger(ServerFormController.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
     public void handleSendAd(){

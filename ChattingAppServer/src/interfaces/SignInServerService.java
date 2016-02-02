@@ -15,4 +15,5 @@ public interface SignInServerService extends Remote {
     public boolean updateUserIsOnlineByEmail(String email) throws RemoteException;
     public boolean updateUserStatusByEmail(String email, String status) throws RemoteException;
     public void sendAdToOnlineUsers(String AdMsg) throws RemoteException;
+    public void changeFriendStatus(String friendEmail, String newStatus) throws RemoteException;
 }

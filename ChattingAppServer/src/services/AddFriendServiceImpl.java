@@ -27,5 +27,10 @@ public class AddFriendServiceImpl extends UnicastRemoteObject implements AddFrie
         
         return controller.addFriendRequest(userEmail,emailToAdd);
     }
+
+    @Override
+    public void deliverFriendRequest(String userEmail, String emailToAdd) throws RemoteException {
+        controller.deliverFriendRequest(userEmail,emailToAdd);
+    }
     
 }
