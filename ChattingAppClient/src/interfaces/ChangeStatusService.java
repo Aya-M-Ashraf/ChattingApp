@@ -14,5 +14,5 @@ import model.pojo.User;
  * @author KHoloud
  */
 public interface ChangeStatusService extends Remote{
-    public boolean tellFriendsMyStatus(User user,String status) throws RemoteException;
+    public void tellFriendsMyStatus(User user,String status) throws RemoteException;
 }

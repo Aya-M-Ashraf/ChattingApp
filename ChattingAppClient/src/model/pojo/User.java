@@ -140,6 +140,15 @@ public class User implements Serializable {
     public ArrayList<User> getFriendsList() {
         return friendsList;
     }
+    
+    public ArrayList<User> getOnlineFriendsList() {
+        ArrayList<User> onlineFriends = new ArrayList<>();
+        for(User user : friendsList){
+            if(user.isIsOnline())
+                onlineFriends.add(user);
+        }
+        return onlineFriends;
+    }
 
     public void setFriendsList(ArrayList<User> friendsList) {
         this.friendsList = friendsList;

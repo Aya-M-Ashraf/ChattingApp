@@ -1,0 +1,64 @@
+.text-field , .label , .button , .text-area , .combo-box {
+    -fx-text-alignment:center;
+    -fx-text-fill: #083e5f;
+    -fx-font-family: "Comic Sans MS";    
+}
+.list-view{
+    -fx-background-color:transparent;
+}
+.mainFxmlClass {
+    -fx-background-repeat: no-repeat;
+    -fx-background-color:linear-gradient(to bottom , rgba(240,209,197,1) 0%, rgba(255,214,186,1) 26%, rgba(218,255,176,1) 50%, rgba(202,235,218,1) 67%, rgba(204,232,232,1) 78%, rgba(222,218,245,1) 89%, rgba(222,218,245,1) 100%);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-border-radius: 16;
+}
+.text-field , .text-area  {
+    -fx-font-size:12;
+    -fx-background-color: transparent;
+    -fx-border-color: #cbc4f2;
+    -fx-border-radius: 16;
+} 
+.combo-box{
+    -fx-font-size:12;
+    -fx-background-color: transparent;
+    -fx-border-color: #cbc4f2;
+    -fx-border-radius: 16;
+}
+.label{
+    -fx-font-size:16;
+    -fx-background-color: transparent;
+    
+}
+#rainbowAnnouncement/*Label Header Section*/,#adLabel/*The Advertisement*/{
+    -fx-text-alignment:center;
+    -fx-font-style:bold;
+}
+
+.menu-bar{
+    -fx-font-size:12;
+    -fx-background-color: transparent;
+    -fx-border-color: #cbc4f2;
+    -fx-border-radius: 0;
+    -fx-border-width:2;
+}
+.hyperlink{
+    -fx-text-alignment:center;
+    -fx-font-size:16;
+    -fx-text-fill: #083e5f;
+    -fx-font-family: "Comic Sans MS";
+    -fx-background-color: transparent;
+    -fx-font-style:italic;
+}
+.button {
+    -fx-font-size:12;
+    -fx-background-color: linear-gradient(to bottom,#ffe0d4 0%,#fd6524 90%); //rgba(255,170,185) 0%, rgba(240,209,197,1) 59%, rgba(255,105,133) 100%);    
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-border-radius: 16;
+    -fx-cursor:hand;
+}
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #fd6524 0%, #ffe0d4 50%,#fd6524 100%);    
+}
+.button:pressed{
+    -fx-background-color: linear-gradient(to bottom, #ffe0d4 0%,#fd6524 50%,#ffe0d4 100%);      
+}

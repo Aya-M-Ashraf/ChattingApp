@@ -12,5 +12,6 @@ package view;
 public interface FXMLControllersInterface {
     
     public void displayAdd(String adMessege);
-    
+    public void updateList();
+
 }

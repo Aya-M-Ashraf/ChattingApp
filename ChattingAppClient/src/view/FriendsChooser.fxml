@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="388.0" prefWidth="211.0" styleClass="mainFxmlClass" stylesheets="@cssForm.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FriendsChooserController">
+   <children>
+      <Label prefHeight="23.0" prefWidth="178.0" text="Choose you friends :" />
+      <ListView fx:id="listView" prefHeight="274.0" prefWidth="309.0" />
+      <AnchorPane prefHeight="92.0" prefWidth="182.0">
+         <children>
+            <Button fx:id="createRoomButton" layoutX="55.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#handleCreateRoomButton" prefHeight="26.0" prefWidth="102.0" text="Create Room" />
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

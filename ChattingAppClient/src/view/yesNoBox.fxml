@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="63.0" prefWidth="347.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.YesNoBoxController">
+    <children>
+      <BorderPane prefHeight="200.0" prefWidth="347.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <bottom>
+                <HBox prefHeight="39.0" prefWidth="438.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <Button fx:id="YesButton" mnemonicParsing="false" prefHeight="28.0" prefWidth="198.0" text="yes" onAction="#onYes" />
+                        <Button fx:id="NoButton" mnemonicParsing="false" prefHeight="28.0" prefWidth="164.0" text="No" onAction="#onNo" />
+                    </children>
+                </HBox>
+         </bottom>
+         <center>
+            <Label fx:id="messageLabel" text="Label" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+    </children>
+</AnchorPane>

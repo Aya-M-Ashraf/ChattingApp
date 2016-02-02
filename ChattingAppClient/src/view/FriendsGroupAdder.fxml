@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="305.0" prefWidth="205.0" styleClass="mainFxmlClass" stylesheets="@cssForm.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.FriendsGroupAdderController">
+   <children>
+      <ListView fx:id="listView" prefHeight="259.0" prefWidth="205.0" />
+      <AnchorPane prefHeight="46.0" prefWidth="199.0">
+         <children>
+            <Button layoutX="77.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleAddButton" text="Add" />
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

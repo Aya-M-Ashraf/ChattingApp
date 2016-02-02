@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+    
+    <xs:complexType name="userSays">
+        <xs:sequence>
+            <xs:element name="Email" type="xs:string" />
+            <xs:element name="Message" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="messageArea">
+        <xs:sequence>
+        <xs:element name="UserSays" type="userSays" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="sender" type="xs:string"/>
+        <xs:attribute name="reciever" type="xs:string"/>
+    </xs:complexType>
+    <xs:element name="MessageArea" type="messageArea"/>
+
+</xs:schema>

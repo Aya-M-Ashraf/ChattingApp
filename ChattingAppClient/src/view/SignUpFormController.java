@@ -91,9 +91,8 @@ public class SignUpFormController implements Initializable , FXMLControllersInte
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    
-
-  
-
-
+    @Override
+    public void updateList() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

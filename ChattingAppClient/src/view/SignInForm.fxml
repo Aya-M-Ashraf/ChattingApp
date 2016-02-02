@@ -7,18 +7,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="587.0" prefWidth="276.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SignInFormController">
-    <stylesheets>
-        <URL value="@signinform.css" />
-    </stylesheets>
+<AnchorPane id="AnchorPane" prefHeight="452.0" prefWidth="276.0" styleClass="mainFxmlClass" stylesheets="@cssForm.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SignInFormController">
    <children>
-      <Label id="emailLabel" fx:id="emailLabel" layoutX="28.0" layoutY="158.0" prefHeight="17.0" prefWidth="43.0" text="E-mail" AnchorPane.bottomAnchor="393.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="190.0" AnchorPane.topAnchor="158.0" />
-      <TextField id="emailTextField" fx:id="emailTextField" layoutX="96.0" layoutY="164.0" prefHeight="25.0" prefWidth="136.0" AnchorPane.bottomAnchor="398.0" AnchorPane.leftAnchor="96.0" AnchorPane.rightAnchor="44.0" AnchorPane.topAnchor="164.0" />
-      <TextField id="passwordTextField" fx:id="passwordTextField" layoutX="96.0" layoutY="199.0" prefHeight="25.0" prefWidth="136.0" AnchorPane.bottomAnchor="363.0" AnchorPane.leftAnchor="96.0" AnchorPane.rightAnchor="44.0" AnchorPane.topAnchor="199.0" />
-      <Label id="passwordLabel" fx:id="passwordLabel" layoutX="28.0" layoutY="194.0" prefHeight="17.0" prefWidth="59.0" text="Password" AnchorPane.bottomAnchor="357.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="174.0" AnchorPane.topAnchor="194.0" />
-      <Button id="signInButtton" fx:id="signInButtton" layoutX="101.0" layoutY="275.0" mnemonicParsing="false" onMouseClicked="#handleSignInButton" prefHeight="25.0" prefWidth="69.0" text="Sign In" AnchorPane.bottomAnchor="287.0" AnchorPane.leftAnchor="101.0" AnchorPane.rightAnchor="106.0" AnchorPane.topAnchor="275.0" />
-      <Hyperlink id="forgotPasswordLink" fx:id="forgotPasswordLink" alignment="CENTER" layoutX="70.0" layoutY="347.0" text="i forgot my password" AnchorPane.bottomAnchor="198.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="347.0" />
-      <Hyperlink id="signUpLink" fx:id="signUpLink" alignment="CENTER" layoutX="104.0" layoutY="311.0" onMouseClicked="#handleSignUpLink" text="Sign Up " AnchorPane.bottomAnchor="234.0" AnchorPane.leftAnchor="104.0" AnchorPane.rightAnchor="103.0" AnchorPane.topAnchor="311.0" />
+      <Label id="emailLabel" fx:id="emailLabel" layoutX="22.0" layoutY="151.0" prefHeight="17.0" prefWidth="43.0" text="E-mail" AnchorPane.bottomAnchor="400.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="196.0" AnchorPane.topAnchor="151.0" />
+      <TextField id="emailTextField" fx:id="emailTextField" layoutX="106.0" layoutY="156.0" prefHeight="28.0" prefWidth="145.0" AnchorPane.bottomAnchor="406.0" AnchorPane.leftAnchor="106.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="156.0" />
+      <PasswordField id="passwordTextField" fx:id="passwordTextField" layoutX="110.0" layoutY="201.0" prefHeight="25.0" prefWidth="136.0" />
+      <Label id="passwordLabel" fx:id="passwordLabel" layoutX="22.0" layoutY="195.0" prefHeight="17.0" prefWidth="59.0" text="Password" AnchorPane.bottomAnchor="356.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="195.0" />
+      <Button id="signInButtton" fx:id="signInButtton" layoutX="104.0" layoutY="254.0" mnemonicParsing="false" onMouseClicked="#handleSignInButton" prefHeight="25.0" prefWidth="69.0" text="Sign In" AnchorPane.bottomAnchor="308.0" AnchorPane.leftAnchor="104.0" AnchorPane.rightAnchor="103.0" AnchorPane.topAnchor="254.0" />
+      <Hyperlink id="forgotPasswordLink" fx:id="forgotPasswordLink" alignment="CENTER" layoutX="40.0" layoutY="367.0" prefHeight="45.0" prefWidth="197.0" text="i forgot my password" AnchorPane.bottomAnchor="178.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="367.0" />
+      <Hyperlink id="signUpLink" fx:id="signUpLink" alignment="CENTER" layoutX="90.0" layoutY="322.0" onMouseClicked="#handleSignUpLink" prefHeight="45.0" prefWidth="97.0" text="Sign Up " AnchorPane.bottomAnchor="223.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="89.0" AnchorPane.topAnchor="322.0" />
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="276.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
@@ -38,5 +35,7 @@
           </Menu>
         </menus>
       </MenuBar>
+      <TextField fx:id="regIP" layoutX="103.0" layoutY="63.0" prefHeight="28.0" prefWidth="136.0" />
+      <Label layoutX="22.0" layoutY="37.0" prefHeight="23.0" prefWidth="97.0" text="Server IP :" />
    </children>
 </AnchorPane>

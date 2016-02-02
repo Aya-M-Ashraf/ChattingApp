@@ -8,9 +8,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="567.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainPageFormController">
+<AnchorPane id="AnchorPane" prefHeight="621.0" prefWidth="331.0" styleClass="mainFxmlClass" stylesheets="@fxml.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainPageFormController">
    <children>
-      <MenuBar prefHeight="25.0" prefWidth="305.0">
+      <MenuBar prefHeight="35.0" prefWidth="331.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
@@ -31,18 +31,21 @@
       </MenuBar>
       <ImageView id="imageView" fx:id="imageView" fitHeight="72.0" fitWidth="130.0" layoutX="35.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@myImg.jpg" />
+            <Image url="@images/default.png" />
          </image></ImageView>
-      <ComboBox id="statusComboBox" fx:id="statusComboBox" layoutX="145.0" layoutY="85.0" onAction="#statusChangeHandeling" prefHeight="25.0" prefWidth="107.0" />
+      <ComboBox id="statusComboBox" fx:id="statusComboBox" layoutX="145.0" layoutY="85.0" onAction="#statusChangeHandeling" prefHeight="28.0" prefWidth="137.0" />
       <Label id="nameLabel" fx:id="nameLabel" layoutX="119.0" layoutY="38.0" prefHeight="36.0" prefWidth="150.0" />
-      <ListView fx:id="listView" layoutY="184.0" prefHeight="315.0" prefWidth="309.0" />
-      <Label fx:id="testLabel" layoutX="40.0" layoutY="146.0" prefHeight="25.0" prefWidth="63.0" />
+      <ListView fx:id="listView" layoutY="189.0" onMouseClicked="#handleListClicks" prefHeight="315.0" prefWidth="331.0" />
+      <Label fx:id="testLabel" layoutX="40.0" layoutY="122.0" prefHeight="25.0" prefWidth="63.0" />
       <Button id="addFriendButton" fx:id="addFriendButton" layoutX="206.0" layoutY="159.0" mnemonicParsing="false" onMouseClicked="#handleAddFriendButton" prefHeight="25.0" prefWidth="99.0" text="+ Add Friends">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
       <Button id="SignOutButton" fx:id="SignOutButton" layoutX="221.0" layoutY="121.0" mnemonicParsing="false" onMouseClicked="#onSignOut" text="Sign Out" />
-      <Label id="adLabel" fx:id="adLabel" layoutX="14.0" layoutY="504.0" prefHeight="59.0" prefWidth="281.0" />
+      <Label id="adLabel" fx:id="adLabel" layoutX="14.0" layoutY="540.0" prefHeight="72.0" prefWidth="302.0" stylesheets="@cssForm.css" wrapText="true" />
+      <Button fx:id="groubButton" layoutX="9.0" layoutY="159.0" mnemonicParsing="false" onAction="#handleGroupButton" prefHeight="25.0" prefWidth="115.0" text="Create Chat room" />
+      <Label id="rainbowAnnouncement" layoutX="64.0" layoutY="517.0" stylesheets="@mainPage.css" text="Rainbow Announcements" />
+      <Label layoutX="51.0" layoutY="123.0" text="Label" />
    </children>
 </AnchorPane>

@@ -6,12 +6,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -27,10 +29,13 @@ public class SignInFormController implements Initializable, FXMLControllersInter
     @FXML
     private TextField emailTextField;
     @FXML
-    private TextField passwordTextField;
+    private PasswordField passwordTextField;
+    @FXML
+    private TextField regIP;
 
     User user;
     Controller controller;
+    
 
     public SignInFormController() {
         
@@ -38,6 +43,7 @@ public class SignInFormController implements Initializable, FXMLControllersInter
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        regIP.setText("127.0.0.1");
         this.user = new User();
         this.controller = new Controller();
     }
@@ -75,7 +81,9 @@ public class SignInFormController implements Initializable, FXMLControllersInter
                     Scene homePageScene = new Scene(homePageParent);
                     Stage homeStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     homeStage.setScene(homePageScene);
+                    homeStage.setOnCloseRequest(e->{Platform.exit();System.exit(0);});
                     homeStage.show();
+                    
                 } catch (IOException ex) {
                     Logger.getLogger(SignInFormController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -97,6 +105,11 @@ public class SignInFormController implements Initializable, FXMLControllersInter
 
     @Override
     public void displayAdd(String adMessege) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public void updateList() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

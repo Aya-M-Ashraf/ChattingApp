@@ -5,7 +5,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import model.pojo.User;
 
 /**
  * FXML Controller class
@@ -17,8 +19,12 @@ public class AddFriendFormController implements Initializable , FXMLControllersI
     Controller controller;
     @FXML 
     private TextField emailTextField;
+    @FXML
+    private Button addFriendButton;
     
     private String userEmail;
+    
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -33,10 +39,17 @@ public class AddFriendFormController implements Initializable , FXMLControllersI
         
         String emailToAdd = emailTextField.getText();
         controller.addFriendToUser(userEmail,emailToAdd);
+        addFriendButton.setDisable(true);
     }   
 
     @Override
     public void displayAdd(String adMessege) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+    public void updateList() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+   
 }
