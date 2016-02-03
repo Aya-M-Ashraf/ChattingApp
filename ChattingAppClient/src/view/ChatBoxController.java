@@ -89,8 +89,7 @@ public class ChatBoxController implements Initializable {
     @FXML
     public void handleSendButton() {
         if (!chatTextField.getText().equals("")) {
-            controller.sendMsg(chatTextField.getText(), friend.getEmail(),controller.getEmail());
-            //textArea.appendText("\n"+controller.getEmail() + ": " + chatTextField.getText());
+            controller.sendMsg(chatTextField.getText(), friend.getEmail(), controller.getEmail());
             buildXMLElement(chatTextField.getText(), controller.getEmail());
             chatTextField.setText("");
         }
@@ -113,9 +112,6 @@ public class ChatBoxController implements Initializable {
 
             System.out.println("you didnt choose file");
         }
-        // readFile("src/view/amr.txt");
-        System.out.println("iam in on send file Button");
-
         System.out.println("File size is : " + fileSize);
         System.out.println(myFile.getName());
         clientServices = controller.sendFileToUser(myFile.getName(), friend.getEmail(), controller.getEmail());
