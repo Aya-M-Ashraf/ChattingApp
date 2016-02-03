@@ -130,6 +130,7 @@ public class Controller {
 
             Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5000);
             System.setProperty("java.rmi.server.hostname", "127.0.0.1");
+            
             registry.unbind("SignInService");
             registry.unbind("SignOutService");
             registry.unbind("SignUpService");

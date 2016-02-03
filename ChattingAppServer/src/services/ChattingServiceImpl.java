@@ -31,7 +31,6 @@ public class ChattingServiceImpl extends UnicastRemoteObject implements Chatting
 
     @Override
     public void sendMsgToGroupChat(int ID, String msg, String senderEmail) throws RemoteException {
-        System.out.println("inside chattingImpl Server sendMsgToGChat");
         controller.sendMsgToGroupChat(ID, msg, senderEmail);
     }
 
