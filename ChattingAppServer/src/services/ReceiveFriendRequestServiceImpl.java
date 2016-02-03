@@ -10,7 +10,6 @@ import interfaces.ReceiveFriendRequestService;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import org.omg.CORBA.portable.RemarshalException;
 
 /**
  *

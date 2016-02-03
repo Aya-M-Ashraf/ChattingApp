@@ -223,14 +223,56 @@ public class ManipulateDB {
         }
         return onlineUsers;
     }
-
+    
     public ArrayList<User> selectAllOfflineUsers() {
+
+        User user = new User();
+        ArrayList<User> onlineUsers = new ArrayList<>();
+        try {
+            String userMail;
+            PreparedStatement pst = connection.prepareStatement("Select Email from user where Online = false ");
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                userMail = rs.getString(1);
+                user = selectAllFromUserWhereEmailwithoutFriendList(userMail);
+                onlineUsers.add(user);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Can't execute selectAllOnlineUsers Query");
+        }
+        return onlineUsers;
+    }
+
+    public ArrayList<User> selectAllFemaleUsers() {
 
         User user = new User();
         ArrayList<User> offlineUsers = new ArrayList<>();
         try {
             String userMail;
-            PreparedStatement pst = connection.prepareStatement("Select Email from user where Online = false ");
+            PreparedStatement pst = connection.prepareStatement("Select Email from user where gender = 'Female' ");
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                userMail = rs.getString(1);
+                user = selectAllFromUserWhereEmailwithoutFriendList(userMail);
+                offlineUsers.add(user);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Can't execute selectAllOnlineUsers Query");
+        }
+        return offlineUsers;
+    }
+    
+    public ArrayList<User> selectAllMaleUsers() {
+
+        User user = new User();
+        ArrayList<User> offlineUsers = new ArrayList<>();
+        try {
+            String userMail;
+            PreparedStatement pst = connection.prepareStatement("Select Email from user where gender = 'Male' ");
             ResultSet rs = pst.executeQuery();
 
             while (rs.next()) {

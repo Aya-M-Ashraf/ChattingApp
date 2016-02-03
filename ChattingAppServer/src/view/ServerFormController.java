@@ -23,6 +23,8 @@ public class ServerFormController implements Initializable {
     @FXML
     PieChart pieChart;
     @FXML
+    PieChart pieChart2;
+    @FXML
     private TextArea adTextArea;
     @FXML
     private Button sendAdButton;
@@ -39,8 +41,8 @@ public class ServerFormController implements Initializable {
             System.out.println("can't create registry");
             ex.printStackTrace();
         }
+        updateOnlinePieChart();
         updatePieChart();
-
     }
 
     @FXML
@@ -49,23 +51,35 @@ public class ServerFormController implements Initializable {
         startServiceButton.setDisable(true);
         stopServiceButton.setDisable(false);
     }
-
     @FXML
     void handleStopButton() {
         controller.stopServer();
         startServiceButton.setDisable(false);
         stopServiceButton.setDisable(true);
     }
-
     @FXML
-    public void updatePieChart() {
-
+    public void updateOnlinePieChart() {
         ObservableList<PieChart.Data> pieChartData
                 = FXCollections.observableArrayList(
                         new PieChart.Data("Online Users", controller.getOnlineUsersCount()),
                         new PieChart.Data("Offline Users", controller.getOfflineUsersCount()));
-
         pieChart.setData(pieChartData);
+    }
+    
+    @FXML
+    public void updateCharts() {
+        updateOnlinePieChart();
+        updatePieChart();
+    }
+    
+    @FXML
+     public void updatePieChart() {
+        ObservableList<PieChart.Data> pieChartData
+                = FXCollections.observableArrayList(
+                        
+                        new PieChart.Data("Female Users", controller.getFemaleUsersCount()),
+                        new PieChart.Data("Male Users", controller.getMaleUsersCount()));
+        pieChart2.setData(pieChartData);
     }
     
     public void handleSendAd(){

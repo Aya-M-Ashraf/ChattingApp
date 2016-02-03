@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import model.dao.ManipulateDB;
 import model.dao.QueryDB;
 import model.pojo.User;
@@ -128,7 +129,7 @@ public class Controller {
         try {
 
             Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5000);
-
+            System.setProperty("java.rmi.server.hostname", "127.0.0.1");
             registry.unbind("SignInService");
             registry.unbind("SignOutService");
             registry.unbind("SignUpService");
@@ -167,6 +168,14 @@ public class Controller {
 
     public int getOnlineUsersCount() {
         return manipulateDBObj.selectAllOnlineUsers().size();
+    }
+
+    public int getFemaleUsersCount() {
+        return manipulateDBObj.selectAllFemaleUsers().size();
+    }
+
+    public int getMaleUsersCount() {
+        return manipulateDBObj.selectAllMaleUsers().size();
     }
 
     public int getOfflineUsersCount() {
@@ -217,14 +226,21 @@ public class Controller {
     }
 
     public void sendMsgToUser(String text, String reciever, String sender) {
-        try {
-            for (ClientServices client : usersInterfacesVector) {
-                if (client.getEmail().equals(reciever)) {
-                    client.recieveMsg(text, sender);
+        if (!Platform.isFxApplicationThread()) {
+            Platform.runLater(() -> {
+                try {
+                    for (ClientServices client : usersInterfacesVector) {
+                        if (client.getEmail().equals(reciever)) {
+                            client.recieveMsg(text, sender, reciever);
+                        }
+                        if (client.getEmail().equals(sender)) {
+                            client.recieveMsg(text, sender, reciever);
+                        }
+                    }
+                } catch (RemoteException ex) {
+                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-        } catch (RemoteException ex) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            });
         }
     }
 
@@ -299,7 +315,6 @@ public class Controller {
                 if (client.getEmail().equals(reciever)) {
                     if (client.askUserToReceiveFile(fileName, reciever, senderEmail)) {
                         receiverclient = client;
-                        System.out.println(" iam in  sendFileToUser  server we got the client");
                     }
                 }
             } catch (RemoteException ex) {
@@ -310,11 +325,11 @@ public class Controller {
         return receiverclient;
     }
 
-    public void deliverFriendRequest(String userEmail, String emailToAdd) {
+    public void deliverFriendRequest(String sender, String reciever) {
         try {
             for (ClientServices client : usersInterfacesVector) {
-                if (client.getEmail().equals(emailToAdd)) {
-                    client.getFriendRequest(userEmail);
+                if (client.getEmail().equals(reciever)) {
+                    client.getFriendRequest(sender);
                 }
             }
         } catch (RemoteException ex) {

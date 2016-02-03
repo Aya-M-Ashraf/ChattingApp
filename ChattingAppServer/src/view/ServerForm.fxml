@@ -9,20 +9,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="499.0" prefWidth="572.0" stylesheets="@serverform.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ServerFormController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="673.0" stylesheets="@serverform.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ServerFormController">
    <children>
-      <TabPane prefHeight="499.0" prefWidth="572.0" stylesheets="@serverform.css" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutY="-1.0" prefHeight="500.0" prefWidth="673.0" stylesheets="@serverform.css" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Start/Stop">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="244.0" prefWidth="381.0">
                      <children>
-                        <PieChart fx:id="pieChart" layoutX="14.0" layoutY="116.0" prefHeight="345.0" prefWidth="315.0" />
+                        <PieChart fx:id="pieChart" layoutX="4.0" layoutY="38.0" prefHeight="428.0" prefWidth="298.0" />
+                        <PieChart fx:id="pieChart2" layoutX="313.0" layoutY="44.0" prefHeight="416.0" prefWidth="293.0" />
                         <Button id="button" fx:id="stopServiceButton" layoutX="226.0" layoutY="50.0" mnemonicParsing="false" onMouseClicked="#handleStopButton" prefHeight="15.0" prefWidth="87.0" text="Stop" />
                         <Button id="button" fx:id="startServiceButton" layoutX="97.0" layoutY="50.0" mnemonicParsing="false" onMouseClicked="#handleStartButton" prefHeight="18.0" prefWidth="82.0" stylesheets="@serverform.css" text="Start" />
-                        <Button id="button" fx:id="refreshButton" layoutX="109.0" layoutY="388.0" mnemonicParsing="false" onAction="#updatePieChart" prefHeight="22.0" prefWidth="88.0" stylesheets="@serverform.css" text="Refresh" />
-                        <ImageView id="logo" fitHeight="95.0" fitWidth="113.0" layoutX="463.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" />
-                        <Text id="logoText" layoutX="459.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rainbow" textAlignment="CENTER" wrappingWidth="101.3359375" />
+                        <Button id="button" fx:id="refreshButton" layoutX="242.0" layoutY="388.0" mnemonicParsing="false" onAction="#updateCharts" prefHeight="22.0" prefWidth="88.0" stylesheets="@serverform.css" text="Refresh" />
+                        <ImageView id="logo" fitHeight="109.0" fitWidth="109.0" layoutX="474.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" />
+                        <Text id="logoText" layoutX="471.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rainbow Server" textAlignment="CENTER" wrappingWidth="113.3359375" />
                      </children>
                   </AnchorPane>
             </content>
