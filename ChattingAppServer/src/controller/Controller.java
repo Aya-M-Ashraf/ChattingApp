@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Alert;
 import model.dao.ManipulateDB;
 import model.dao.QueryDB;
 import model.pojo.User;
@@ -54,10 +55,15 @@ public class Controller {
         User user;
         user = manipulateDBObj.selectAllfromUserWhereEmail(eMail);
         if (user == null) {
-            System.out.println("no user with this mail is found");
+            //System.out.println("no user with this mail is found");
             return false;
         } else {
-            System.out.println("user with this mail is found");
+            //System.out.println("user with this mail is found");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("WRARING");
+            alert.setHeaderText(null);
+            alert.setContentText("User with this mail is found");
+            alert.showAndWait();
             return true;
         }
     }
@@ -157,6 +163,10 @@ public class Controller {
         return false;
     }
 
+    public ArrayList<User> getAllUserInfo() {
+        return queryDB.selectAllUsersInfo();
+    }
+
     public ArrayList<User> getAllUsers() {
         return queryDB.selectAllUsers();
     }
@@ -180,7 +190,12 @@ public class Controller {
                     clientServices.recieveAd(text);
                 }
             } else {
-                System.out.println("There is no online users.");
+                //System.out.println("There is no online users.");
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("WRARING");
+                alert.setHeaderText(null);
+                alert.setContentText("There is no online users");
+                alert.showAndWait();
             }
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
