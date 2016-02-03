@@ -12,7 +12,7 @@
       <Label fx:id="introLabel" layoutX="25.0" layoutY="14.0" prefHeight="39.0" prefWidth="328.0" text="This Email sent you friend Request." />
       <Label fx:id="endLabel" layoutX="25.0" layoutY="84.0" prefHeight="49.0" prefWidth="380.0" text="If you want to confirm this request click confirm, else click cancel" wrapText="true" />
       <Label id="requestLabel" fx:id="requestLabel" layoutX="25.0" layoutY="53.0" prefHeight="17.0" prefWidth="209.0" text="RequestLabel" />
-      <Button id="confirmButton" fx:id="confirmButton" layoutX="84.0" layoutY="149.0" mnemonicParsing="false" onMouseClicked="#confirmFriendRequestHandel" prefHeight="31.0" prefWidth="69.0" text="Confirm" />
-      <Button id="cancelButton" fx:id="cancelButton" layoutX="234.0" layoutY="149.0" mnemonicParsing="false" onMouseClicked="#cancelFriendRequestHandel" prefHeight="31.0" prefWidth="69.0" text="Cancel" />
+      <Button id="confirmButton" fx:id="confirmButton" layoutX="84.0" layoutY="157.0" mnemonicParsing="false" onMouseClicked="#confirmFriendRequestHandel" prefHeight="23.0" prefWidth="69.0" text="Confirm" />
+      <Button id="cancelButton" fx:id="cancelButton" layoutX="234.0" layoutY="157.0" mnemonicParsing="false" onMouseClicked="#cancelFriendRequestHandel" prefHeight="23.0" prefWidth="69.0" text="Cancel" />
    </children>
 </AnchorPane>

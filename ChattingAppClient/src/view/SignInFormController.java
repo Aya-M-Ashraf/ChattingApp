@@ -109,7 +109,7 @@ public class SignInFormController implements Initializable, FXMLControllersInter
     }
     
     @Override
-    public void updateList() {
+    public void updateList(User user) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

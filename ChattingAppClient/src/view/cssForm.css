@@ -25,7 +25,7 @@
     -fx-font-size:12;
     -fx-background-color: transparent;
     -fx-border-color: #cbc4f2;
-    -fx-border-radius: 16;
+    -fx-border-radius: 16; 
 } 
 .combo-box{
     -fx-font-size:12;
@@ -36,7 +36,6 @@
 .label{
     -fx-font-size:16;
     -fx-background-color: transparent;
-    
 }
 .menu-bar{
     -fx-font-size:12;

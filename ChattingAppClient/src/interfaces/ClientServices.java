@@ -12,7 +12,7 @@ import java.util.Vector;
 public interface ClientServices extends Remote {
     public String getEmail() throws RemoteException;
     public void recieveAd(String adMessege) throws RemoteException;
-    public void recieveMsg(String text,String sender) throws RemoteException;
+    public void recieveMsg(String text,String sender,String reciever) throws RemoteException;
     public void recieveGroupChat(int ID,ArrayList<String> arrayList) throws RemoteException;
     public void recieveGroupChatMsg(int ID, String msg, String senderEmail)throws RemoteException;
     public void updateRoomList(int ID, ArrayList<String> friends)throws RemoteException;

@@ -35,20 +35,20 @@ public class AddFriendFormController implements Initializable , FXMLControllersI
         userEmail = text;
     }
     
-    public void handleAddFirendButton(){
-        
+    public void handleAddFirendButton(){      
         String emailToAdd = emailTextField.getText();
         controller.addFriendToUser(userEmail,emailToAdd);
         addFriendButton.setDisable(true);
+        addFriendButton.getScene().getWindow().hide();
     }   
 
     @Override
     public void displayAdd(String adMessege) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
-    public void updateList() {
+    public void updateList(User user) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
    

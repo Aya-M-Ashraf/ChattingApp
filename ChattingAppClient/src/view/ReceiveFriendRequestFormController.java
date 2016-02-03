@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
 import controller.Controller;
@@ -33,6 +28,7 @@ public class ReceiveFriendRequestFormController implements Initializable {
 
     Controller controller;
     String myEmail;
+    String senderMail;
     //MainPageFormController mainPageFormController = new MainPageFormController();
 
     /**
@@ -43,16 +39,17 @@ public class ReceiveFriendRequestFormController implements Initializable {
         // TODO
     }
 
-    public void initData(String request, String myEmail, Controller controller) {
+    public void initData(String sender, String myEmail, Controller controller) {
         this.controller = controller;
-        requestLabel.setText(request);
+        requestLabel.setText(sender);
         this.myEmail = myEmail;
+        this.senderMail = sender;
     }
 
     public void confirmFriendRequestHandel() {
         System.out.println(requestLabel.getText());
         System.out.println(myEmail);
-        controller.confirmReceivedFriendRequest(requestLabel.getText(), myEmail);
+        controller.confirmReceivedFriendRequest(senderMail, myEmail);
         confirmButton.setDisable(true);
         cancelButton.setDisable(true);
         introLabel.setText(null);
@@ -67,8 +64,9 @@ public class ReceiveFriendRequestFormController implements Initializable {
         confirmButton.setDisable(true);
         introLabel.setText("Request has been deleted.");
         endLabel.setText(null);
-        controller.updateMyFriendsList(myEmail);
-        controller.updateMyFriendsList(requestLabel.getText());
+        endLabel.getScene().getWindow().hide();
+        //controller.updateMyFriendsList(controller.);
+        //controller.updateMyFriendsList(requestLabel.getText());
     }
 
 }

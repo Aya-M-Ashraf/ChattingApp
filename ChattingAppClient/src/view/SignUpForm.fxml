@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
@@ -16,8 +17,8 @@
       <Label layoutX="19.0" layoutY="213.0" prefHeight="25.0" prefWidth="63.0" text="E-mail :" />
       <Label layoutX="19.0" layoutY="256.0" prefHeight="25.0" prefWidth="70.0" text="Gender :" />
       <Label layoutX="18.0" layoutY="305.0" prefHeight="25.0" prefWidth="82.0" text="Password :" />
-      <Label layoutX="22.0" layoutY="354.0" prefHeight="25.0" prefWidth="70.0" text="Country :" />
-      <Label layoutX="25.0" layoutY="409.0" prefHeight="25.0" prefWidth="40.0" text="City :" />
+      <Label layoutX="30.0" layoutY="367.0" prefHeight="25.0" prefWidth="70.0" text="Country :" />
+      <Label layoutX="31.0" layoutY="408.0" prefHeight="25.0" prefWidth="40.0" text="City :" />
       <Label layoutX="31.0" layoutY="443.0" prefHeight="25.0" prefWidth="82.0" text="Question :" />
       <Label layoutX="33.0" layoutY="484.0" prefHeight="25.0" prefWidth="82.0" text="Answer :" />
       <ComboBox fx:id="country" layoutX="153.0" layoutY="365.0" prefHeight="28.0" prefWidth="190.0" />
@@ -29,12 +30,17 @@
       <TextField fx:id="question" layoutX="154.0" layoutY="441.0" prefHeight="28.0" prefWidth="190.0" />
       <TextField fx:id="answer" layoutX="154.0" layoutY="482.0" prefHeight="28.0" prefWidth="190.0" />
       <ComboBox fx:id="gender" layoutX="150.0" layoutY="255.0" prefHeight="28.0" prefWidth="190.0" />
-      <Button layoutX="120.0" layoutY="530.0" mnemonicParsing="false" onAction="#onSubmit" prefHeight="42.0" prefWidth="118.0" text="submit" />
+      <Button layoutX="129.0" layoutY="530.0" mnemonicParsing="false" onAction="#onSubmit" prefHeight="14.0" prefWidth="98.0" text="submit" />
       <Label fx:id="errorMessageLabel" layoutX="28.0" layoutY="14.0" prefHeight="18.0" prefWidth="300.0" textFill="#ee0f0f" />
-      <ImageView fitHeight="74.0" fitWidth="82.0" layoutX="144.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="88.0" fitWidth="98.0" layoutX="139.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/pufflogo.png" />
          </image>
       </ImageView>
+      <Hyperlink fx:id="signInHyperlink" layoutX="103.0" layoutY="567.0" text="Go Back to Sign In" onAction="#handleSignInHyperLink" >
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Hyperlink>
    </children>
 </AnchorPane>

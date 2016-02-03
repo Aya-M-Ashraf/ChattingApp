@@ -5,6 +5,8 @@
  */
 package view;
 
+import model.pojo.User;
+
 /**
  *
  * @author KHoloud
@@ -12,6 +14,6 @@ package view;
 public interface FXMLControllersInterface {
     
     public void displayAdd(String adMessege);
-    public void updateList();
+    public void updateList(User user);
 
 }

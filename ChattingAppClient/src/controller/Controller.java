@@ -31,7 +31,6 @@ import services.ClientServicesImpl;
 import view.ChatBoxController;
 import view.FXMLControllersInterface;
 import view.GroupChatBoxController;
-import view.MainPageFormController;
 import view.ReceiveFriendRequestFormController;
 
 public class Controller extends Application {
@@ -104,7 +103,6 @@ public class Controller extends Application {
             } else {
                 if (user.getPassword().equals(password)) {
                     //password is correct
-                    System.out.println(user.getFirstName() + " u r logged in");
                     if (serverSignInRef.updateUserIsOnlineByEmail(email)) {
                         user.setIsOnline(true);
                         System.out.println("isonline updated" + user.getEmail() + " " + user.isIsOnline());
@@ -122,6 +120,16 @@ public class Controller extends Application {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    public User getUserByEmail(String email) {
+        try {
+            user = serverSignInRef.signIn(email, null);
+        } catch (RemoteException ex) {
+            System.out.println("can't use sign In from server");
+            ex.printStackTrace();
+        }
+        return user;
     }
 
     public boolean signOutOneUser(String eMail) {
@@ -228,7 +236,7 @@ public class Controller extends Application {
                         friendlistUser.setStatus(newStatus);
                     }
                 }
-                currentControllersMap.get("mainPageFormController").updateList();
+                currentControllersMap.get("mainPageFormController").updateList(user);
                 System.out.println("List updatedddddddd");
             });
         }
@@ -269,15 +277,16 @@ public class Controller extends Application {
         }
     }
 
-    public boolean confirmReceivedFriendRequest(String friendEmail, String email) {
+    public boolean confirmReceivedFriendRequest(String senderEmail, String email) {
         try {
-            if (receiveFriendRequestService.confirmFriendReuest(friendEmail, email)) {
-                System.out.println("Confirmed.");
-                if (!Platform.isFxApplicationThread()) {
-                    Platform.runLater(() -> {
-                        updateMyFriendsList(email);
-                        updateMyFriendsList(friendEmail);
-                    });
+            if (receiveFriendRequestService.confirmFriendReuest(senderEmail, email)) {
+                user.getFriendsList().add(getUserByEmail(senderEmail));
+                System.out.println("add " + senderEmail + " to " + user.getEmail() + " = " + email);
+                updateMyFriendsList(user);
+                System.out.println("finished updatelist to" + user.getEmail());
+                System.out.println("inside confirmFriendRequest) userFriendList is : ");
+                for (User friend : user.getFriendsList()) {
+                    System.out.println(friend.getEmail());
                 }
                 return true;
             }
@@ -287,17 +296,17 @@ public class Controller extends Application {
         return false;
     }
 
-    public void updateMyFriendsList(String email) {
+    public void updateMyFriendsList(User user) {
         if (!Platform.isFxApplicationThread()) {
             Platform.runLater(() -> {
-                currentControllersMap.get("mainPageFormController").updateList();
+                currentControllersMap.get("mainPageFormController").updateList(user);
             });
         }
     }
 
-    public void sendMsg(String text, String reciever) {
+    public void sendMsg(String text, String reciever, String sender) {
         try {
-            chattingRef.sendMsg(text, reciever, user.getEmail());
+            chattingRef.sendMsg(text, reciever, sender);
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -311,10 +320,15 @@ public class Controller extends Application {
         }
     }
 
-    public void receiveMsgFromUser(String text, String sender) {
+    public void receiveMsgFromUser(String text, String sender, String reciever) {
+
         if (currentChatControllersMap.containsKey(sender)) {
             if (!Platform.isFxApplicationThread()) {
                 Platform.runLater(() -> currentChatControllersMap.get(sender).recieveMsg(text, sender));
+            }
+        } else if (sender.equals(user.getEmail())) {
+            if (!Platform.isFxApplicationThread()) {
+                Platform.runLater(() -> currentChatControllersMap.get(reciever).recieveMsg(text, sender));
             }
         } else {
             if (!Platform.isFxApplicationThread()) {

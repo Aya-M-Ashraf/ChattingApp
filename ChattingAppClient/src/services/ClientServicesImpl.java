@@ -60,8 +60,8 @@ public class ClientServicesImpl extends UnicastRemoteObject implements ClientSer
 
 
     @Override
-    public void recieveMsg(String text, String sender) throws RemoteException {
-        controller.receiveMsgFromUser(text,sender);
+    public void recieveMsg(String text, String sender ,String receiever) throws RemoteException {
+        controller.receiveMsgFromUser(text,sender,receiever);
     }
 
     @Override
@@ -161,8 +161,8 @@ public class ClientServicesImpl extends UnicastRemoteObject implements ClientSer
     }
 
     @Override
-    public void getFriendRequest(String userEmail) throws RemoteException {
-        controller.getOfflineFriendRequest(userEmail);
+    public void getFriendRequest(String sender) throws RemoteException {
+        controller.getOfflineFriendRequest(sender);
     }
     
 }

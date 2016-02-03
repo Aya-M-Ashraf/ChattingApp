@@ -109,10 +109,15 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
         statusComboBox.setValue(user.getStatus());
         imageView.setImage(new Image(getClass().getResource("images/default.png").toExternalForm()));
         controller.getOfflineFriendRequest(controller.getEmail());
-        updateList();
+        updateList(user);
     }
 
-    public void updateList() {
+    public void updateList(User user) {
+        this.user = user;
+        System.out.println("inside updateList() userFriendList is : ");
+        for(User friend : user.getFriendsList())
+            System.out.println(friend.getEmail());
+        
         ObservableList<User> observableList = FXCollections.observableList(user.getFriendsList());
         listView.setItems(observableList);
         imageView.setImage(new Image(getClass().getResource("images/default.png").toExternalForm()));

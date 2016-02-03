@@ -3,7 +3,6 @@ package view;
 import controller.Controller;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Observable;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -60,5 +59,6 @@ public class FriendsGroupAdderController implements Initializable {
           list.add((String)obj);
         }
         controller.addFriendsToChatRoom(list,chatRoomID);
+        listView.getScene().getWindow().hide();
     }
 }

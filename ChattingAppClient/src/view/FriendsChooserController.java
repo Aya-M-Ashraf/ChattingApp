@@ -58,6 +58,7 @@ public class FriendsChooserController implements Initializable {
         }
         list.add(user.getEmail());
         controller.createGroupChat(list);  
+        listView.getScene().getWindow().hide();
     }
     
 }

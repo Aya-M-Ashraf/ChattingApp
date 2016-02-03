@@ -12,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import model.pojo.User;
-
 import java.io.*;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
@@ -52,6 +51,8 @@ public class ChatBoxController implements Initializable {
     @FXML
     private Label label;
     @FXML
+    private Label firstNamelabel;
+    @FXML
     private TextField chatTextField;
     @FXML
     private TextArea textArea;
@@ -77,6 +78,7 @@ public class ChatBoxController implements Initializable {
     public void passUser(User user) {
         this.friend = user;
         label.setText(user.getEmail());
+        firstNamelabel.setText(user.getFirstName());
         //    createXMLTree();
     }
 
@@ -87,8 +89,8 @@ public class ChatBoxController implements Initializable {
     @FXML
     public void handleSendButton() {
         if (!chatTextField.getText().equals("")) {
-            controller.sendMsg(chatTextField.getText(), friend.getEmail());
-            textArea.appendText("\n"+controller.getEmail() + ": " + chatTextField.getText());
+            controller.sendMsg(chatTextField.getText(), friend.getEmail(),controller.getEmail());
+            //textArea.appendText("\n"+controller.getEmail() + ": " + chatTextField.getText());
             buildXMLElement(chatTextField.getText(), controller.getEmail());
             chatTextField.setText("");
         }
@@ -97,7 +99,9 @@ public class ChatBoxController implements Initializable {
     public void recieveMsg(String msg, String sender) {
         textArea.appendText(sender + ": " + msg);
         textArea.appendText("\n");
-        buildXMLElement(msg, friend.getEmail());
+        if (!sender.equals(controller.getEmail())) {
+            buildXMLElement(msg, friend.getEmail());
+        }
     }
 
     public void onSendFile() {
@@ -123,8 +127,6 @@ public class ChatBoxController implements Initializable {
                 Logger.getLogger(ChatBoxController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-//            JOptionPane.showConfirmDialog(null,
-//               friend.getEmail()+ "refused to download the file !", null, JOptionPane.OK_OPTION);
             System.out.println("the peer to peer client is equal null");
         }
     }
@@ -223,7 +225,7 @@ public class ChatBoxController implements Initializable {
             FileChooser fileChooser = new FileChooser();
             File myFile = fileChooser.showSaveDialog(label.getScene().getWindow());
             if (myFile != null) {
-                String path = myFile.getAbsolutePath()+ ".html";
+                String path = myFile.getAbsolutePath() + ".html";
                 Source sourceXSLT = new StreamSource(new File("src/view/MessageXSLT.xsl"));
                 Transformer transform = transformFactory.newTransformer(sourceXSLT);
                 transform.setOutputProperty(OutputKeys.INDENT, "yes");
