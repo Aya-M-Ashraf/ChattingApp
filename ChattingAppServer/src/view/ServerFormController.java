@@ -12,8 +12,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
-//import javafx.scene.control.Alert;
-//import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
@@ -155,36 +155,36 @@ public class ServerFormController implements Initializable {
                             controller.insertUser(user);
                         };
                     } else {
-                        //System.out.println("password is invalid");
-//                        Alert alert = new Alert(AlertType.WARNING);
-//                        alert.setTitle("WRARING");
-//                        alert.setHeaderText(null);
-//                        alert.setContentText("password should contain capital letter , small letter , special character , numbers and at least 8 digits");
-//                        alert.showAndWait();
+                        System.out.println("password is invalid");
+                        Alert alert = new Alert(AlertType.WARNING);
+                        alert.setTitle("WRARING");
+                        alert.setHeaderText(null);
+                        alert.setContentText("password should contain capital letter , small letter , special character , numbers and at least 8 digits");
+                        alert.showAndWait();
                     }
                 } else {
-                    //System.out.println("e_mail is invalid");
-//                    Alert alert = new Alert(AlertType.WARNING);
-//                    alert.setTitle("WRARING");
-//                    alert.setHeaderText(null);
-//                    alert.setContentText("E-Mail is invalid");
-//                    alert.showAndWait();
+                    System.out.println("e_mail is invalid");
+                    Alert alert = new Alert(AlertType.WARNING);
+                    alert.setTitle("WRARING");
+                    alert.setHeaderText(null);
+                    alert.setContentText("E-Mail is invalid");
+                    alert.showAndWait();
                 }
             } else {
-//                //System.out.println("last name is false");
-//                Alert alert = new Alert(AlertType.WARNING);
-//                alert.setTitle("WRARING");
-//                alert.setHeaderText(null);
-//                alert.setContentText("Last name is invalid");
-//                alert.showAndWait();
+                //System.out.println("last name is false");
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.setTitle("WRARING");
+                alert.setHeaderText(null);
+                alert.setContentText("Last name is invalid");
+                alert.showAndWait();
             }
         } else {
-//            //System.out.println("first name is incorrect");
-//            Alert alert = new Alert(AlertType.WARNING);
-//            alert.setTitle("WRARING");
-//            alert.setHeaderText(null);
-//            alert.setContentText("First name is invalid");
-//            alert.showAndWait();
+            //System.out.println("first name is incorrect");
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("WRARING");
+            alert.setHeaderText(null);
+            alert.setContentText("First name is invalid");
+            alert.showAndWait();
         }
     }
 

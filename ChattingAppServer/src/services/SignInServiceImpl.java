@@ -35,6 +35,7 @@ public class SignInServiceImpl extends UnicastRemoteObject implements SignInServ
     @Override
     public void registerUser(ClientServices userInterface) throws RemoteException {
         controller.getUsersInterfacesVector().add(userInterface);
+        controller.tellMyFriendsIamOnline(userInterface);
         System.out.println("client added " + controller.getUsersInterfacesVector().size());
     }
 

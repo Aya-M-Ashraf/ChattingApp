@@ -12,7 +12,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-//import javafx.scene.control.Alert;
+import javafx.scene.control.Alert;
 import model.dao.ManipulateDB;
 import model.dao.QueryDB;
 import model.pojo.User;
@@ -21,6 +21,7 @@ import services.SignInServiceImpl;
 import services.SignUpServiceImpl;
 import services.ChangeStatusServiceImpl;
 import services.ChattingServiceImpl;
+import services.ForgetPasswordServiceImpl;
 import services.ReceiveFriendRequestServiceImpl;
 import services.SignOutServiceImpl;
 
@@ -59,12 +60,12 @@ public class Controller {
             //System.out.println("no user with this mail is found");
             return false;
         } else {
-//            //System.out.println("user with this mail is found");
-//            Alert alert = new Alert(Alert.AlertType.WARNING);
-//            alert.setTitle("WRARING");
-//            alert.setHeaderText(null);
-//            alert.setContentText("User with this mail is found");
-//            alert.showAndWait();
+            //System.out.println("user with this mail is found");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("WRARING");
+            alert.setHeaderText(null);
+            alert.setContentText("User with this mail is found");
+            alert.showAndWait();
             return true;
         }
     }
@@ -125,6 +126,9 @@ public class Controller {
             ReceiveFriendRequestServiceImpl receiveFriendRequestServiceImplRef = new ReceiveFriendRequestServiceImpl(this);
             registry.rebind("ReceiveFriendRequestService", receiveFriendRequestServiceImplRef);
 
+            ForgetPasswordServiceImpl forgetPasswordServiceImplRef = new ForgetPasswordServiceImpl(this);
+            registry.rebind("ForgetPasswordService", forgetPasswordServiceImplRef);
+
         } catch (RemoteException ex) {
             System.out.println("can't start");
             ex.printStackTrace();
@@ -136,7 +140,7 @@ public class Controller {
 
             Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5000);
             System.setProperty("java.rmi.server.hostname", "127.0.0.1");
-            
+
             registry.unbind("SignInService");
             registry.unbind("SignOutService");
             registry.unbind("SignUpService");
@@ -144,6 +148,7 @@ public class Controller {
             registry.unbind("ChangeStatusService");
             registry.unbind("ChattingService");
             registry.unbind("ReceiveFriendRequestService");
+            registry.unbind("ForgetPasswordService");
 
         } catch (RemoteException ex) {
             ex.printStackTrace();
@@ -200,12 +205,12 @@ public class Controller {
                     clientServices.recieveAd(text);
                 }
             } else {
-//                //System.out.println("There is no online users.");
-//                Alert alert = new Alert(Alert.AlertType.WARNING);
-//                alert.setTitle("WRARING");
-//                alert.setHeaderText(null);
-//                alert.setContentText("There is no online users");
-//                alert.showAndWait();
+                //System.out.println("There is no online users.");
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("WRARING");
+                alert.setHeaderText(null);
+                alert.setContentText("There is no online users");
+                alert.showAndWait();
             }
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
@@ -348,6 +353,28 @@ public class Controller {
                     client.getFriendRequest(sender);
                 }
             }
+        } catch (RemoteException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public User selectUserWhereEmail(String email) {
+        return manipulateDBObj.selectAllFromUserWhereEmailwithoutFriendList(email);
+    }
+    
+    public void tellMyFriendsIamOnline(ClientServices userInterface) {
+        try {
+            ArrayList<User> myfriends = userInterface.getAllMyFriends();
+            for (User myUser : myfriends) {
+                for (ClientServices onlineUser : usersInterfacesVector) {
+                    if (myUser.getEmail().equals(onlineUser.getEmail())) {
+                        onlineUser.setFriendOnline(userInterface.getEmail());
+                        //onlineUser.popUpOnlineNotification(userInterface.getEmail()); //pop up to online that i'm online
+                    }
+                }
+
+            }
+
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
