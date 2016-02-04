@@ -15,5 +15,8 @@ public interface FXMLControllersInterface {
     
     public void displayAdd(String adMessege);
     public void updateList(User user);
+    public void updateListView();
+
+    public void passUser(User user);
 
 }

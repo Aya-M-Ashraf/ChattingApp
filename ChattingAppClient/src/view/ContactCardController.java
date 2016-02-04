@@ -17,19 +17,23 @@ import model.pojo.User;
 public class ContactCardController implements Initializable {
 
     @FXML
-    private Label emailLabel, genderLabel, statusLabel;
+    private Label emailLabel, checkOnLineLabel, statusLabel;
+    @FXML
     private ImageView imageView;
 
     Controller controller;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+    public void initialize(URL url, ResourceBundle rb) {    
     }
 
     void passUser(User item, Controller controller) {
         emailLabel.setText(item.getEmail());
-        genderLabel.setText(item.getGender());
+        if(item.isIsOnline()){
+            checkOnLineLabel.setText("OnLine");
+        }else{
+            checkOnLineLabel.setText("Offline");
+        }
         statusLabel.setText(item.getStatus());
         this.controller = controller;
         if ("Available".equals(item.getStatus()) && item.isIsOnline() == true) {

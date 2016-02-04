@@ -6,6 +6,7 @@ import interfaces.SignUpServerService;
 import interfaces.ChangeStatusService;
 import interfaces.ChattingServerService;
 import interfaces.ClientServices;
+import interfaces.ForgetPasswordService;
 import interfaces.ReceiveFriendRequestService;
 import interfaces.SignOutServerService;
 import java.io.IOException;
@@ -43,6 +44,7 @@ public class Controller extends Application {
     private ChangeStatusService changeStatusRef;
     private ChattingServerService chattingRef;
     private ReceiveFriendRequestService receiveFriendRequestService;
+    private ForgetPasswordService forgetPasswordService;
 
     User user;
     Map<String, FXMLControllersInterface> currentControllersMap = new HashMap<>();
@@ -65,6 +67,7 @@ public class Controller extends Application {
             changeStatusRef = (ChangeStatusService) registry.lookup("ChangeStatusService");
             chattingRef = (ChattingServerService) registry.lookup("ChattingService");
             receiveFriendRequestService = (ReceiveFriendRequestService) registry.lookup("ReceiveFriendRequestService");
+            forgetPasswordService = (ForgetPasswordService) registry.lookup("ForgetPasswordService");
 
         } catch (RemoteException | NotBoundException ex) {
             System.out.println("can't lookup from registry");
@@ -195,8 +198,8 @@ public class Controller extends Application {
 
     public void registerMe() {
         try {
-
             serverSignInRef.registerUser(clientServicesImpl);
+            
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -282,7 +285,7 @@ public class Controller extends Application {
             if (receiveFriendRequestService.confirmFriendReuest(senderEmail, email)) {
                 user.getFriendsList().add(getUserByEmail(senderEmail));
                 System.out.println("add " + senderEmail + " to " + user.getEmail() + " = " + email);
-                updateMyFriendsList(user);
+                updateMyFriendsList();
                 System.out.println("finished updatelist to" + user.getEmail());
                 System.out.println("inside confirmFriendRequest) userFriendList is : ");
                 for (User friend : user.getFriendsList()) {
@@ -296,10 +299,11 @@ public class Controller extends Application {
         return false;
     }
 
-    public void updateMyFriendsList(User user) {
+    public void updateMyFriendsList() {
         if (!Platform.isFxApplicationThread()) {
             Platform.runLater(() -> {
-                currentControllersMap.get("mainPageFormController").updateList(user);
+                currentControllersMap.get("mainPageFormController").passUser(user);
+                currentControllersMap.get("mainPageFormController").updateListView(); 
             });
         }
     }
@@ -443,5 +447,26 @@ public class Controller extends Application {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
         return clientServices;
+    }
+
+    public User forgetPasswordHandle(String email) {
+        try {
+            return forgetPasswordService.selectUserWhereEmail(email);
+        } catch (RemoteException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public ArrayList<User> getAllMyFriends() {
+        return user.getFriendsList();
+    }
+
+    public void setFriendOnline(String friendMail) {
+        for(User friend : user.getFriendsList()){
+            if(friend.getEmail().equals(friendMail))
+                friend.setIsOnline(true);
+        }
+        updateMyFriendsList();
     }
 }

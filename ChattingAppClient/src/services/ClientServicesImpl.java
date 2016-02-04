@@ -19,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.pojo.User;
 import view.YesNoBoxController;
 
 /**
@@ -45,12 +46,6 @@ public class ClientServicesImpl extends UnicastRemoteObject implements ClientSer
     @Override
     public ClientServices receiveMyFriendchangeStatus(ClientServices clientService) {
         return clientService;
-    }
-
-
-    @Override
-    public Vector<ClientServices> getAllMyFriends(ClientServices clientService) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -163,6 +158,21 @@ public class ClientServicesImpl extends UnicastRemoteObject implements ClientSer
     @Override
     public void getFriendRequest(String sender) throws RemoteException {
         controller.getOfflineFriendRequest(sender);
+    }
+
+    @Override
+    public ArrayList<User> getAllMyFriends() throws RemoteException {
+        return controller.getAllMyFriends();
+    }
+
+    @Override
+    public void setFriendOnline(String friendMail) throws RemoteException {
+        controller.setFriendOnline(friendMail);
+    }
+
+    @Override
+    public void upDateMainList() throws RemoteException {
+        controller.updateMyFriendsList();
     }
     
 }

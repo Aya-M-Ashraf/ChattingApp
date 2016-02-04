@@ -77,7 +77,6 @@ public class SignInFormController implements Initializable, FXMLControllersInter
                     mainPageController.passUser(user);
                     FXMLControllersInterface mainPageFormController = loader.getController();
                     controller.getCurrentControllers().put("mainPageFormController",mainPageFormController);
-                                        
                     Scene homePageScene = new Scene(homePageParent);
                     Stage homeStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     homeStage.setScene(homePageScene);
@@ -103,6 +102,18 @@ public class SignInFormController implements Initializable, FXMLControllersInter
         }
     }
 
+    public void handleForgetPasswordLink(MouseEvent event) {
+        try {
+            Parent homePageParent = FXMLLoader.load(getClass().getResource("EnterEmailForm.fxml"));
+            Scene homePageScene = new Scene(homePageParent);
+            Stage homeStage = new Stage();
+            homeStage.setScene(homePageScene);
+            homeStage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(SignInFormController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     @Override
     public void displayAdd(String adMessege) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -110,6 +121,16 @@ public class SignInFormController implements Initializable, FXMLControllersInter
     
     @Override
     public void updateList(User user) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void updateListView() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void passUser(User user) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

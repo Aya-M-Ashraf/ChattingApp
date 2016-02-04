@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -15,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -79,7 +81,6 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
     public void onSignOut(MouseEvent event) {
         try {
             user.setIsOnline(false);
-            System.out.println("sign out button pressed");
             Parent signInPage = FXMLLoader.load(getClass().getResource("SignInForm.fxml"));
             Scene signInPageScene = new Scene(signInPage);
             Stage homeStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -99,7 +100,6 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
         userStatus = statusComboBox.getSelectionModel().getSelectedItem();
         System.out.println(userStatus);
         System.out.println("MAIL " + nameLabel.getText());
-        //Controller controller = new Controller();
         controller.updateUserStatus(nameLabel.getText(), userStatus);
     }
 
@@ -109,15 +109,15 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
         statusComboBox.setValue(user.getStatus());
         imageView.setImage(new Image(getClass().getResource("images/default.png").toExternalForm()));
         controller.getOfflineFriendRequest(controller.getEmail());
-        updateList(user);
+        updateListView();
     }
 
     public void updateList(User user) {
         this.user = user;
-        System.out.println("inside updateList() userFriendList is : ");
-        for(User friend : user.getFriendsList())
+        for (User friend : user.getFriendsList()) {
             System.out.println(friend.getEmail());
-        
+        }
+
         ObservableList<User> observableList = FXCollections.observableList(user.getFriendsList());
         listView.setItems(observableList);
         imageView.setImage(new Image(getClass().getResource("images/default.png").toExternalForm()));
@@ -132,34 +132,40 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
                             setGraphic(null);
                         } else {
                             try {
-                                //FXMLLoader loader = new FXMLLoader(getClass().getResource("ContactCard.fxml"));
-                                //Parent root = loader.load();
-                                //ContactCardController mainPageController = loader.getController();
-                                //mainPageController.passUser(item, controller);
-                                Parent root = FXMLLoader.load(getClass().getResource("ContactCard.fxml"));
-
-                                Label emailLabel = (Label) root.lookup("#emailLabel");
-                                emailLabel.setText(item.getEmail());
-
-                                Label genderLabel = (Label) root.lookup("#genderLabel");
-                                genderLabel.setText(item.getGender());
-
-                                Label statusLabel = (Label) root.lookup("#statusLabel");
-                                statusLabel.setText(item.getStatus());
-
-                                ImageView imageView = (ImageView) root.lookup("#imageView");
-                                if ("Available".equals(item.getStatus()) && item.isIsOnline() == true) {
-                                    imageView.setImage(new Image(getClass().getResource("images/Online_status.png").toExternalForm()));
-                                } else if ("Away".equals(item.getStatus()) && item.isIsOnline() == true) {
-                                    imageView.setImage(new Image(getClass().getResource("images/Away_status.png").toExternalForm()));
-                                } else if ("Busy".equals(item.getStatus()) && item.isIsOnline() == true) {
-                                    imageView.setImage(new Image(getClass().getResource("images/Busy_status.png").toExternalForm()));
-                                } else if (item.isIsOnline() == false) {
-                                    imageView.setImage(new Image(getClass().getResource("images/Offline_status.png").toExternalForm()));
-                                } else {
-                                    imageView.setImage(new Image(getClass().getResource("images/default.png").toExternalForm()));
-                                }
-
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource("ContactCard.fxml"));
+                                Parent root = loader.load();
+                                ContactCardController mainPageController = loader.getController();
+                                mainPageController.passUser(item, controller);
+                                setGraphic(root);
+                            } catch (IOException ex) {
+                                Logger.getLogger(view.MainPageFormController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }
+                };
+            }
+        });
+    }
+    
+    public void updateListView() {
+        ObservableList<User> observableList = FXCollections.observableList(user.getFriendsList());
+        listView.setItems(observableList);
+        imageView.setImage(new Image(getClass().getResource("images/default.png").toExternalForm()));
+        listView.setCellFactory(new Callback<ListView<User>, ListCell<User>>() {
+            @Override
+            public ListCell<User> call(ListView<User> userLists) {
+                return new ListCell<User>() {
+                    @Override
+                    protected void updateItem(User item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item == null || empty) {
+                            setGraphic(null);
+                        } else {
+                            try {
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource("ContactCard.fxml"));
+                                Parent root = loader.load();
+                                ContactCardController mainPageController = loader.getController();
+                                mainPageController.passUser(item, controller);
                                 setGraphic(root);
                             } catch (IOException ex) {
                                 Logger.getLogger(view.MainPageFormController.class.getName()).log(Level.SEVERE, null, ex);
@@ -177,7 +183,7 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
 
     public void handleListClicks(MouseEvent event) {
         User user = (User) listView.getSelectionModel().getSelectedItem();
-        if (user != null) {
+        if (user != null && user.isIsOnline()) {
             try {
                 if (controller.getCurrentChatControllersMap().containsKey(user.getEmail())) { //getting focus to it
                     controller.getCurrentChatControllersMap().get(user.getEmail()).getLabel().getScene().getWindow().requestFocus();
@@ -202,6 +208,12 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
             } catch (IOException ex) {
                 Logger.getLogger(MainPageFormController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("WRARING");
+            alert.setHeaderText(null);
+            alert.setContentText("Your friend is offline");
+            alert.showAndWait();
         }
     }
 

@@ -14,7 +14,7 @@
       <PasswordField id="passwordTextField" fx:id="passwordTextField" layoutX="110.0" layoutY="201.0" prefHeight="25.0" prefWidth="136.0" />
       <Label id="passwordLabel" fx:id="passwordLabel" layoutX="22.0" layoutY="195.0" prefHeight="17.0" prefWidth="59.0" text="Password" AnchorPane.bottomAnchor="356.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="195.0" />
       <Button id="signInButtton" fx:id="signInButtton" layoutX="104.0" layoutY="254.0" mnemonicParsing="false" onMouseClicked="#handleSignInButton" prefHeight="25.0" prefWidth="69.0" text="Sign In" AnchorPane.bottomAnchor="308.0" AnchorPane.leftAnchor="104.0" AnchorPane.rightAnchor="103.0" AnchorPane.topAnchor="254.0" />
-      <Hyperlink id="forgotPasswordLink" fx:id="forgotPasswordLink" alignment="CENTER" layoutX="40.0" layoutY="367.0" prefHeight="45.0" prefWidth="197.0" text="i forgot my password" AnchorPane.bottomAnchor="178.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="367.0" />
+      <Hyperlink id="forgotPasswordLink" fx:id="forgotPasswordLink" alignment="CENTER" layoutX="40.0" layoutY="367.0" prefHeight="45.0" prefWidth="197.0" text="i forgot my password" AnchorPane.bottomAnchor="178.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="39.0" AnchorPane.topAnchor="367.0" onMouseClicked="#handleForgetPasswordLink" />
       <Hyperlink id="signUpLink" fx:id="signUpLink" alignment="CENTER" layoutX="90.0" layoutY="322.0" onMouseClicked="#handleSignUpLink" prefHeight="45.0" prefWidth="97.0" text="Sign Up " AnchorPane.bottomAnchor="223.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="89.0" AnchorPane.topAnchor="322.0" />
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="276.0">
         <menus>
