@@ -28,6 +28,36 @@ public class QueryDB {
         connection = DBConnection.getConnection();
     }
 
+    public ArrayList<User> selectAllUsersInfo() {
+
+        ArrayList<User> AllUsers = new ArrayList<User>();
+
+        User user;
+
+        try {
+            PreparedStatement pst = connection.prepareStatement("select Fname , Lname , Country , city , Online , Status , Gender from user");
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                user = new User();
+                user.setFirstName(rs.getString(1));
+                user.setLastName(rs.getString(2));
+                user.setCountry(rs.getString(3));
+                user.setCity(rs.getString(4));
+                user.setIsOnline(rs.getBoolean(5));
+                user.setStatus(rs.getString(6));
+                user.setGender(rs.getString(7));
+                AllUsers.add(user);
+            }
+            //System.out.println(AllUsers.get(2).getFirstName());
+
+            return AllUsers;
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
     public ArrayList<User> selectAllUsers() {
 
         ArrayList<User> AllUsers = new ArrayList<User>();
