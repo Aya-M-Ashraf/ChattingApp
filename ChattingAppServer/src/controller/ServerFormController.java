@@ -1,4 +1,4 @@
-package view;
+package controller;
 
 import controller.Controller;
 import java.net.URL;
@@ -23,6 +23,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.pojo.User;
+import view.Validation;
 
 public class ServerFormController implements Initializable {
 
@@ -94,8 +95,11 @@ public class ServerFormController implements Initializable {
         try {
             registry = LocateRegistry.createRegistry(5000);
         } catch (RemoteException ex) {
-            System.out.println("can't create registry");
-            ex.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("WRARING");
+            alert.setHeaderText(null);
+            alert.setContentText("The Port is already in used.");
+            alert.showAndWait();
         }
 
         ArrayList<User> AllUsers = new ArrayList<User>();

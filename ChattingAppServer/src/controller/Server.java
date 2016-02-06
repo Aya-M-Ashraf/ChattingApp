@@ -1,9 +1,11 @@
 package controller;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 /**
@@ -12,9 +14,7 @@ import javafx.stage.Stage;
  */
 public class Server extends Application{
 
-    public Server()  {
-
-            
+    public Server()  {     
     }
     
     @Override
@@ -22,13 +22,14 @@ public class Server extends Application{
         Parent root = FXMLLoader.load(getClass().getResource("/view/ServerForm.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
+        primaryStage.setOnCloseRequest(e->{Platform.exit();System.exit(0);});
         primaryStage.show();
         primaryStage.setResizable(false);
+
     }
 
     public static void main(String[] args) {
-           launch(args);
-            
+           launch(args);     
     }
 
 }

@@ -42,6 +42,7 @@ public class SignInServiceImpl extends UnicastRemoteObject implements SignInServ
     @Override
     public void unregisterUser(ClientServices userInterface) throws RemoteException {
         controller.getUsersInterfacesVector().remove(userInterface);
+        controller.tellMyFriendsIamOffline(userInterface);
         System.out.println("client removed " + controller.getUsersInterfacesVector().size());
     }
 

@@ -104,7 +104,7 @@ public class Controller {
 
     public void startServer(Registry registry) {
         try {
-
+            System.setProperty("java.rmi.server.hostname", "127.0.0.1");
             SignInServiceImpl SignInServiceImplRef = new SignInServiceImpl(this);
             registry.rebind("SignInService", SignInServiceImplRef);
 
@@ -130,14 +130,25 @@ public class Controller {
             registry.rebind("ForgetPasswordService", forgetPasswordServiceImplRef);
 
         } catch (RemoteException ex) {
-            System.out.println("can't start");
-            ex.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("WRARING");
+            alert.setHeaderText(null);
+            alert.setContentText("The Port is already in used.");
+            alert.showAndWait();
         }
     }
 
     public void stopServer() {
         try {
-
+            if (!usersInterfacesVector.isEmpty()) {
+                for (ClientServices onlineUser : usersInterfacesVector) {
+                    try {
+                        onlineUser.serverisDown();
+                    } catch (RemoteException ex) {
+                        Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
             Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5000);
             System.setProperty("java.rmi.server.hostname", "127.0.0.1");
 
@@ -361,7 +372,7 @@ public class Controller {
     public User selectUserWhereEmail(String email) {
         return manipulateDBObj.selectAllFromUserWhereEmailwithoutFriendList(email);
     }
-    
+
     public void tellMyFriendsIamOnline(ClientServices userInterface) {
         try {
             ArrayList<User> myfriends = userInterface.getAllMyFriends();
@@ -369,12 +380,27 @@ public class Controller {
                 for (ClientServices onlineUser : usersInterfacesVector) {
                     if (myUser.getEmail().equals(onlineUser.getEmail())) {
                         onlineUser.setFriendOnline(userInterface.getEmail());
-                        //onlineUser.popUpOnlineNotification(userInterface.getEmail()); //pop up to online that i'm online
+                        onlineUser.popUpOnlineNotification(userInterface.getEmail()); //pop up to online that i'm online
                     }
                 }
-
             }
+        } catch (RemoteException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
+    public void tellMyFriendsIamOffline(ClientServices userInterface) {
+        try {
+            ArrayList<User> myfriends = userInterface.getAllMyFriends();
+            for (User myUser : myfriends) {
+                for (ClientServices onlineUser : usersInterfacesVector) {
+                    if (myUser.getEmail().equals(onlineUser.getEmail())) {
+                        onlineUser.setFriendOffline(userInterface.getEmail());
+                        onlineUser.popUpOfflineNotification(userInterface.getEmail());
+
+                    }
+                }
+            }
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
