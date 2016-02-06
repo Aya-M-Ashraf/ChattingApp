@@ -12,31 +12,29 @@ package controller;
 public class Validation {
 
     public static boolean nameValidation(String name) {
-   /*
-        if (name.matches("([A-Z][a-z]*)([\\\\s\\\\\\'-][A-Z][a-z]*)*")) {
+        if (name.matches("[A-Za-z\\s]+")) {
             return true;
         }
-*/
-        return true;
+        return false;
 
     }
 
     public static boolean eMailValidation(String email) {
-/*
-        if (email.matches("^(([^<>()[\\]\\\\.,;:\\s@\"]+(\\.[^<>()[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$")) {
+
+        if (email.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")) {
             return true;
         }
-*/
-        return true;
+
+        return false;
     }
     
      public static boolean passwordValidation(String email) {
-/*
+
         if (email.matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])[^\\s]{8,}$")) {
             return true;
         }
-*/
-        return true;
+
+        return false;
     }
     
     

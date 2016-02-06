@@ -96,9 +96,17 @@ public class Controller extends Application {
 
     public void sendUserToServer(User user) {
         if (serverSignUpRef.clientSignUp(user)) {
-            System.out.println("Sign up is correct");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("WRARING");
+            alert.setHeaderText(null);
+            alert.setContentText("Your account has been created.");
+            alert.showAndWait();
         } else {
-            System.out.println("Sign up fails");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("WRARING");
+            alert.setHeaderText(null);
+            alert.setContentText("There is a problem in account creation.");
+            alert.showAndWait();
         }
     }
 
@@ -111,14 +119,12 @@ public class Controller extends Application {
                 alert.setHeaderText(null);
                 alert.setContentText("User doesn't exisit!");
                 alert.showAndWait();
+
             } else {
                 if (user.getPassword().equals(password)) {
                     //password is correct
                     if (serverSignInRef.updateUserIsOnlineByEmail(email)) {
                         user.setIsOnline(true);
-                        System.out.println("isonline updated" + user.getEmail() + " " + user.isIsOnline());
-                    } else {
-                        System.out.println("isonline doesn't updated.");
                     }
                     return user;
                 } else {
@@ -132,7 +138,11 @@ public class Controller extends Application {
                 }
             }
         } catch (RemoteException ex) {
-            System.out.println("can't use sign In from server");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("WRARING");
+            alert.setHeaderText(null);
+            alert.setContentText("Server down, can't sign in.");
+            alert.showAndWait();
         }
         return null;
     }

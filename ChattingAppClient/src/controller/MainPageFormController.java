@@ -47,7 +47,9 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
     private Label adLabel;
     @FXML
     private ImageView imageView;
-
+    @FXML
+    private Label firstNameLabel;
+    
     String userStatus;
     Controller controller;
 
@@ -109,6 +111,7 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
         statusComboBox.setValue(user.getStatus());
         imageView.setImage(new Image(getClass().getResource("/view/images/default.png").toExternalForm()));
         controller.getOfflineFriendRequest(controller.getEmail());
+        firstNameLabel.setText(user.getFirstName());
         updateListView();
     }
 
@@ -146,7 +149,7 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
             }
         });
     }
-    
+
     public void updateListView() {
         ObservableList<User> observableList = FXCollections.observableList(user.getFriendsList());
         listView.setItems(observableList);
@@ -234,7 +237,7 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
         }
 
     }
-    
+
     public Label getNameLabel() {
         return nameLabel;
     }

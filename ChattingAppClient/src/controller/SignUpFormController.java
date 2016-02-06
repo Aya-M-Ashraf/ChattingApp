@@ -2,6 +2,7 @@ package controller;
 
 import controller.Controller;
 import controller.Validation;
+import static controller.Validation.nameValidation;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -43,9 +45,27 @@ public class SignUpFormController implements Initializable, FXMLControllersInter
     @FXML
     private ComboBox<String> gender;
     @FXML
-    private ComboBox<String> country;
+    private TextField country;
     @FXML
-    private ComboBox<String> city;
+    private TextField city;
+    @FXML
+    private Label validateFirestName;
+    @FXML
+    private Label validateLastName;
+    @FXML
+    private Label validateEmail;
+    @FXML
+    private Label validateGender;
+    @FXML
+    private Label validatePassword;
+    @FXML
+    private Label validateCountry;
+    @FXML
+    private Label validateCity;
+    @FXML
+    private Label validateQuestion;
+    @FXML
+    private Label validateAnswer;
 
     //reference to the user 
     User user;
@@ -54,31 +74,56 @@ public class SignUpFormController implements Initializable, FXMLControllersInter
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         controller = new Controller();
-        country.getItems().addAll("Egypt", "korea");
+//        country.getItems().addAll("Egypt", "korea");
         gender.getItems().addAll("Female", "Male");
-        city.getItems().addAll("Benha", "Cairo", "Alex");
+//        city.getItems().addAll("Benha", "Cairo", "Alex");
     }
 
     @FXML
     public void onSubmit() {
+
         if (Validation.nameValidation(firstName.getText())) {
             if (Validation.nameValidation(lastName.getText())) {
                 if (Validation.eMailValidation(eMail.getText())) {
                     if (Validation.passwordValidation(password.getText())) {
-                        user = new User(eMail.getText(), firstName.getText(), lastName.getText(), password.getText(), country.getValue(), city.getValue(), question.getText(), answer.getText(), "Available", gender.getValue(), true);
-                        controller.sendUserToServer(user);
+
+                        if (nameValidation(country.getText())) {
+
+                            if (nameValidation(city.getText())) {
+
+                                if (nameValidation(question.getText())) {
+
+                                    if (nameValidation(answer.getText())) {
+
+                                        user = new User(eMail.getText(), firstName.getText(), lastName.getText(), password.getText(), country.getText(), city.getText(), question.getText(), answer.getText(), "Available", gender.getValue(), true);
+                                        controller.sendUserToServer(user);
+
+                                    } else {
+                                        validateAnswer.setText("You must answer the question.");
+                                    }
+                                } else {
+                                    validateQuestion.setText("You must enter question.");
+                                }
+                            } else {
+                                validateCity.setText("You must enter your city.");
+                            }
+                        } else {
+                            validateCountry.setText("You must enter your country.");
+                        }
                     } else {
-                        System.out.println("password is invalid");
+                        validatePassword.setText("password should contain capital letter, small letter, special character, numbers and at least 8 digits");
                     }
                 } else {
-                    System.out.println("e_mail is invalid");
+                    validateEmail.setText("E-Mail is invalid");
                 }
             } else {
-                System.out.println("last name is false");
+                validateLastName.setText("Last name is invalid");
             }
         } else {
-            System.out.println("first name is incorrect");
+            //System.out.println("first name is incorrect");
+            validateFirestName.setText("First name is invalid");
         }
+
     }
 
     public void handleSignInHyperLink(ActionEvent event) {
@@ -88,8 +133,10 @@ public class SignUpFormController implements Initializable, FXMLControllersInter
             Stage homeStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             homeStage.setScene(homePageScene);
             homeStage.show();
+
         } catch (IOException ex) {
-            Logger.getLogger(SignInFormController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SignInFormController.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 

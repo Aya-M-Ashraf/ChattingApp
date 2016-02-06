@@ -32,7 +32,11 @@ public class SignInFormController implements Initializable, FXMLControllersInter
     @FXML
     private PasswordField passwordTextField;
     @FXML
-    private TextField regIP;
+    private Label validatePassword;
+//    @FXML
+//    private TextField regIP;
+    @FXML
+    private Label validateEmail;
 
     User user;
     Controller controller;
@@ -41,9 +45,10 @@ public class SignInFormController implements Initializable, FXMLControllersInter
 
     }
 
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        regIP.setText("127.0.0.1");
+//        regIP.setText("127.0.0.1");
         this.user = new User();
         this.controller = new Controller();
     }
@@ -53,13 +58,13 @@ public class SignInFormController implements Initializable, FXMLControllersInter
         if (emailTextField.getText() != null) {
             email = emailTextField.getText();
         } else {
-            //do anything shreer email field is empty 
+            validateEmail.setText("You must enter your email");
         }
 
         if (passwordTextField.getText() != null) {
             password = passwordTextField.getText();
         } else {
-            //do anything shreer
+            validatePassword.setText("You must enter your password.");
         }
 
         if (email != null && password != null) {
@@ -89,6 +94,17 @@ public class SignInFormController implements Initializable, FXMLControllersInter
 
                 } catch (IOException ex) {
                     Logger.getLogger(SignInFormController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else{
+//                if(user.getEmail() == null){
+//                    validateEmail.setText("You must enter your email.");
+//                }else{
+//                    validatePassword.setText("You must enter your password.");
+//                }
+                if(user == null){
+                    validateEmail.setText("Your email incorrect.");
+                } else if(user.getPassword() != password){
+                    validatePassword.setText("Your password incorrect.");
                 }
             }
         }
@@ -135,7 +151,7 @@ public class SignInFormController implements Initializable, FXMLControllersInter
 
     @Override
     public void passUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.user = user;
     }
 
     @Override

@@ -46,6 +46,6 @@
       <Label id="adLabel" fx:id="adLabel" layoutX="14.0" layoutY="540.0" prefHeight="72.0" prefWidth="302.0" stylesheets="@cssForm.css" wrapText="true" />
       <Button fx:id="groubButton" layoutX="9.0" layoutY="159.0" mnemonicParsing="false" onAction="#handleGroupButton" prefHeight="25.0" prefWidth="115.0" text="Create Chat room" />
       <Label id="rainbowAnnouncement" layoutX="64.0" layoutY="517.0" stylesheets="@mainPage.css" text="Rainbow Announcements" />
-      <Label layoutX="51.0" layoutY="123.0" text="Label" />
+      <Label fx:id="firstNameLabel" layoutX="34.0" layoutY="123.0" prefHeight="23.0" prefWidth="80.0" />
    </children>
 </AnchorPane>
