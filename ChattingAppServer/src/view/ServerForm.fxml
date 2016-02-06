@@ -80,6 +80,15 @@
       <Label fx:id="errorMessageLabel" layoutX="28.0" layoutY="14.0" prefHeight="18.0" prefWidth="300.0" textFill="#ee0f0f" />
                         <TextField id="country" fx:id="country" layoutX="177.0" layoutY="305.0" />
                         <TextField fx:id="city" layoutX="179.0" layoutY="360.0" />
+                        <Label fx:id="validatFirestName" layoutX="180.0" layoutY="91.0" prefHeight="23.0" prefWidth="242.0" />
+                        <Label fx:id="validatLastName" layoutX="188.0" layoutY="143.0" prefHeight="23.0" prefWidth="261.0" />
+                        <Label fx:id="validateEmail" layoutX="354.0" layoutY="169.0" prefHeight="23.0" prefWidth="207.0" />
+                        <Label fx:id="validateGender" layoutX="354.0" layoutY="208.0" prefHeight="23.0" prefWidth="206.0" />
+                        <Label fx:id="validatePassword" layoutX="357.0" layoutY="208.0" prefHeight="101.0" prefWidth="233.0" wrapText="true" />
+                        <Label fx:id="validateCountry" layoutX="359.0" layoutY="310.0" prefHeight="23.0" prefWidth="184.0" />
+                        <Label fx:id="validateCity" layoutX="362.0" layoutY="364.0" prefHeight="23.0" prefWidth="174.0" />
+                        <Label fx:id="validateQuestion" layoutX="362.0" layoutY="407.0" prefHeight="23.0" prefWidth="193.0" />
+                        <Label fx:id="validateAnswer" layoutX="362.0" layoutY="470.0" prefHeight="23.0" prefWidth="192.0" />
                      </children>
                   </AnchorPane>
                </content>

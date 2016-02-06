@@ -16,6 +16,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -24,9 +25,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.pojo.User;
 import view.Validation;
+import static view.Validation.nameValidation;
 
 public class ServerFormController implements Initializable {
-
+    
     @FXML
     Button startServiceButton;
     @FXML
@@ -65,7 +67,7 @@ public class ServerFormController implements Initializable {
     //table view columns
     @FXML
     private TableView userTableView;
-
+    
     @FXML
     private TableColumn fnameCol;
     @FXML
@@ -80,14 +82,33 @@ public class ServerFormController implements Initializable {
     private TableColumn statusCol;
     @FXML
     private TableColumn genderCol;
+    @FXML
+    private Label validatFirestName;
+    @FXML
+    private Label validatLastName;
+    @FXML
+    private Label validateEmail;
+    @FXML
+    private Label validateGender;
+    @FXML
+    private Label validatePassword;
+    @FXML
+    private Label validateCountry;
+    @FXML
+    private Label validateCity;
+    @FXML
+    private Label validateQuestion;
+    @FXML
+    private Label validateAnswer;
+
     //table view observable list
     private ObservableList<User> usersList = FXCollections.observableArrayList();
-
+    
     User user;
-
+    
     Registry registry;
     Controller controller = new Controller();
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         gender.getItems().addAll("Female", "Male");
@@ -101,97 +122,107 @@ public class ServerFormController implements Initializable {
             alert.setContentText("The Port is already in used.");
             alert.showAndWait();
         }
-
+        
         ArrayList<User> AllUsers = new ArrayList<User>();
-
+        
         AllUsers = controller.getAllUserInfo();
-
+        
         usersList.addAll(AllUsers);
-
+        
         fnameCol = new TableColumn("fname");
         fnameCol.setCellValueFactory(new PropertyValueFactory<User, String>("firstName"));
-
+        
         lnameCol = new TableColumn("lname");
         lnameCol.setCellValueFactory(new PropertyValueFactory<User, String>("lastName"));
-
+        
         countryCol = new TableColumn("country");
         countryCol.setCellValueFactory(new PropertyValueFactory<User, String>("country"));
-
+        
         cityCol = new TableColumn("city");
         cityCol.setCellValueFactory(new PropertyValueFactory<User, String>("city"));
-
+        
         onlineCol = new TableColumn("online");
         onlineCol.setCellValueFactory(new PropertyValueFactory<User, String>("isOnline"));
-
+        
         statusCol = new TableColumn("status");
         statusCol.setCellValueFactory(new PropertyValueFactory<User, String>("status"));
-
+        
         genderCol = new TableColumn("gender");
         genderCol.setCellValueFactory(new PropertyValueFactory<User, String>("gender"));
-
+        
         userTableView.getColumns().setAll(fnameCol, lnameCol, countryCol, cityCol, onlineCol, statusCol, genderCol);
-
+        
         userTableView.setItems(usersList);
         updateCharts();
     }
-
+    
     @FXML
     void handleStartButton() {
         controller.startServer(registry);
         startServiceButton.setDisable(true);
         stopServiceButton.setDisable(false);
     }
+    
     @FXML
     void handleStopButton() {
         controller.stopServer();
         startServiceButton.setDisable(false);
         stopServiceButton.setDisable(true);
     }
-
+    
     @FXML
     public void onSubmit() {
         if (Validation.nameValidation(firstName.getText())) {
             if (Validation.nameValidation(lastName.getText())) {
                 if (Validation.eMailValidation(eMail.getText())) {
                     if (Validation.passwordValidation(password.getText())) {
-                        user = new User(eMail.getText(), firstName.getText(), lastName.getText(), password.getText(), country.getText(), city.getText(), question.getText(), answer.getText(), "Available", gender.getValue(), true);
-                        if (!controller.searchForUserByEMail(user.getEmail())) {
-                            controller.insertUser(user);
-                        };
+                        
+                        if (nameValidation(country.getText())) {
+                            
+                            if (nameValidation(city.getText())) {
+                                
+                                if (nameValidation(question.getText())) {
+                                    
+                                    if (nameValidation(answer.getText())) {
+                                        
+                                        user = new User(eMail.getText(), firstName.getText(), lastName.getText(), password.getText(), country.getText(), city.getText(), question.getText(), answer.getText(), "Available", gender.getValue(), true);
+                                        if (!controller.searchForUserByEMail(user.getEmail())) {
+                                            controller.insertUser(user);
+                                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                                            alert.setTitle("WRARING");
+                                            alert.setHeaderText(null);
+                                            alert.setContentText("Account has been created.");
+                                            alert.showAndWait();
+                                        }
+                                        
+                                    } else {
+                                        validateAnswer.setText("You must answer the question.");
+                                    }
+                                } else {
+                                    validateQuestion.setText("You must enter question.");
+                                }
+                            } else {
+                                validateCity.setText("You must enter your city.");
+                            }
+                        } else {
+                            validateCountry.setText("You must enter your country.");
+                        }
                     } else {
-                        System.out.println("password is invalid");
-                        Alert alert = new Alert(AlertType.WARNING);
-                        alert.setTitle("WRARING");
-                        alert.setHeaderText(null);
-                        alert.setContentText("password should contain capital letter , small letter , special character , numbers and at least 8 digits");
-                        alert.showAndWait();
+                        validatePassword.setText("password should contain capital letter, small letter, special character, numbers and at least 8 digits");
                     }
                 } else {
-                    System.out.println("e_mail is invalid");
-                    Alert alert = new Alert(AlertType.WARNING);
-                    alert.setTitle("WRARING");
-                    alert.setHeaderText(null);
-                    alert.setContentText("E-Mail is invalid");
-                    alert.showAndWait();
+                    validateEmail.setText("E-Mail is invalid");
                 }
             } else {
-                //System.out.println("last name is false");
-                Alert alert = new Alert(AlertType.WARNING);
-                alert.setTitle("WRARING");
-                alert.setHeaderText(null);
-                alert.setContentText("Last name is invalid");
-                alert.showAndWait();
+                validatLastName.setText("Last name is invalid");
             }
         } else {
             //System.out.println("first name is incorrect");
-            Alert alert = new Alert(AlertType.WARNING);
-            alert.setTitle("WRARING");
-            alert.setHeaderText(null);
-            alert.setContentText("First name is invalid");
-            alert.showAndWait();
+            validatFirestName.setText("First name is invalid");
         }
+        
     }
-
+    
     @FXML
     public void updateCharts() {
         updateOnlinePieChart();
@@ -199,14 +230,15 @@ public class ServerFormController implements Initializable {
     }
     
     @FXML
-     public void updatePieChart() {
+    public void updatePieChart() {
         ObservableList<PieChart.Data> pieChartData
                 = FXCollections.observableArrayList(
                         new PieChart.Data("Female Users", controller.getFemaleUsersCount()),
                         new PieChart.Data("Male Users", controller.getMaleUsersCount()));
         pieChart2.setData(pieChartData);
     }
-     @FXML
+    
+    @FXML
     public void updateOnlinePieChart() {
         ObservableList<PieChart.Data> pieChartData
                 = FXCollections.observableArrayList(
@@ -215,7 +247,7 @@ public class ServerFormController implements Initializable {
         pieChart.setData(pieChartData);
     }
     
-    public void handleSendAd(){
+    public void handleSendAd() {
         controller.sendAddToOnlineUsers(adTextArea.getText());
     }
 }
