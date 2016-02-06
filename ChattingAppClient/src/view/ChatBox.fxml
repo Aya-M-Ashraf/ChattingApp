@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="375.0" prefWidth="595.0" styleClass="mainFxmlClass" stylesheets="@cssForm.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ChatBoxController">
+<AnchorPane id="AnchorPane" prefHeight="375.0" prefWidth="595.0" styleClass="mainFxmlClass" stylesheets="@cssForm.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ChatBoxController">
    <children>
       <BorderPane prefHeight="375.0" prefWidth="587.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="0.0">
          <bottom>

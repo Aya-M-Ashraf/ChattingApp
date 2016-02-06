@@ -1,4 +1,4 @@
-package view;
+package controller;
 
 import controller.Controller;
 import java.net.URL;
@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.pojo.User;
 
@@ -59,6 +60,11 @@ public class AddFriendFormController implements Initializable , FXMLControllersI
 
     @Override
     public void passUser(User user) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Label getNameLabel() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
    

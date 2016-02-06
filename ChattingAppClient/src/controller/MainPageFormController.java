@@ -1,4 +1,4 @@
-package view;
+package controller;
 
 import controller.Controller;
 import java.io.IOException;
@@ -17,6 +17,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+//import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -64,7 +65,7 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
     @FXML
     public void handleAddFriendButton(MouseEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddFriendForm.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AddFriendForm.fxml"));
             Parent homePageParent = loader.load();
             AddFriendFormController controller = loader.getController();
             controller.initData(nameLabel.getText());
@@ -81,7 +82,7 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
     public void onSignOut(MouseEvent event) {
         try {
             user.setIsOnline(false);
-            Parent signInPage = FXMLLoader.load(getClass().getResource("SignInForm.fxml"));
+            Parent signInPage = FXMLLoader.load(getClass().getResource("/view/SignInForm.fxml"));
             Scene signInPageScene = new Scene(signInPage);
             Stage homeStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             homeStage.setScene(signInPageScene);
@@ -91,7 +92,6 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
             System.out.println("signout button pressed");
             Logger.getLogger(SignInFormController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println(nameLabel.getText());
         controller.signOutOneUser(user.getEmail());
         controller.unregisterMe();
     }
@@ -107,7 +107,7 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
         this.user = user;
         nameLabel.setText(user.getEmail());
         statusComboBox.setValue(user.getStatus());
-        imageView.setImage(new Image(getClass().getResource("images/default.png").toExternalForm()));
+        imageView.setImage(new Image(getClass().getResource("/view/images/default.png").toExternalForm()));
         controller.getOfflineFriendRequest(controller.getEmail());
         updateListView();
     }
@@ -120,7 +120,7 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
 
         ObservableList<User> observableList = FXCollections.observableList(user.getFriendsList());
         listView.setItems(observableList);
-        imageView.setImage(new Image(getClass().getResource("images/default.png").toExternalForm()));
+        imageView.setImage(new Image(getClass().getResource("/view/images/default.png").toExternalForm()));
         listView.setCellFactory(new Callback<ListView<User>, ListCell<User>>() {
             @Override
             public ListCell<User> call(ListView<User> userLists) {
@@ -132,13 +132,13 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
                             setGraphic(null);
                         } else {
                             try {
-                                FXMLLoader loader = new FXMLLoader(getClass().getResource("ContactCard.fxml"));
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ContactCard.fxml"));
                                 Parent root = loader.load();
                                 ContactCardController mainPageController = loader.getController();
                                 mainPageController.passUser(item, controller);
                                 setGraphic(root);
                             } catch (IOException ex) {
-                                Logger.getLogger(view.MainPageFormController.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(controller.MainPageFormController.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                     }
@@ -150,7 +150,7 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
     public void updateListView() {
         ObservableList<User> observableList = FXCollections.observableList(user.getFriendsList());
         listView.setItems(observableList);
-        imageView.setImage(new Image(getClass().getResource("images/default.png").toExternalForm()));
+        imageView.setImage(new Image(getClass().getResource("/view/images/default.png").toExternalForm()));
         listView.setCellFactory(new Callback<ListView<User>, ListCell<User>>() {
             @Override
             public ListCell<User> call(ListView<User> userLists) {
@@ -162,13 +162,13 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
                             setGraphic(null);
                         } else {
                             try {
-                                FXMLLoader loader = new FXMLLoader(getClass().getResource("ContactCard.fxml"));
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ContactCard.fxml"));
                                 Parent root = loader.load();
                                 ContactCardController mainPageController = loader.getController();
                                 mainPageController.passUser(item, controller);
                                 setGraphic(root);
                             } catch (IOException ex) {
-                                Logger.getLogger(view.MainPageFormController.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(controller.MainPageFormController.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                     }
@@ -188,7 +188,7 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
                 if (controller.getCurrentChatControllersMap().containsKey(user.getEmail())) { //getting focus to it
                     controller.getCurrentChatControllersMap().get(user.getEmail()).getLabel().getScene().getWindow().requestFocus();
                 } else {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("ChatBox.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ChatBox.fxml"));
                     Parent homePageParent = loader.load();
                     ChatBoxController chatBoxController = loader.getController();
                     chatBoxController.passUser(user);
@@ -220,7 +220,7 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
     @FXML
     public void handleGroupButton() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FriendsChooser.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/FriendsChooser.fxml"));
             Parent homePageParent = loader.load();
             FriendsChooserController friendsChooserController = loader.getController();
             friendsChooserController.passUser(user);
@@ -233,6 +233,10 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
             Logger.getLogger(MainPageFormController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+    
+    public Label getNameLabel() {
+        return nameLabel;
     }
 
 }

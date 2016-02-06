@@ -1,5 +1,7 @@
 package controller;
 
+import eu.hansolo.enzo.notification.Notification;
+import eu.hansolo.enzo.notification.Notification.Notifier;
 import interfaces.AddFriendServerService;
 import interfaces.SignInServerService;
 import interfaces.SignUpServerService;
@@ -16,6 +18,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,14 +28,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.pojo.User;
 import services.ClientServicesImpl;
-import view.ChatBoxController;
-import view.FXMLControllersInterface;
-import view.GroupChatBoxController;
-import view.ReceiveFriendRequestFormController;
 
 public class Controller extends Application {
 
@@ -70,7 +70,11 @@ public class Controller extends Application {
             forgetPasswordService = (ForgetPasswordService) registry.lookup("ForgetPasswordService");
 
         } catch (RemoteException | NotBoundException ex) {
-            System.out.println("can't lookup from registry");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("WRARING");
+            alert.setHeaderText(null);
+            alert.setContentText("Serve is down, can't lookup from registry");
+            alert.showAndWait();
         }
     }
 
@@ -102,7 +106,11 @@ public class Controller extends Application {
         try {
             user = serverSignInRef.signIn(email, password);
             if (user == null) {   // user doesn't exist              
-                System.out.println("User doesn't exisit!");
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("WRARING");
+                alert.setHeaderText(null);
+                alert.setContentText("User doesn't exisit!");
+                alert.showAndWait();
             } else {
                 if (user.getPassword().equals(password)) {
                     //password is correct
@@ -115,12 +123,16 @@ public class Controller extends Application {
                     return user;
                 } else {
                     // password isn't correct.
-                    System.out.println("Password is incorrect!");
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("WRARING");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Password is incorrect!");
+                    alert.showAndWait();
+
                 }
             }
         } catch (RemoteException ex) {
             System.out.println("can't use sign In from server");
-            ex.printStackTrace();
         }
         return null;
     }
@@ -151,10 +163,8 @@ public class Controller extends Application {
             if (serverSignInRef.updateUserStatusByEmail(user.getEmail(), status)) {
                 System.out.println("status updated by " + status);
                 changeStatusRef.tellFriendsMyStatus(user, status);
-
             } else {
                 System.out.println("status doesn't updated.");
-
             }
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
@@ -170,7 +180,11 @@ public class Controller extends Application {
                     serverAddFriendRef.deliverFriendRequest(userEmail, emailToAdd);
                 }
             } else {
-                System.out.println("this mail doesn't belong to anyone");
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("WRARING");
+                alert.setHeaderText(null);
+                alert.setContentText("this mail doesn't belong to anyone");
+                alert.showAndWait();
             }
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
@@ -199,7 +213,6 @@ public class Controller extends Application {
     public void registerMe() {
         try {
             serverSignInRef.registerUser(clientServicesImpl);
-            
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -208,6 +221,17 @@ public class Controller extends Application {
     public void unregisterMe() {
         try {
             serverSignInRef.unregisterUser(clientServicesImpl);
+            try {
+                if (currentGroupChatControllersMap.size() != 0) {
+                    Iterator it = currentGroupChatControllersMap.entrySet().iterator();
+                    while (it.hasNext()) {
+                        HashMap.Entry pair = (HashMap.Entry) it.next();
+                        chattingRef.removeMeFromRoom(user.getEmail(), (int) pair.getKey());
+                    }
+                }
+            } catch (RemoteException ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -303,7 +327,7 @@ public class Controller extends Application {
         if (!Platform.isFxApplicationThread()) {
             Platform.runLater(() -> {
                 currentControllersMap.get("mainPageFormController").passUser(user);
-                currentControllersMap.get("mainPageFormController").updateListView(); 
+                currentControllersMap.get("mainPageFormController").updateListView();
             });
         }
     }
@@ -405,7 +429,6 @@ public class Controller extends Application {
 
     public void sendMsgToGroupChat(int ID, String msg, String email) {
         try {
-            System.out.println("inside client controller sendMsgToGchat");
             chattingRef.sendMsgToGroupChat(ID, msg, email);
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
@@ -413,7 +436,6 @@ public class Controller extends Application {
     }
 
     public void receiveGroupChatMsg(int ID, String msg, String senderEmail) {
-        System.out.println("inside client controller call back receiveGroupChatMsg");
         if (!Platform.isFxApplicationThread()) {
             Platform.runLater(() -> currentGroupChatControllersMap.get(ID).recieveMsg(msg, senderEmail));
         }
@@ -440,10 +462,8 @@ public class Controller extends Application {
     public ClientServices sendFileToUser(String fileName, String receiverEmail, String senderEmail) {
         ClientServices clientServices = null;
         try {
-            System.out.println("iam in the send file to user chating app client");
             clientServices = chattingRef.sendFile(fileName, receiverEmail, senderEmail);
         } catch (RemoteException ex) {
-            System.out.println("");
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
         return clientServices;
@@ -463,10 +483,56 @@ public class Controller extends Application {
     }
 
     public void setFriendOnline(String friendMail) {
-        for(User friend : user.getFriendsList()){
-            if(friend.getEmail().equals(friendMail))
+        for (User friend : user.getFriendsList()) {
+            if (friend.getEmail().equals(friendMail)) {
                 friend.setIsOnline(true);
+            }
         }
         updateMyFriendsList();
+    }
+
+    public void setFriendOffline(String friendMail) {
+        for (User friend : user.getFriendsList()) {
+            if (friend.getEmail().equals(friendMail)) {
+                friend.setIsOnline(false);
+            }
+        }
+        updateMyFriendsList();
+    }
+
+    public void putNotification(String onStatus, String email) {
+        if (!Platform.isFxApplicationThread()) {
+            Platform.runLater(() -> {
+                Notification notify = new Notification(email, " is " + onStatus + " now");
+                Notifier.INSTANCE.notify(notify);
+            });
+        }
+    }
+
+    public void serverisDown() {
+        if (!Platform.isFxApplicationThread()) {
+            Platform.runLater(() -> {
+                try {
+                    currentControllersMap.get("mainPageFormController").getNameLabel().getScene().getWindow().hide();
+                    currentControllersMap.remove("mainPageFormController");
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("WRARING");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Sorry, Server is down. Try again later.");
+                    alert.showAndWait();
+
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SignInForm.fxml"));
+                    Parent root = loader.load();
+                    FXMLControllersInterface signInFormController = loader.getController();
+                    currentControllersMap.put("SignInFormController", signInFormController);
+                    Scene scene = new Scene(root);
+                    Stage primaryStage = new Stage();
+                    primaryStage.setScene(scene);
+                    primaryStage.show();
+                } catch (IOException ex) {
+                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+        }
     }
 }

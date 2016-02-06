@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="172.0" prefWidth="419.0" stylesheets="@cssForm.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.EnterEmailFormController">
+<AnchorPane id="AnchorPane" prefHeight="172.0" prefWidth="419.0" stylesheets="@cssForm.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EnterEmailFormController">
    <children>
       <Label layoutX="24.0" layoutY="45.0" text="Enter Your Email:" />
       <TextField fx:id="emailTextField" layoutX="169.0" layoutY="43.0" prefHeight="28.0" prefWidth="236.0" />

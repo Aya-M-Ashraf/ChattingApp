@@ -1,4 +1,4 @@
-package view;
+package controller;
 
 import controller.Controller;
 import java.io.IOException;
@@ -64,8 +64,9 @@ public class GroupChatBoxController implements Initializable {
 
     @FXML
     public void handleSendButton() {
-        if (!chatField.getText().equals("")) {
-            controller.sendMsgToGroupChat(this.ID,chatField.getText(),controller.getEmail());
+        String message = chatField.getText().trim();
+        if (!message.equals("")) {
+            controller.sendMsgToGroupChat(this.ID,message,controller.getEmail());
             chatField.setText("");
         }
     }
@@ -73,7 +74,7 @@ public class GroupChatBoxController implements Initializable {
     @FXML
     public void handleAddFriendButton() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FriendsGroupAdder.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/FriendsGroupAdder.fxml"));
             Parent homePageParent = loader.load();
             FriendsGroupAdderController friendsGroupAdderController = loader.getController();
             friendsGroupAdderController.passController(controller,ID);

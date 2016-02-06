@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package controller;
 
+import javafx.scene.control.Label;
 import model.pojo.User;
 
 /**
@@ -16,6 +17,7 @@ public interface FXMLControllersInterface {
     public void displayAdd(String adMessege);
     public void updateList(User user);
     public void updateListView();
+    public Label getNameLabel();
 
     public void passUser(User user);
 

@@ -24,5 +24,9 @@ public interface ClientServices extends Remote {
     public void getFriendRequest(String userEmail) throws RemoteException;
     public ArrayList<User> getAllMyFriends()throws RemoteException;
     public void setFriendOnline(String email)throws RemoteException;
+    public void setFriendOffline(String email)throws RemoteException;
     public void upDateMainList()throws RemoteException;
+    public void popUpOnlineNotification(String email)throws RemoteException;
+    public void popUpOfflineNotification(String email)throws RemoteException;
+    public void serverisDown() throws RemoteException;
 }

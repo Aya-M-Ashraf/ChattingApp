@@ -1,4 +1,4 @@
-package view;
+package controller;
 
 import controller.Controller;
 import java.net.URL;
@@ -31,21 +31,22 @@ public class ContactCardController implements Initializable {
         emailLabel.setText(item.getEmail());
         if(item.isIsOnline()){
             checkOnLineLabel.setText("OnLine");
+            statusLabel.setText(item.getStatus());
         }else{
             checkOnLineLabel.setText("Offline");
         }
-        statusLabel.setText(item.getStatus());
+        
         this.controller = controller;
         if ("Available".equals(item.getStatus()) && item.isIsOnline() == true) {
-            imageView.setImage(new Image(getClass().getResource("images/Online_status.png").toExternalForm()));
+            imageView.setImage(new Image(getClass().getResource("/view/images/Online_status.png").toExternalForm()));
         } else if ("Away".equals(item.getStatus()) && item.isIsOnline() == true) {
-            imageView.setImage(new Image(getClass().getResource("images/Away_status.png").toExternalForm()));
+            imageView.setImage(new Image(getClass().getResource("/view/images/Away_status.png").toExternalForm()));
         } else if ("Busy".equals(item.getStatus()) && item.isIsOnline() == true) {
-            imageView.setImage(new Image(getClass().getResource("images/Busy_status.png").toExternalForm()));
+            imageView.setImage(new Image(getClass().getResource("/view/images/Busy_status.png").toExternalForm()));
         } else if (item.isIsOnline() == false) {
-            imageView.setImage(new Image(getClass().getResource("images/Offline_status.png").toExternalForm()));
+            imageView.setImage(new Image(getClass().getResource("/view/images/Offline_status.png").toExternalForm()));
         } else {
-            imageView.setImage(new Image(getClass().getResource("images/default.png").toExternalForm()));
+            imageView.setImage(new Image(getClass().getResource("/view/images/default.png").toExternalForm()));
         }
     }
 }

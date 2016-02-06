@@ -1,4 +1,4 @@
-package view;
+package controller;
 
 import controller.Controller;
 import java.net.URL;
@@ -8,46 +8,48 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.input.MouseEvent;
 import model.pojo.User;
 
 /**
  * FXML Controller class
  *
- * @author Ahmed Ashraf
+ * @author Aya M. Ashraf
  */
-public class FriendsChooserController implements Initializable {
-
+public class FriendsGroupAdderController implements Initializable {
+    
+    Controller controller;
+    ArrayList<User> friendsList = new ArrayList<>();
+    int chatRoomID;
+    
     @FXML
     private ListView listView;
-   
-    User user;
-    private Controller controller;
+    @FXML
+    private Button addButton;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-    }   
-    
-    public void passController(Controller controller) {
-        this.controller = controller;
-    }
+        // TODO
+    }    
 
-    public void passUser(User user) {
-        this.user=user;
+    public void passController(Controller controller, int ID) {
+        this.controller = controller;
+        friendsList = this.controller.getOnlineFriendList();
+        chatRoomID = ID;
+    }
+    public void passFriends(ArrayList<String> arrayList) {
         ArrayList<String> friendsEmails = new ArrayList<>();
-        for(User friend : user.getOnlineFriendsList())
-        {
-            friendsEmails.add(friend.getEmail());
+        for (User friend : friendsList) {
+            if (!arrayList.contains(friend.getEmail())) {
+                friendsEmails.add(friend.getEmail());
+            }
         }
         ObservableList<String> observableList = FXCollections.observableList(friendsEmails);
         listView.setItems(observableList);
-    }
+    }  
     
-    public void handleCreateRoomButton(MouseEvent event)
-    {
+    public void handleAddButton(){
         ObservableList<String> observableList = listView.getSelectionModel().getSelectedItems();
         Object [] array = new String [observableList.size()];
         array = observableList.toArray();
@@ -56,9 +58,7 @@ public class FriendsChooserController implements Initializable {
         {
           list.add((String)obj);
         }
-        list.add(user.getEmail());
-        controller.createGroupChat(list);  
+        controller.addFriendsToChatRoom(list,chatRoomID);
         listView.getScene().getWindow().hide();
     }
-    
 }

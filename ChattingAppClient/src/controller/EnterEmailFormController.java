@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package controller;
 
 import controller.Controller;
 import java.io.IOException;
@@ -61,7 +61,7 @@ public class EnterEmailFormController implements Initializable {
         if (user != null) {
             try {
                 System.out.println("reterned user not null");
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("ForgetPassword.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ForgetPassword.fxml"));
                 Parent forgetPasswordPageParent = loader.load();
                 ForgetPasswordController forgetPasswordPageController = loader.getController();
                 forgetPasswordPageController.init(controller, user);

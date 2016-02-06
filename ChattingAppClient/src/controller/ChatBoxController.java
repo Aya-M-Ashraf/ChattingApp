@@ -1,6 +1,5 @@
-package view;
+package controller;
 
-import controller.Controller;
 import interfaces.ClientServices;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -72,7 +71,6 @@ public class ChatBoxController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
     }
 
     public void passUser(User user) {
@@ -88,9 +86,10 @@ public class ChatBoxController implements Initializable {
 
     @FXML
     public void handleSendButton() {
-        if (!chatTextField.getText().equals("")) {
-            controller.sendMsg(chatTextField.getText(), friend.getEmail(), controller.getEmail());
-            buildXMLElement(chatTextField.getText(), controller.getEmail());
+        String message = chatTextField.getText().trim();
+        if (!message.equals("")) {
+            controller.sendMsg(message, friend.getEmail(), controller.getEmail());
+            buildXMLElement(message, controller.getEmail());
             chatTextField.setText("");
         }
     }
@@ -130,17 +129,14 @@ public class ChatBoxController implements Initializable {
     public void readFile(String path) {
         try {
             FileInputStream fis = new FileInputStream(path);
-
             fileSize = fis.available();
             FileToTransfere = new byte[fileSize];
             fis.read(FileToTransfere);
             fis.close();
-
         } catch (IOException e) {
             System.out.println("i cant read File");
             e.printStackTrace();
         }
-
     }
 
     /////////////////////////////////////////////////////////////
@@ -158,13 +154,10 @@ public class ChatBoxController implements Initializable {
                 if (document == null) {
                     createXMLTree();
                 }
-
                 Element userSaysElement = document.createElement("UserSays");
-
                 Element userNameElement = document.createElement("Email");
                 userNameElement.setTextContent(userName);
                 userSaysElement.appendChild(userNameElement);
-
                 Element userMessageElement = document.createElement("Message");
                 userMessageElement.setTextContent(userMessage);
                 userSaysElement.appendChild(userMessageElement);
@@ -175,15 +168,12 @@ public class ChatBoxController implements Initializable {
     }
 
     public void createXMLTree() {
-
         String user1 = controller.getEmail();
-
         String user2 = friend.getEmail();
         try {
             factory = DocumentBuilderFactory.newInstance();
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema schema = schemaFactory.newSchema(new File("src/view/MessageSchema.xsd"));
-
+            Schema schema = schemaFactory.newSchema(new File("src/controller/MessageSchema.xsd"));
             factory.setSchema(schema);
             builder = factory.newDocumentBuilder();
             document = builder.newDocument();
@@ -194,7 +184,6 @@ public class ChatBoxController implements Initializable {
             Attr attrReciever = document.createAttribute("reciever");
             attrReciever.setTextContent(user2);
             rootElement.setAttributeNode(attrReciever);
-
             document.appendChild(rootElement);
         } catch (ParserConfigurationException | SAXException ex) {
             ex.printStackTrace();
@@ -214,7 +203,6 @@ public class ChatBoxController implements Initializable {
     }
 
     public void createXMLDocument(String fileName) {
-        // fileName="test";
         TransformerFactory transformFactory = TransformerFactory.newInstance();
         try {
 
@@ -222,13 +210,11 @@ public class ChatBoxController implements Initializable {
             File myFile = fileChooser.showSaveDialog(label.getScene().getWindow());
             if (myFile != null) {
                 String path = myFile.getAbsolutePath() + ".html";
-                Source sourceXSLT = new StreamSource(new File("src/view/MessageXSLT.xsl"));
+                Source sourceXSLT = new StreamSource(new File("src/controller/MessageXSLT.xsl"));
                 Transformer transform = transformFactory.newTransformer(sourceXSLT);
                 transform.setOutputProperty(OutputKeys.INDENT, "yes");
                 File file = new File(path);
                 file.createNewFile();
-                //if(file.createNewFile()){
-                //new file is created
                 StreamResult result = new StreamResult(file);
                 if (document != null) {
                     DOMSource source = new DOMSource(document.getDocumentElement());
@@ -242,17 +228,13 @@ public class ChatBoxController implements Initializable {
         } catch (TransformerConfigurationException ex) {
             System.out.println("transformer");
         } catch (TransformerException | IOException ex) {
-
             ex.printStackTrace();
-
         }
     }
 
     @FXML
     public void onSaveButton() {
-
         createXMLDocument(friend.getEmail());
-
     }
 
     public Label getLabel() {

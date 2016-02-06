@@ -1,4 +1,4 @@
-package view;
+package controller;
 
 import controller.Controller;
 import controller.Validation;
@@ -15,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -82,7 +83,7 @@ public class SignUpFormController implements Initializable, FXMLControllersInter
 
     public void handleSignInHyperLink(ActionEvent event) {
         try {
-            Parent homePageParent = FXMLLoader.load(getClass().getResource("SignInForm.fxml"));
+            Parent homePageParent = FXMLLoader.load(getClass().getResource("/view/SignInForm.fxml"));
             Scene homePageScene = new Scene(homePageParent);
             Stage homeStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             homeStage.setScene(homePageScene);
@@ -109,6 +110,11 @@ public class SignUpFormController implements Initializable, FXMLControllersInter
 
     @Override
     public void passUser(User user) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Label getNameLabel() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

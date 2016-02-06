@@ -20,7 +20,7 @@ import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.pojo.User;
-import view.YesNoBoxController;
+import controller.YesNoBoxController;
 
 /**
  *
@@ -173,6 +173,26 @@ public class ClientServicesImpl extends UnicastRemoteObject implements ClientSer
     @Override
     public void upDateMainList() throws RemoteException {
         controller.updateMyFriendsList();
+    }
+
+    @Override
+    public void setFriendOffline(String friendMail) throws RemoteException {
+         controller.setFriendOffline(friendMail);
+    }
+
+    @Override
+    public void popUpOnlineNotification(String email) throws RemoteException {
+        controller.putNotification("Online",email);            
+    }
+
+    @Override
+    public void popUpOfflineNotification(String email) throws RemoteException {
+        controller.putNotification("Offline",email);  
+    }
+    
+    @Override
+    public void serverisDown() throws RemoteException {
+        controller.serverisDown();
     }
     
 }

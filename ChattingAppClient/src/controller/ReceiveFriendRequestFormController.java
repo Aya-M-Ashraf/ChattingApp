@@ -1,4 +1,4 @@
-package view;
+package controller;
 
 import controller.Controller;
 import java.net.URL;
