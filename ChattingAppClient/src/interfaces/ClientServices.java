@@ -3,7 +3,6 @@ package interfaces;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Vector;
 import model.pojo.User;
 
 /**
@@ -29,4 +28,5 @@ public interface ClientServices extends Remote {
     public void popUpOnlineNotification(String email)throws RemoteException;
     public void popUpOfflineNotification(String email)throws RemoteException;
     public void serverisDown() throws RemoteException;
+    public void addMyRequest(String senderEmail)throws RemoteException;
 }

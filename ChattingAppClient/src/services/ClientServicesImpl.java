@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -22,10 +21,7 @@ import javafx.stage.Stage;
 import model.pojo.User;
 import controller.YesNoBoxController;
 
-/**
- *
- * @author Ahmed Ashraf
- */
+
 public class ClientServicesImpl extends UnicastRemoteObject implements ClientServices{
 
     Controller controller;
@@ -83,18 +79,12 @@ public class ClientServicesImpl extends UnicastRemoteObject implements ClientSer
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/yesNoBox.fxml"));
                     Parent homePageParent = loader.load();
-
                     YesNoBoxController yesNoBoxController = loader.getController();
-
                     Scene homePageScene = new Scene(homePageParent);
                     Stage homeStage = new Stage();
-
                     homeStage.setScene(homePageScene);
-
                     homeStage.show();
-
                     yesNoBoxController.getYesButton().setOnAction(new EventHandler<ActionEvent>() {
-
                         @Override
                         public void handle(ActionEvent arg0) {
                             homeStage.close();
@@ -103,28 +93,21 @@ public class ClientServicesImpl extends UnicastRemoteObject implements ClientSer
                             if (myFile != null) {
                                 try {
                                     FileOutputStream fos = new FileOutputStream(myFile.getAbsolutePath()+fileName);
-                                    //int size = fis.available();
                                     fos.write(file);
                                     fos.close();
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
                             } else {
-
                                 System.out.println("you didnt choose file");
                             }
-
                         }
                     });
-
                     yesNoBoxController.getNoButton().setOnAction(new EventHandler<ActionEvent>() {
-
                         @Override
                         public void handle(ActionEvent arg0) {
                             homeStage.close();
-
-
-                        }
+                       }
                     });
 
                 } catch (IOException ex) {
@@ -132,19 +115,14 @@ public class ClientServicesImpl extends UnicastRemoteObject implements ClientSer
                 }
             });
         }
-
         return true;
     }
 
     public void writeFile(String path, byte[] b) {
-
         try {
             FileOutputStream fos = new FileOutputStream(path);
-            //int size = fis.available();
-
             fos.write(b);
             fos.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -174,6 +152,11 @@ public class ClientServicesImpl extends UnicastRemoteObject implements ClientSer
     public void upDateMainList() throws RemoteException {
         controller.updateMyFriendsList();
     }
+    
+    @Override
+    public void addMyRequest(String friendMail) throws RemoteException {
+        controller.addMyRequest(friendMail);
+    }
 
     @Override
     public void setFriendOffline(String friendMail) throws RemoteException {
@@ -194,5 +177,4 @@ public class ClientServicesImpl extends UnicastRemoteObject implements ClientSer
     public void serverisDown() throws RemoteException {
         controller.serverisDown();
     }
-    
 }

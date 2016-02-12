@@ -119,7 +119,6 @@ public class Controller extends Application {
                 alert.setHeaderText(null);
                 alert.setContentText("User doesn't exisit!");
                 alert.showAndWait();
-
             } else {
                 if (user.getPassword().equals(password)) {
                     //password is correct
@@ -129,7 +128,7 @@ public class Controller extends Application {
                     return user;
                 } else {
                     // password isn't correct.
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("WRARING");
                     alert.setHeaderText(null);
                     alert.setContentText("Password is incorrect!");
@@ -182,7 +181,7 @@ public class Controller extends Application {
             if (serverAddFriendRef.checkIfUserExist(emailToAdd)) {
                 if (serverAddFriendRef.sendFriendRequest(userEmail, emailToAdd)) {
                     serverAddFriendRef.deliverFriendRequest(userEmail, emailToAdd);
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Confirmation");
                     alert.setHeaderText(null);
                     alert.setContentText("Your rwquest has been sent");
@@ -267,7 +266,6 @@ public class Controller extends Application {
         if (!Platform.isFxApplicationThread()) {
             Platform.runLater(() -> {
                 for (User friendlistUser : user.getFriendsList()) {
-                    System.out.println("my Frind list: " + friendlistUser.getEmail());
                     if (friendlistUser.getEmail().equals(friendEmail)) {
                         friendlistUser.setStatus(newStatus);
                     }
@@ -275,7 +273,19 @@ public class Controller extends Application {
                 currentControllersMap.get("mainPageFormController").updateList(user);
             });
         }
-
+    }
+    
+    public void addMyRequest(String friendMail){
+        if (!Platform.isFxApplicationThread()) {
+            Platform.runLater(() -> {  
+                try {
+                    user.getFriendsList().add(getUserByEmail(friendMail));
+                    currentControllersMap.get("mainPageFormController").updateList(user);
+                } catch (RemoteException ex) {
+                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+        }
     }
 
     public void getOfflineFriendRequest(String email) {
@@ -316,6 +326,7 @@ public class Controller extends Application {
             if (receiveFriendRequestService.confirmFriendReuest(senderEmail, email)) {
                 user.getFriendsList().add(getUserByEmail(senderEmail));
                 updateMyFriendsList();
+                receiveFriendRequestService.confirmToSender(senderEmail,email);
                 return true;
             }
         } catch (RemoteException ex) {
@@ -325,7 +336,7 @@ public class Controller extends Application {
     }
 
     public void updateMyFriendsList() {
-        currentControllersMap.get("mainPageFormController").updateList(user);
+       currentControllersMap.get("mainPageFormController").updateList(user);
     }
 
     public void sendMsg(String text, String reciever, String sender) {
@@ -507,7 +518,7 @@ public class Controller extends Application {
                 try {
                     currentControllersMap.get("mainPageFormController").getNameLabel().getScene().getWindow().hide();
                     currentControllersMap.remove("mainPageFormController");
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("WRARING");
                     alert.setHeaderText(null);
                     alert.setContentText("Sorry, Server is down. Try again later.");
