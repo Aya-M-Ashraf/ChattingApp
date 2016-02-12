@@ -18,7 +18,6 @@ public interface FXMLControllersInterface {
     public void updateList(User user);
     public void updateListView();
     public Label getNameLabel();
-
     public void passUser(User user);
 
 }

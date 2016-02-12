@@ -1,6 +1,5 @@
 package controller;
 
-import controller.Controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -10,11 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.pojo.User;
 
-/**
- * FXML Controller class
- *
- * @author Aya M. Ashraf
- */
+
 public class AddFriendFormController implements Initializable , FXMLControllersInterface {
 
     Controller controller;
@@ -24,16 +19,15 @@ public class AddFriendFormController implements Initializable , FXMLControllersI
     private Button addFriendButton;
     
     private String userEmail;
-    
-    
-    
+   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        controller = new Controller();
+        
     }
     
-    void initData(String text) {
+    void initData(String text,Controller controller) {
         userEmail = text;
+        this.controller = controller;
     }
     
     public void handleAddFirendButton(){      

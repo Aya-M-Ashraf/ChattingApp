@@ -1,12 +1,10 @@
 package controller;
 
-import controller.Controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -17,7 +15,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-//import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -30,11 +27,7 @@ import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import model.pojo.User;
 
-/**
- * FXML Controller class
- *
- * @author KHoloud
- */
+
 public class MainPageFormController implements Initializable, FXMLControllersInterface {
 
     @FXML
@@ -49,10 +42,9 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
     private ImageView imageView;
     @FXML
     private Label firstNameLabel;
-    
+
     String userStatus;
     Controller controller;
-
     User user = new User();
 
     @Override
@@ -70,7 +62,7 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AddFriendForm.fxml"));
             Parent homePageParent = loader.load();
             AddFriendFormController AddFriendController = loader.getController();
-            AddFriendController.initData(controller.getEmail());
+            AddFriendController.initData(controller.getEmail(),controller);
             Scene homePageScene = new Scene(homePageParent);
             Stage homeStage = new Stage();
             homeStage.setScene(homePageScene);
@@ -91,7 +83,6 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
             homeStage.show();
 
         } catch (IOException ex) {
-            System.out.println("signout button pressed");
             Logger.getLogger(SignInFormController.class.getName()).log(Level.SEVERE, null, ex);
         }
         controller.signOutOneUser(user.getEmail());
@@ -100,11 +91,10 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
 
     public void statusChangeHandeling() {
         userStatus = statusComboBox.getSelectionModel().getSelectedItem();
-        System.out.println(userStatus);
-        System.out.println("MAIL " + nameLabel.getText());
         controller.updateUserStatus(nameLabel.getText(), userStatus);
     }
 
+    @Override
     public void passUser(User user) {
         this.user = user;
         nameLabel.setText(user.getEmail());
@@ -115,6 +105,7 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
         updateListView();
     }
 
+    @Override
     public void updateList(User user) {
         this.user = user;
         for (User friend : user.getFriendsList()) {
@@ -237,7 +228,7 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
         }
 
     }
-
+    
     public Label getNameLabel() {
         return nameLabel;
     }

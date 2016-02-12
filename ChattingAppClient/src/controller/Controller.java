@@ -146,18 +146,15 @@ public class Controller extends Application {
         return null;
     }
 
-    public User getUserByEmail(String email) {
-        try {
-            user = serverSignInRef.signIn(email, null);
-        } catch (RemoteException ex) {
-            ex.printStackTrace();
-        }
-        return user;
+    public User getUserByEmail(String email) throws RemoteException {
+        User retrievedUser;
+        retrievedUser = serverSignInRef.signIn(email, null);
+        return retrievedUser;
     }
 
     public boolean signOutOneUser(String eMail) {
         try {
-            System.out.println("befor  user Signd out ");
+            System.out.println("before user Signd out ");
             return serverSignOutRef.signOutOneUser(eMail);
         } catch (RemoteException ex) {
             System.out.println("user Signd out ");
@@ -184,8 +181,12 @@ public class Controller extends Application {
         try {
             if (serverAddFriendRef.checkIfUserExist(emailToAdd)) {
                 if (serverAddFriendRef.sendFriendRequest(userEmail, emailToAdd)) {
-                    System.out.println("Request is sent");
                     serverAddFriendRef.deliverFriendRequest(userEmail, emailToAdd);
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmation");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Your rwquest has been sent");
+                    alert.showAndWait();
                 }
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -230,7 +231,7 @@ public class Controller extends Application {
         try {
             serverSignInRef.unregisterUser(clientServicesImpl);
             try {
-                if (currentGroupChatControllersMap.size() != 0) {
+                if (!currentGroupChatControllersMap.isEmpty()) {
                     Iterator it = currentGroupChatControllersMap.entrySet().iterator();
                     while (it.hasNext()) {
                         HashMap.Entry pair = (HashMap.Entry) it.next();
@@ -272,7 +273,6 @@ public class Controller extends Application {
                     }
                 }
                 currentControllersMap.get("mainPageFormController").updateList(user);
-                System.out.println("List updatedddddddd");
             });
         }
 
@@ -293,7 +293,6 @@ public class Controller extends Application {
                     errorStage.setScene(receiveRequestPageScene);
                     errorStage.show();
                 }
-                System.out.println("I have :" + myFreindsRequests.size());
             }
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
@@ -316,13 +315,7 @@ public class Controller extends Application {
         try {
             if (receiveFriendRequestService.confirmFriendReuest(senderEmail, email)) {
                 user.getFriendsList().add(getUserByEmail(senderEmail));
-                System.out.println("add " + senderEmail + " to " + user.getEmail() + " = " + email);
                 updateMyFriendsList();
-                System.out.println("finished updatelist to" + user.getEmail());
-                System.out.println("inside confirmFriendRequest) userFriendList is : ");
-                for (User friend : user.getFriendsList()) {
-                    System.out.println(friend.getEmail());
-                }
                 return true;
             }
         } catch (RemoteException ex) {
@@ -332,12 +325,7 @@ public class Controller extends Application {
     }
 
     public void updateMyFriendsList() {
-        if (!Platform.isFxApplicationThread()) {
-            Platform.runLater(() -> {
-                currentControllersMap.get("mainPageFormController").passUser(user);
-                currentControllersMap.get("mainPageFormController").updateListView();
-            });
-        }
+        currentControllersMap.get("mainPageFormController").updateList(user);
     }
 
     public void sendMsg(String text, String reciever, String sender) {
@@ -389,10 +377,8 @@ public class Controller extends Application {
                         Scene homePageScene = new Scene(homePageParent);
                         Stage homeStage = new Stage();
                         homeStage.setScene(homePageScene);
-                        homeStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                            public void handle(WindowEvent we) {
-                                getCurrentChatControllersMap().remove(mail, chatBoxController);
-                            }
+                        homeStage.setOnCloseRequest((WindowEvent we) -> {
+                            getCurrentChatControllersMap().remove(mail, chatBoxController);
                         });
                         homeStage.show();
                     } catch (IOException ex) {
@@ -417,14 +403,12 @@ public class Controller extends Application {
                     Stage homeStage = new Stage();
                     homeStage.setScene(scene);
                     final String mail = user.getEmail();
-                    homeStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                        public void handle(WindowEvent we) {
-                            currentGroupChatControllersMap.remove(ID);
-                            try {
-                                chattingRef.removeMeFromRoom(mail, ID);
-                            } catch (RemoteException ex) {
-                                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-                            }
+                    homeStage.setOnCloseRequest((WindowEvent we) -> {
+                        currentGroupChatControllersMap.remove(ID);
+                        try {
+                            chattingRef.removeMeFromRoom(mail, ID);
+                        } catch (RemoteException ex) {
+                            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     });
                     homeStage.show();

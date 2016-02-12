@@ -1,6 +1,5 @@
 package controller;
 
-import controller.Controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -29,14 +28,10 @@ public class ReceiveFriendRequestFormController implements Initializable {
     Controller controller;
     String myEmail;
     String senderMail;
-    //MainPageFormController mainPageFormController = new MainPageFormController();
-
-    /**
-     * Initializes the controller class.
-     */
+   
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }
 
     public void initData(String sender, String myEmail, Controller controller) {
@@ -65,8 +60,6 @@ public class ReceiveFriendRequestFormController implements Initializable {
         introLabel.setText("Request has been deleted.");
         endLabel.setText(null);
         endLabel.getScene().getWindow().hide();
-        //controller.updateMyFriendsList(controller.);
-        //controller.updateMyFriendsList(requestLabel.getText());
     }
 
 }
