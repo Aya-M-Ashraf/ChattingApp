@@ -400,4 +400,16 @@ public class Controller {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public void confirmToSender(String senderEmail, String mail) {
+        try {
+            for (ClientServices onlineUser : usersInterfacesVector) {
+                if (senderEmail.equals(onlineUser.getEmail())) {
+                    onlineUser.addMyRequest(mail);
+                }
+            }
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

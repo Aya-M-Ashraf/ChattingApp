@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package services;
 
 import controller.Controller;
@@ -38,5 +33,10 @@ public class ReceiveFriendRequestServiceImpl extends UnicastRemoteObject impleme
     @Override
     public boolean cancelFriendRequest(String friendEmail, String email) throws RemoteException {
         return controller.deleteFriendRequest(friendEmail, email);
+    }
+
+    @Override
+    public void confirmToSender(String senderEmail, String mail) throws RemoteException {
+        controller.confirmToSender(senderEmail,mail);
     }
 }

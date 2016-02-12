@@ -76,7 +76,7 @@
       <TextField fx:id="question" layoutX="178.0" layoutY="416.0" />
       <TextField fx:id="answer" layoutX="178.0" layoutY="471.0" />
       <ComboBox fx:id="gender" layoutX="178.0" layoutY="208.0" prefHeight="28.0" prefWidth="163.0" />
-      <Button layoutX="144.0" layoutY="518.0" mnemonicParsing="false" onAction="#onSubmit" prefHeight="42.0" prefWidth="118.0" text="submit" />
+      <Button layoutX="256.0" layoutY="514.0" mnemonicParsing="false" onAction="#onSubmit" prefHeight="11.0" prefWidth="90.0" text="Submit" />
       <Label fx:id="errorMessageLabel" layoutX="28.0" layoutY="14.0" prefHeight="18.0" prefWidth="300.0" textFill="#ee0f0f" />
                         <TextField id="country" fx:id="country" layoutX="177.0" layoutY="305.0" />
                         <TextField fx:id="city" layoutX="179.0" layoutY="360.0" />
