@@ -9,23 +9,23 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="623.0" prefWidth="668.0" stylesheets="@serverform.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ServerFormController">
+<AnchorPane id="AnchorPane" prefHeight="587.0" prefWidth="624.0" stylesheets="@serverform.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ServerFormController">
 
    <children>
       
-      <TabPane layoutX="15.0" layoutY="15.0" prefHeight="667.0" prefWidth="668.0" stylesheets="@serverform.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane layoutX="33.0" layoutY="32.0" prefHeight="587.0" prefWidth="624.0" stylesheets="@serverform.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
           <Tab text="Start/Stop">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="481.0" prefWidth="588.0">
                      <children>
-                        <PieChart fx:id="pieChart" layoutY="137.0" prefHeight="455.0" prefWidth="345.0" />
-                        <PieChart fx:id="pieChart2" layoutX="321.0" layoutY="138.0" prefHeight="452.0" prefWidth="345.0" />
+                        <PieChart fx:id="pieChart" layoutX="-13.0" layoutY="75.0" prefHeight="491.0" prefWidth="368.0" />
+                        <PieChart fx:id="pieChart2" layoutX="304.0" layoutY="98.0" prefHeight="468.0" prefWidth="354.0" />
                         <Button id="button" fx:id="stopServiceButton" layoutX="226.0" layoutY="50.0" mnemonicParsing="false" onMouseClicked="#handleStopButton" prefHeight="15.0" prefWidth="87.0" text="Stop" />
                         <Button id="button" fx:id="startServiceButton" layoutX="97.0" layoutY="50.0" mnemonicParsing="false" onMouseClicked="#handleStartButton" prefHeight="18.0" prefWidth="82.0" stylesheets="@serverform.css" text="Start" />
-                        <Button id="button" fx:id="refreshButton" layoutX="290.0" layoutY="498.0" mnemonicParsing="false" onAction="#updateCharts" prefHeight="22.0" prefWidth="88.0" stylesheets="@serverform.css" text="Refresh" />
-                        <ImageView id="logo" fitHeight="109.0" fitWidth="109.0" layoutX="474.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true" />
-                        <Text id="logoText" layoutX="471.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rainbow Server" textAlignment="CENTER" wrappingWidth="113.3359375" />
+                        <Button id="button" fx:id="refreshButton" layoutX="269.0" layoutY="485.0" mnemonicParsing="false" onAction="#updateCharts" prefHeight="22.0" prefWidth="88.0" stylesheets="@serverform.css" text="Refresh" />
+                        <ImageView id="logo" fitHeight="109.0" fitWidth="109.0" layoutX="473.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true" />
+                        <Text id="logoText" layoutX="471.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rainbow Server" textAlignment="CENTER" wrappingWidth="113.3359375" />
                      </children>
                   </AnchorPane>
             </content>
