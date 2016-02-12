@@ -61,11 +61,6 @@ public class Controller {
             return false;
         } else {
             //System.out.println("user with this mail is found");
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("WRARING");
-            alert.setHeaderText(null);
-            alert.setContentText("User with this mail is found");
-            alert.showAndWait();
             return true;
         }
     }
