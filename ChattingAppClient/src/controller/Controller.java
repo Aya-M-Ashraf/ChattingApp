@@ -134,7 +134,6 @@ public class Controller extends Application {
                     alert.setHeaderText(null);
                     alert.setContentText("Password is incorrect!");
                     alert.showAndWait();
-
                 }
             }
         } catch (RemoteException ex) {
@@ -151,7 +150,6 @@ public class Controller extends Application {
         try {
             user = serverSignInRef.signIn(email, null);
         } catch (RemoteException ex) {
-            System.out.println("can't use sign In from server");
             ex.printStackTrace();
         }
         return user;

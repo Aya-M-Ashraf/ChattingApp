@@ -69,8 +69,8 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AddFriendForm.fxml"));
             Parent homePageParent = loader.load();
-            AddFriendFormController controller = loader.getController();
-            controller.initData(nameLabel.getText());
+            AddFriendFormController AddFriendController = loader.getController();
+            AddFriendController.initData(controller.getEmail());
             Scene homePageScene = new Scene(homePageParent);
             Stage homeStage = new Stage();
             homeStage.setScene(homePageScene);
