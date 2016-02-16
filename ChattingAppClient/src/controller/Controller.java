@@ -54,10 +54,6 @@ public class Controller extends Application {
     public Controller() {
         try {
             clientServicesImpl = new ClientServicesImpl(this);
-        } catch (RemoteException ex) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
             Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5000);
 
             serverSignInRef = (SignInServerService) registry.lookup("SignInService");
@@ -75,6 +71,7 @@ public class Controller extends Application {
             alert.setHeaderText(null);
             alert.setContentText("Serve is down, can't lookup from registry");
             alert.showAndWait();
+            System.exit(0);
         }
     }
 
@@ -209,12 +206,14 @@ public class Controller extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SignInForm.fxml"));
         Parent root = loader.load();
         FXMLControllersInterface signInFormController = loader.getController();
         currentControllersMap.put("SignInFormController", signInFormController);
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

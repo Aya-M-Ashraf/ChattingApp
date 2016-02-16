@@ -141,6 +141,7 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
         });
     }
 
+    @Override
     public void updateListView() {
         ObservableList<User> observableList = FXCollections.observableList(user.getFriendsList());
         listView.setItems(observableList);
@@ -171,6 +172,7 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
         });
     }
 
+    @Override
     public void displayAdd(String adMessege) {
         adLabel.setText(adMessege);
     }
@@ -226,9 +228,9 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
         } catch (IOException ex) {
             Logger.getLogger(MainPageFormController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
     
+    @Override
     public Label getNameLabel() {
         return nameLabel;
     }
