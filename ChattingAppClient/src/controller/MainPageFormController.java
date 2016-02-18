@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -138,7 +140,7 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
                     }
                 };
             }
-        });
+        }); 
     }
 
     @Override
@@ -170,6 +172,14 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
                 };
             }
         });
+        
+        listView.getSelectionModel().selectedItemProperty().addListener(
+            new ChangeListener<User>() {
+                @Override
+            public void changed(ObservableValue<? extends User> observable, User oldValue, User newValue) {
+                    handleListClicks();
+            }
+        });
     }
 
     @Override
@@ -177,7 +187,7 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
         adLabel.setText(adMessege);
     }
 
-    public void handleListClicks(MouseEvent event) {
+    public void handleListClicks() {
         User user = (User) listView.getSelectionModel().getSelectedItem();
         if (user != null && user.isIsOnline()) {
             try {

@@ -35,7 +35,7 @@
          </image></ImageView>
       <ComboBox id="statusComboBox" fx:id="statusComboBox" layoutX="145.0" layoutY="85.0" onAction="#statusChangeHandeling" prefHeight="28.0" prefWidth="137.0" />
       <Label id="nameLabel" fx:id="nameLabel" layoutX="119.0" layoutY="38.0" prefHeight="36.0" prefWidth="150.0" />
-      <ListView fx:id="listView" layoutY="189.0" onMouseClicked="#handleListClicks" prefHeight="315.0" prefWidth="331.0" />
+      <ListView fx:id="listView" layoutY="189.0" prefHeight="315.0" prefWidth="331.0" />
       <Label fx:id="testLabel" layoutX="40.0" layoutY="122.0" prefHeight="25.0" prefWidth="63.0" />
       <Button id="addFriendButton" fx:id="addFriendButton" layoutX="206.0" layoutY="159.0" mnemonicParsing="false" onMouseClicked="#handleAddFriendButton" prefHeight="25.0" prefWidth="99.0" text="+ Add Friends">
          <font>

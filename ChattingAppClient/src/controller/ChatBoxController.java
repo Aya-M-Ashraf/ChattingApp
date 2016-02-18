@@ -220,7 +220,9 @@ public class ChatBoxController implements Initializable {
                     DOMSource source = new DOMSource(document.getDocumentElement());
                     transform.transform(source, result);
                 } else {
-                    System.out.println(document.getDocumentElement().getTagName());
+//                    if (textArea.getText() != null && chatTextField.getText()!=null) {
+//                        System.out.println(document.getDocumentElement().getTagName());
+//                    }
                 }
             } else {
                 System.out.println("you didnt choose file");
