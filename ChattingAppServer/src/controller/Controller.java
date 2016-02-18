@@ -12,7 +12,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.scene.control.Alert;
+//import javafx.scene.control.Alert;
 import model.dao.ManipulateDB;
 import model.dao.QueryDB;
 import model.pojo.User;
@@ -125,11 +125,11 @@ public class Controller {
             registry.rebind("ForgetPasswordService", forgetPasswordServiceImplRef);
 
         } catch (RemoteException ex) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("WRARING");
-            alert.setHeaderText(null);
-            alert.setContentText("The Port is already in used.");
-            alert.showAndWait();
+//            Alert alert = new Alert(Alert.AlertType.WARNING);
+//            alert.setTitle("WRARING");
+//            alert.setHeaderText(null);
+//            alert.setContentText("The Port is already in used.");
+//            alert.showAndWait();
         }
     }
 
@@ -212,11 +212,11 @@ public class Controller {
                 }
             } else {
                 //System.out.println("There is no online users.");
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("WRARING");
-                alert.setHeaderText(null);
-                alert.setContentText("There is no online users");
-                alert.showAndWait();
+//                Alert alert = new Alert(Alert.AlertType.WARNING);
+//                alert.setTitle("WRARING");
+//                alert.setHeaderText(null);
+//                alert.setContentText("There is no online users");
+//                alert.showAndWait();
             }
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);

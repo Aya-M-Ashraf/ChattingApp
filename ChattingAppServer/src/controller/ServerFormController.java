@@ -11,7 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.Alert;
+//import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -113,11 +113,11 @@ public class ServerFormController implements Initializable {
         try {
             registry = LocateRegistry.createRegistry(5000);
         } catch (RemoteException ex) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("WRARING");
-            alert.setHeaderText(null);
-            alert.setContentText("The Port is already in used.");
-            alert.showAndWait();
+//            Alert alert = new Alert(Alert.AlertType.WARNING);
+//            alert.setTitle("WRARING");
+//            alert.setHeaderText(null);
+//            alert.setContentText("The Port is already in used.");
+//            alert.showAndWait();
         }
         
         ArrayList<User> AllUsers = new ArrayList<User>();
@@ -185,11 +185,11 @@ public class ServerFormController implements Initializable {
                                         user = new User(eMail.getText(), firstName.getText(), lastName.getText(), password.getText(), country.getText(), city.getText(), question.getText(), answer.getText(), "Available", gender.getValue(), true);
                                         if (!controller.searchForUserByEMail(user.getEmail())) {
                                             controller.insertUser(user);
-                                            Alert alert = new Alert(Alert.AlertType.WARNING);
-                                            alert.setTitle("WRARING");
-                                            alert.setHeaderText(null);
-                                            alert.setContentText("Account has been created.");
-                                            alert.showAndWait();
+//                                            Alert alert = new Alert(Alert.AlertType.WARNING);
+//                                            alert.setTitle("WRARING");
+//                                            alert.setHeaderText(null);
+//                                            alert.setContentText("Account has been created.");
+//                                            alert.showAndWait();
                                         }
                                         
                                     } else {
