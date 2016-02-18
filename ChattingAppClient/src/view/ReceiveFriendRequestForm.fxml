@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="204.0" prefWidth="407.0" styleClass="mainFxmlClass" stylesheets="@cssForm.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReceiveFriendRequestFormController">
+<AnchorPane id="AnchorPane" maxHeight="204.0" maxWidth="407.0" minHeight="204.0" minWidth="407.0" prefHeight="204.0" prefWidth="407.0" styleClass="mainFxmlClass" stylesheets="@cssForm.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReceiveFriendRequestFormController">
    <children>
       <Label fx:id="introLabel" layoutX="25.0" layoutY="14.0" prefHeight="39.0" prefWidth="328.0" text="This Email sent you friend Request." />
       <Label fx:id="endLabel" layoutX="25.0" layoutY="84.0" prefHeight="49.0" prefWidth="380.0" text="If you want to confirm this request click confirm, else click cancel" wrapText="true" />

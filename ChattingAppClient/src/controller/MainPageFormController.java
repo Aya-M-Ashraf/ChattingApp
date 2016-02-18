@@ -14,7 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+//import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -205,11 +205,11 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
                 Logger.getLogger(MainPageFormController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("WRARING");
-            alert.setHeaderText(null);
-            alert.setContentText("Your friend is offline");
-            alert.showAndWait();
+//            Alert alert = new Alert(Alert.AlertType.WARNING);
+//            alert.setTitle("WRARING");
+//            alert.setHeaderText(null);
+//            alert.setContentText("Your friend is offline");
+//            alert.showAndWait();
         }
     }
 

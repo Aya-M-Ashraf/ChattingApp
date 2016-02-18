@@ -7,11 +7,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="200.0" prefWidth="486.0" styleClass="mainFxmlClass" stylesheets="@cssForm.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddFriendFormController">
+<AnchorPane id="AnchorPane" maxHeight="200.0" maxWidth="486.0" minHeight="200.0" minWidth="369.0" prefHeight="200.0" prefWidth="378.0" styleClass="mainFxmlClass" stylesheets="@cssForm.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddFriendFormController">
    <children>
-      <TextField id="emailTextField" fx:id="emailTextField" layoutX="41.0" layoutY="88.0" prefHeight="25.0" prefWidth="308.0" />
-      <Label layoutX="41.0" layoutY="56.0" prefHeight="23.0" prefWidth="242.0" text="Enter Your Friend e-mail :" />
-      <Button id="addFriendButton" fx:id="addFriendButton" layoutX="199.0" layoutY="142.0" mnemonicParsing="false" onMouseClicked="#handleAddFirendButton" prefHeight="25.0" prefWidth="70.0" text="Add " />
-      <Label fx:id="label" layoutX="167.0" layoutY="14.0" prefHeight="17.0" prefWidth="70.0" />
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="378.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="label" prefHeight="17.0" prefWidth="70.0" />
+            <Label prefHeight="23.0" prefWidth="242.0" text="Enter Your Friend e-mail :" />
+            <TextField id="emailTextField" fx:id="emailTextField" prefHeight="25.0" prefWidth="308.0" />
+            <Button id="addFriendButton" fx:id="addFriendButton" mnemonicParsing="false" onMouseClicked="#handleAddFirendButton" prefHeight="25.0" prefWidth="70.0" text="Add " />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

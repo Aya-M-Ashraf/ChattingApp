@@ -28,7 +28,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+//import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.pojo.User;
@@ -66,12 +66,12 @@ public class Controller extends Application {
             forgetPasswordService = (ForgetPasswordService) registry.lookup("ForgetPasswordService");
 
         } catch (RemoteException | NotBoundException ex) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("WRARING");
-            alert.setHeaderText(null);
-            alert.setContentText("Serve is down, can't lookup from registry");
-            alert.showAndWait();
-            System.exit(0);
+//            Alert alert = new Alert(Alert.AlertType.WARNING);
+//            alert.setTitle("WRARING");
+//            alert.setHeaderText(null);
+//            alert.setContentText("Serve is down, can't lookup from registry");
+//            alert.showAndWait();
+//            System.exit(0);
         }
     }
 
@@ -93,17 +93,17 @@ public class Controller extends Application {
 
     public void sendUserToServer(User user) {
         if (serverSignUpRef.clientSignUp(user)) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("WRARING");
-            alert.setHeaderText(null);
-            alert.setContentText("Your account has been created.");
-            alert.showAndWait();
+//            Alert alert = new Alert(Alert.AlertType.WARNING);
+//            alert.setTitle("WRARING");
+//            alert.setHeaderText(null);
+//            alert.setContentText("Your account has been created.");
+//            alert.showAndWait();
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("WRARING");
-            alert.setHeaderText(null);
-            alert.setContentText("There is a problem in account creation.");
-            alert.showAndWait();
+//            Alert alert = new Alert(Alert.AlertType.WARNING);
+//            alert.setTitle("WRARING");
+//            alert.setHeaderText(null);
+//            alert.setContentText("There is a problem in account creation.");
+//            alert.showAndWait();
         }
     }
 
@@ -111,11 +111,11 @@ public class Controller extends Application {
         try {
             user = serverSignInRef.signIn(email, password);
             if (user == null) {   // user doesn't exist              
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("WRARING");
-                alert.setHeaderText(null);
-                alert.setContentText("User doesn't exisit!");
-                alert.showAndWait();
+//                Alert alert = new Alert(Alert.AlertType.WARNING);
+//                alert.setTitle("WRARING");
+//                alert.setHeaderText(null);
+//                alert.setContentText("User doesn't exisit!");
+//                alert.showAndWait();
             } else {
                 if (user.getPassword().equals(password)) {
                     //password is correct
@@ -125,19 +125,19 @@ public class Controller extends Application {
                     return user;
                 } else {
                     // password isn't correct.
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("WRARING");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Password is incorrect!");
-                    alert.showAndWait();
+//                    Alert alert = new Alert(Alert.AlertType.ERROR);
+//                    alert.setTitle("WRARING");
+//                    alert.setHeaderText(null);
+//                    alert.setContentText("Password is incorrect!");
+//                    alert.showAndWait();
                 }
             }
         } catch (RemoteException ex) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("WRARING");
-            alert.setHeaderText(null);
-            alert.setContentText("Server down, can't sign in.");
-            alert.showAndWait();
+//            Alert alert = new Alert(Alert.AlertType.WARNING);
+//            alert.setTitle("WRARING");
+//            alert.setHeaderText(null);
+//            alert.setContentText("Server down, can't sign in.");
+//            alert.showAndWait();
         }
         return null;
     }
@@ -178,18 +178,18 @@ public class Controller extends Application {
             if (serverAddFriendRef.checkIfUserExist(emailToAdd)) {
                 if (serverAddFriendRef.sendFriendRequest(userEmail, emailToAdd)) {
                     serverAddFriendRef.deliverFriendRequest(userEmail, emailToAdd);
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Confirmation");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Your rwquest has been sent");
-                    alert.showAndWait();
+////                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+////                    alert.setTitle("Confirmation");
+////                    alert.setHeaderText(null);
+////                    alert.setContentText("Your rwquest has been sent");
+////                    alert.showAndWait();
                 }
             } else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("WRARING");
-                alert.setHeaderText(null);
-                alert.setContentText("this mail doesn't belong to anyone");
-                alert.showAndWait();
+//                Alert alert = new Alert(Alert.AlertType.WARNING);
+//                alert.setTitle("WRARING");
+//                alert.setHeaderText(null);
+//                alert.setContentText("this mail doesn't belong to anyone");
+//                alert.showAndWait();
             }
         } catch (RemoteException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
@@ -517,11 +517,11 @@ public class Controller extends Application {
                 try {
                     currentControllersMap.get("mainPageFormController").getNameLabel().getScene().getWindow().hide();
                     currentControllersMap.remove("mainPageFormController");
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("WRARING");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Sorry, Server is down. Try again later.");
-                    alert.showAndWait();
+//                    Alert alert = new Alert(Alert.AlertType.ERROR);
+//                    alert.setTitle("WRARING");
+//                    alert.setHeaderText(null);
+//                    alert.setContentText("Sorry, Server is down. Try again later.");
+//                    alert.showAndWait();
 
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SignInForm.fxml"));
                     Parent root = loader.load();

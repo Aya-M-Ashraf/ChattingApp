@@ -82,6 +82,7 @@ public class SignInFormController implements Initializable, FXMLControllersInter
                     Scene homePageScene = new Scene(homePageParent);
                     Stage homeStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     homeStage.setScene(homePageScene);
+                    homeStage.setResizable(false);
                     homeStage.setOnCloseRequest(e -> {
                         user.setIsOnline(false);
                         controller.signOutOneUser(user.getEmail());
@@ -116,6 +117,7 @@ public class SignInFormController implements Initializable, FXMLControllersInter
             Stage homeStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             homeStage.setScene(homePageScene);
             homeStage.show();
+            homeStage.setResizable(false);
         } catch (IOException ex) {
             Logger.getLogger(SignInFormController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -128,6 +130,7 @@ public class SignInFormController implements Initializable, FXMLControllersInter
             Stage homeStage = new Stage();
             homeStage.setScene(homePageScene);
             homeStage.show();
+            homeStage.setResizable(false);
         } catch (IOException ex) {
             Logger.getLogger(SignInFormController.class.getName()).log(Level.SEVERE, null, ex);
         }
