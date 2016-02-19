@@ -135,7 +135,7 @@ public class ClientServicesImpl extends UnicastRemoteObject implements ClientSer
 
     @Override
     public void getFriendRequest(String sender) throws RemoteException {
-        controller.getOfflineFriendRequest(sender);
+        controller.getRequest(sender);
     }
 
     @Override

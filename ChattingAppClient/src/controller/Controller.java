@@ -206,7 +206,7 @@ public class Controller extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SignInForm.fxml"));
         Parent root = loader.load();
         FXMLControllersInterface signInFormController = loader.getController();
@@ -273,10 +273,10 @@ public class Controller extends Application {
             });
         }
     }
-    
-    public void addMyRequest(String friendMail){
+
+    public void addMyRequest(String friendMail) {
         if (!Platform.isFxApplicationThread()) {
-            Platform.runLater(() -> {  
+            Platform.runLater(() -> {
                 try {
                     user.getFriendsList().add(getUserByEmail(friendMail));
                     currentControllersMap.get("mainPageFormController").updateList(user);
@@ -325,7 +325,7 @@ public class Controller extends Application {
             if (receiveFriendRequestService.confirmFriendReuest(senderEmail, email)) {
                 user.getFriendsList().add(getUserByEmail(senderEmail));
                 updateMyFriendsList();
-                receiveFriendRequestService.confirmToSender(senderEmail,email);
+                receiveFriendRequestService.confirmToSender(senderEmail, email);
                 return true;
             }
         } catch (RemoteException ex) {
@@ -335,7 +335,7 @@ public class Controller extends Application {
     }
 
     public void updateMyFriendsList() {
-       currentControllersMap.get("mainPageFormController").updateList(user);
+        currentControllersMap.get("mainPageFormController").updateList(user);
     }
 
     public void sendMsg(String text, String reciever, String sender) {
@@ -531,6 +531,25 @@ public class Controller extends Application {
                     Stage primaryStage = new Stage();
                     primaryStage.setScene(scene);
                     primaryStage.show();
+                } catch (IOException ex) {
+                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+        }
+    }
+
+    public void getRequest(String senderMail) {
+        if (!Platform.isFxApplicationThread()) {
+            Platform.runLater(() -> {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ReceiveFriendRequestForm.fxml"));
+                    Parent recieveRquestPageParent = loader.load();
+                    ReceiveFriendRequestFormController controller = loader.getController();
+                    controller.initData(senderMail, getEmail(), this);
+                    Scene receiveRequestPageScene = new Scene(recieveRquestPageParent);
+                    Stage errorStage = new Stage();
+                    errorStage.setScene(receiveRequestPageScene);
+                    errorStage.show();
                 } catch (IOException ex) {
                     Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
                 }

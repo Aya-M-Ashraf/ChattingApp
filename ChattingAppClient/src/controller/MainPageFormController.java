@@ -31,7 +31,6 @@ import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import model.pojo.User;
 
-
 public class MainPageFormController implements Initializable, FXMLControllersInterface {
 
     @FXML
@@ -54,6 +53,52 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         statusComboBox.getItems().addAll("Available", "Busy", "Away");
+
+//        ComboBox<Status> myComboBox = new ComboBox<Status>();
+//        myComboBox.getItems().addAll(
+//                new Status("Available", new Image(getClass().getResource("/view/images/Online_status.png").toExternalForm())),
+//                new Status("Busy", new Image(getClass().getResource("/view/images/Busy_status.png").toExternalForm())),
+//                new Status("Away", new Image(getClass().getResource("/view/images/Away_status.png").toExternalForm())));
+//
+//        myComboBox.setCellFactory(new Callback<ListView<Status>, ListCell<Status>>() {
+//            @Override
+//            public ListCell<Status> call(ListView<Status> p) {
+//                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//                return new ListCell<Status>() {
+//                    private final ImageView view;
+//
+//                    {
+//                        //  setContentDisplay(ContentDisplay.GRAPHIC_ONLY); 
+//                        view = new ImageView();
+//                    }
+//
+//                    @Override
+//                    protected void updateItem(Status item, boolean empty) {
+//                        super.updateItem(item, empty);
+//
+//                        if (item == null || empty) {
+//                            setGraphic(null);
+//                            setText(null);
+//                        } else {
+//                            view.setImage(item.getImage());
+//                            setGraphic(view);
+//                            setText(item.getStatus());
+//                        }
+//                    }
+//                };
+//
+//            }
+//        });
+//        
+//        myComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Status>(){
+// 
+//            @Override
+//            public void changed(ObservableValue<? extends Status> ov, Status t, Status t1) {
+//                String browserName = t1.getStatus();
+//                Image browserIcon = t1.getImage();
+//                // do whatever you need with the browserName and icon...
+//            }
+//        });        
     }
 
     void passController(Controller controller) {
@@ -66,7 +111,7 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AddFriendForm.fxml"));
             Parent homePageParent = loader.load();
             AddFriendFormController AddFriendController = loader.getController();
-            AddFriendController.initData(controller.getEmail(),controller);
+            AddFriendController.initData(controller.getEmail(), controller);
             Scene homePageScene = new Scene(homePageParent);
             Stage homeStage = new Stage();
             homeStage.setScene(homePageScene);
@@ -128,6 +173,8 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
                         super.updateItem(item, empty);
                         if (item == null || empty) {
                             setGraphic(null);
+                            setText(null);
+                            setContextMenu(null);
                         } else {
                             try {
                                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ContactCard.fxml"));
@@ -142,7 +189,32 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
                     }
                 };
             }
-        }); 
+        });
+
+//        listView.getSelectionModel().selectedItemProperty().addListener(
+//            new ChangeListener<User>() {
+//                @Override
+//            public void changed(ObservableValue<? extends User> observable, User oldValue, User newValue) {
+//                    handleListClicks();
+//            }
+//            
+//        });
+//        listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(final MouseEvent mouseEvent) {
+//                if(listView.selectionModelProperty().getValue() != null)
+//                handleListClicks();
+//            }
+//        });
+        listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                if (listView.getSelectionModel().getSelectedItem() != null) {
+                    handleListClicks();
+                }
+            }
+        });
     }
 
     @Override
@@ -159,6 +231,8 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
                         super.updateItem(item, empty);
                         if (item == null || empty) {
                             setGraphic(null);
+                            setText(null);
+                            setContextMenu(null);
                         } else {
                             try {
                                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ContactCard.fxml"));
@@ -174,12 +248,14 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
                 };
             }
         });
-        
-        listView.getSelectionModel().selectedItemProperty().addListener(
-            new ChangeListener<User>() {
-                @Override
-            public void changed(ObservableValue<? extends User> observable, User oldValue, User newValue) {
+
+        listView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                if (listView.getSelectionModel().getSelectedItem() != null) {
                     handleListClicks();
+                }
             }
         });
     }
@@ -211,7 +287,7 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
                             controller.getCurrentChatControllersMap().remove(user.getEmail(), chatBoxController);
                         }
                     });
-                    
+
                     chatStage.setScene(chatPageScene);
                     chatStage.show();
                 }
@@ -244,7 +320,7 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
             Logger.getLogger(MainPageFormController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @Override
     public Label getNameLabel() {
         return nameLabel;
