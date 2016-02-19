@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -16,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 //import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -195,31 +197,33 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
                     controller.getCurrentChatControllersMap().get(user.getEmail()).getLabel().getScene().getWindow().requestFocus();
                 } else {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ChatBox.fxml"));
-                    Parent homePageParent = loader.load();
+                    Parent chatPageParent = loader.load();
                     ChatBoxController chatBoxController = loader.getController();
                     chatBoxController.passUser(user);
                     chatBoxController.passController(controller);
                     controller.getCurrentChatControllersMap().put(user.getEmail(), chatBoxController);
 
-                    Scene homePageScene = new Scene(homePageParent);
-                    Stage homeStage = new Stage();
-                    homeStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                    Scene chatPageScene = new Scene(chatPageParent);
+                    Stage chatStage = new Stage();
+                    chatStage.setResizable(false);
+                    chatStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                         public void handle(WindowEvent we) {
                             controller.getCurrentChatControllersMap().remove(user.getEmail(), chatBoxController);
                         }
                     });
-                    homeStage.setScene(homePageScene);
-                    homeStage.show();
+                    
+                    chatStage.setScene(chatPageScene);
+                    chatStage.show();
                 }
             } catch (IOException ex) {
                 Logger.getLogger(MainPageFormController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-//            Alert alert = new Alert(Alert.AlertType.WARNING);
-//            alert.setTitle("WRARING");
-//            alert.setHeaderText(null);
-//            alert.setContentText("Your friend is offline");
-//            alert.showAndWait();
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("WRARING");
+            alert.setHeaderText(null);
+            alert.setContentText("Your friend is offline");
+            alert.showAndWait();
         }
     }
 
@@ -233,6 +237,7 @@ public class MainPageFormController implements Initializable, FXMLControllersInt
             friendsChooserController.passController(controller);
             Scene homePageScene = new Scene(homePageParent);
             Stage homeStage = new Stage();
+            homeStage.setResizable(false);
             homeStage.setScene(homePageScene);
             homeStage.show();
         } catch (IOException ex) {
