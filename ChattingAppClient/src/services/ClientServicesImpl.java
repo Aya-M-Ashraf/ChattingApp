@@ -21,24 +21,24 @@ import javafx.stage.Stage;
 import model.pojo.User;
 import controller.YesNoBoxController;
 
-
-public class ClientServicesImpl extends UnicastRemoteObject implements ClientServices{
+public class ClientServicesImpl extends UnicastRemoteObject implements ClientServices {
 
     Controller controller;
+
     public ClientServicesImpl(Controller controller) throws RemoteException {
         this.controller = controller;
     }
 
     @Override
     public String getEmail() throws RemoteException {
-       return controller.getEmail();
+        return controller.getEmail();
     }
-    
+
     @Override
-    public void recieveAd(String adMessege) throws RemoteException{
+    public void recieveAd(String adMessege) throws RemoteException {
         controller.ReceiveAdd(adMessege);
     }
-    
+
     @Override
     public ClientServices receiveMyFriendchangeStatus(ClientServices clientService) {
         return clientService;
@@ -46,30 +46,29 @@ public class ClientServicesImpl extends UnicastRemoteObject implements ClientSer
 
     @Override
     public void changeFriendStatus(String friendEmail, String newStatus) throws RemoteException {
-        controller.changeFriendStatus(friendEmail,newStatus);
-    }
-
-
-    @Override
-    public void recieveMsg(String text, String sender ,String receiever) throws RemoteException {
-        controller.receiveMsgFromUser(text,sender,receiever);
+        controller.changeFriendStatus(friendEmail, newStatus);
     }
 
     @Override
-    public void recieveGroupChat(int ID,ArrayList<String> arrayList) throws RemoteException {
-        controller.participateGroupChat(ID,arrayList);
+    public void recieveMsg(String text, String sender, String receiever) throws RemoteException {
+        controller.receiveMsgFromUser(text, sender, receiever);
+    }
+
+    @Override
+    public void recieveGroupChat(int ID, ArrayList<String> arrayList) throws RemoteException {
+        controller.participateGroupChat(ID, arrayList);
     }
 
     @Override
     public void recieveGroupChatMsg(int ID, String msg, String senderEmail) throws RemoteException {
-        controller.receiveGroupChatMsg(ID,msg,senderEmail);
+        controller.receiveGroupChatMsg(ID, msg, senderEmail);
     }
 
     @Override
     public void updateRoomList(int ID, ArrayList<String> friends) throws RemoteException {
-        controller.updateRooomList(ID,friends);
+        controller.updateRooomList(ID, friends);
     }
-    
+
     @Override
     public boolean receiveFileFromUser(String receiver, String senderEmail, byte[] file, String fileName) throws RemoteException {
 
@@ -92,7 +91,7 @@ public class ClientServicesImpl extends UnicastRemoteObject implements ClientSer
                             File myFile = fileChooser.showSaveDialog(controller.getCurrentChatControllersMap().get(senderEmail).getLabel().getScene().getWindow());
                             if (myFile != null) {
                                 try {
-                                    FileOutputStream fos = new FileOutputStream(myFile.getAbsolutePath()+fileName);
+                                    FileOutputStream fos = new FileOutputStream(myFile.getAbsolutePath() + fileName);
                                     fos.write(file);
                                     fos.close();
                                 } catch (IOException e) {
@@ -107,7 +106,7 @@ public class ClientServicesImpl extends UnicastRemoteObject implements ClientSer
                         @Override
                         public void handle(ActionEvent arg0) {
                             homeStage.close();
-                       }
+                        }
                     });
 
                 } catch (IOException ex) {
@@ -152,7 +151,7 @@ public class ClientServicesImpl extends UnicastRemoteObject implements ClientSer
     public void upDateMainList() throws RemoteException {
         controller.updateMyFriendsList();
     }
-    
+
     @Override
     public void addMyRequest(String friendMail) throws RemoteException {
         controller.addMyRequest(friendMail);
@@ -160,19 +159,19 @@ public class ClientServicesImpl extends UnicastRemoteObject implements ClientSer
 
     @Override
     public void setFriendOffline(String friendMail) throws RemoteException {
-         controller.setFriendOffline(friendMail);
+        controller.setFriendOffline(friendMail);
     }
 
     @Override
     public void popUpOnlineNotification(String email) throws RemoteException {
-        controller.putNotification("Online",email);            
+        controller.putNotification("Online", email);
     }
 
     @Override
     public void popUpOfflineNotification(String email) throws RemoteException {
-        controller.putNotification("Offline",email);  
+        controller.putNotification("Offline", email);
     }
-    
+
     @Override
     public void serverisDown() throws RemoteException {
         controller.serverisDown();

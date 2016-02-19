@@ -107,12 +107,8 @@ public class ChatBoxController implements Initializable {
         File myFile = fileChooser.showOpenDialog(label.getScene().getWindow());
         if (myFile != null) {
             readFile(myFile.getAbsolutePath());
-        } else {
-
-            System.out.println("you didnt choose file");
-        }
-        System.out.println("File size is : " + fileSize);
-        System.out.println(myFile.getName());
+            System.out.println("File size is : " + fileSize);
+        //System.out.println(myFile.getName());
         clientServices = controller.sendFileToUser(myFile.getName(), friend.getEmail(), controller.getEmail());
         if (clientServices != null) {
             try {
@@ -124,6 +120,11 @@ public class ChatBoxController implements Initializable {
         } else {
             System.out.println("the peer to peer client is equal null");
         }
+        } else {
+
+            System.out.println("you didnt choose file");
+        }
+        
     }
 
     public void readFile(String path) {
