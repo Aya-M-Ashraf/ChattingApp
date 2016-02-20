@@ -35,7 +35,7 @@ public class QueryDB {
         User user;
 
         try {
-            PreparedStatement pst = connection.prepareStatement("select Fname , Lname , Country , city , Online , Status , Gender from user");
+            PreparedStatement pst = connection.prepareStatement("select Fname , Lname , Country , city , Online , Status , Gender ,Email from user");
             ResultSet rs = pst.executeQuery();
 
             while (rs.next()) {
@@ -47,6 +47,7 @@ public class QueryDB {
                 user.setIsOnline(rs.getBoolean(5));
                 user.setStatus(rs.getString(6));
                 user.setGender(rs.getString(7));
+                user.setEmail(rs.getString(8));
                 AllUsers.add(user);
             }
             //System.out.println(AllUsers.get(2).getFirstName());

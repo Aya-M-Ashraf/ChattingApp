@@ -223,7 +223,7 @@ public class ManipulateDB {
         }
         return onlineUsers;
     }
-    
+
     public ArrayList<User> selectAllOfflineUsers() {
 
         User user = new User();
@@ -265,7 +265,7 @@ public class ManipulateDB {
         }
         return offlineUsers;
     }
-    
+
     public ArrayList<User> selectAllMaleUsers() {
 
         User user = new User();
@@ -330,7 +330,6 @@ public class ManipulateDB {
             return true;
         } catch (SQLException ex) {
             System.out.println("i cant set the user online or offline");
-
             // Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
@@ -364,5 +363,17 @@ public class ManipulateDB {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+    }
+
+    public boolean UpdateUserInfo(String email, String alt, String column) {
+        try {
+            PreparedStatement pst;
+            pst = connection.prepareStatement("update user set "+ column +"= '"+alt+"' where Email = '"+email+"'");
+            pst.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 }

@@ -412,4 +412,8 @@ public class Controller {
             ex.printStackTrace();
         }
     }
+    
+    public boolean updateUserInfo(String email,String alt,String column){
+        return manipulateDBObj.UpdateUserInfo(email, alt, column);
+    }
 }

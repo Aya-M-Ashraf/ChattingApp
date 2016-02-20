@@ -36,7 +36,7 @@
                      <children>
                         <Text id="logoText" layoutX="459.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rainbow" textAlignment="CENTER" wrappingWidth="101.3359375" />
                         <ImageView id="logo" fitHeight="95.0" fitWidth="113.0" layoutX="463.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" />
-                        <TableView id="userTableView" fx:id="userTableView" layoutX="39.0" layoutY="127.0" prefHeight="527.0" prefWidth="546.0" />
+                        <TableView id="userTableView" fx:id="userTableView" editable="true" layoutX="15.0" layoutY="127.0" prefHeight="527.0" prefWidth="596.0" />
                      </children></AnchorPane>
             </content>
           </Tab>
