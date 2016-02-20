@@ -1,5 +1,6 @@
 package services;
 
+import controller.ChatBoxController;
 import controller.Controller;
 import interfaces.ClientServices;
 import java.io.File;
@@ -20,6 +21,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.pojo.User;
 import controller.YesNoBoxController;
+import javafx.stage.WindowEvent;
 
 public class ClientServicesImpl extends UnicastRemoteObject implements ClientServices {
 
@@ -87,6 +89,37 @@ public class ClientServicesImpl extends UnicastRemoteObject implements ClientSer
                         @Override
                         public void handle(ActionEvent arg0) {
                             homeStage.close();
+                            ///
+                            if (controller.getCurrentChatControllersMap().get(senderEmail) == null) {
+                                try {
+                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ChatBox.fxml"));
+                                    Parent chatPageParent = loader.load();
+                                    ChatBoxController chatBoxController = loader.getController();
+                                    try {
+                                        chatBoxController.passUser(controller.getUserByEmail(senderEmail));
+                                    } catch (RemoteException ex) {
+                                        Logger.getLogger(ClientServicesImpl.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                    chatBoxController.passController(controller);
+                                    controller.getCurrentChatControllersMap().put(senderEmail, chatBoxController);
+                                    
+                                    Scene chatPageScene = new Scene(chatPageParent);
+                                    Stage chatStage = new Stage();
+                                    chatStage.setResizable(false);
+                                    chatStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                                        public void handle(WindowEvent we) {
+                                            controller.getCurrentChatControllersMap().remove(senderEmail, chatBoxController);
+                                        }
+                                    });
+                                    
+                                    chatStage.setScene(chatPageScene);
+                                    chatStage.show();
+                                } catch (IOException ex) {
+                                    Logger.getLogger(ClientServicesImpl.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            //
+
                             FileChooser fileChooser = new FileChooser();
                             File myFile = fileChooser.showSaveDialog(controller.getCurrentChatControllersMap().get(senderEmail).getLabel().getScene().getWindow());
                             if (myFile != null) {

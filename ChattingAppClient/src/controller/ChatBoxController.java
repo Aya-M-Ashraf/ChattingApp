@@ -15,6 +15,7 @@ import java.io.*;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -107,24 +108,25 @@ public class ChatBoxController implements Initializable {
         File myFile = fileChooser.showOpenDialog(label.getScene().getWindow());
         if (myFile != null) {
             readFile(myFile.getAbsolutePath());
-            System.out.println("File size is : " + fileSize);
-        //System.out.println(myFile.getName());
-        clientServices = controller.sendFileToUser(myFile.getName(), friend.getEmail(), controller.getEmail());
-        if (clientServices != null) {
-            try {
-                clientServices.receiveFileFromUser(friend.getEmail(), controller.getEmail(), FileToTransfere, myFile.getName());
-                System.out.println("sending file from sender to receiver peer to peer");
-            } catch (RemoteException ex) {
-                Logger.getLogger(ChatBoxController.class.getName()).log(Level.SEVERE, null, ex);
+            clientServices = controller.sendFileToUser(myFile.getName(), friend.getEmail(), controller.getEmail());
+            if (clientServices != null) {
+                try {
+                    clientServices.receiveFileFromUser(friend.getEmail(), controller.getEmail(), FileToTransfere, myFile.getName());
+                } catch (RemoteException ex) {
+                    Logger.getLogger(ChatBoxController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                System.out.println("the peer to peer client is equal null");
             }
         } else {
-            System.out.println("the peer to peer client is equal null");
-        }
-        } else {
 
-            System.out.println("you didnt choose file");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("WRARING");
+            alert.setHeaderText(null);
+            alert.setContentText("You didn't choose file");
+            alert.showAndWait();
         }
-        
+
     }
 
     public void readFile(String path) {
